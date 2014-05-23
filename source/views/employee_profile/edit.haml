@@ -1,0 +1,6 @@
+%h2
+	Employee Profile
+	= " ##{self.id}"
+%form
+	%input{type: "checkbox", checked: self.administrator, name: 'administrator'} Administrator
+	%button Save

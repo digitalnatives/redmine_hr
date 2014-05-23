@@ -1,0 +1,15 @@
+%h2 Employee Profiles
+%table.list
+  %thead
+    %tr
+      %th Name
+      %th E-mail
+      %th Date of Employment
+  %tbody
+    - self[:profiles].each do |profile|
+      %tr
+        %td
+          %a(href="#profiles/#{profile.id}")
+            = profile.name
+        %td= profile.user[:mail]
+        %td ---

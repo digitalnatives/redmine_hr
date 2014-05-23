@@ -1,0 +1,8 @@
+.contextual
+  %a.icon.icon-edit(href="#profiles/#{self.id}/edit") Update
+%h2
+  Employee Profile
+  = " ##{self.id}"
+%a(href="/users/#{self.user_id}")= self.name
+- if self.administrator
+  Administrator
