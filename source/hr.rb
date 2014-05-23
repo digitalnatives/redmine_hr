@@ -55,6 +55,19 @@ class ProfilesController < Fron::Controller
 
   def initialize
     super
+    @base.delegate :click, 'button[name=add_modifier]' do |e|
+      e.stop
+      modifier = HolidayModifier.new({
+        year: Time.now,
+        value: @base.find('[name=value]').value,
+        description: @base.find('[name=description]').value,
+        hr_employee_profile_id: @profile.id
+      })
+
+      modifier.update do
+        edit id: @profile.id
+      end
+    end
     @base.on :submit do |e| submit(e) end
   end
 

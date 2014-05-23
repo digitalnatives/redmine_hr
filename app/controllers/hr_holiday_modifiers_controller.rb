@@ -1,7 +1,7 @@
 class HrHolidayModifiersController < HrAPIController
 
   UPDATEABLE_ATTRIBUTES = {
-    admin: [],
+    admin: [:year,:description,:value,:hr_employee_profile_id],
     user: []
   }
 

@@ -7,13 +7,39 @@ module Fron
         newdata[@options[:resource]] = data.dup
         newdata
       end
+
+      def set(model,data,&block)
+        setUrl model
+        method = model.id ? 'put' : 'post'
+        @request.send(method,transform(data)) do |response|
+          block.call case response.status
+          when 201, 204
+            nil
+          when 422
+            response.json
+          end
+        end
+      end
+
+      def setUrl(model)
+        id = model.is_a?(Fron::Model) ? model.id : model
+        endpoint = if @options[:endpoint].is_a? Proc
+            model.instance_eval &@options[:endpoint]
+          else
+            @options[:endpoint]
+          end
+        base = endpoint + "/" + @options[:resources]
+        base += id ? "/" + id.to_s : ".json"
+        puts base
+        @request.url = base
+      end
     end
   end
 
   class Model
     def update(attributes = {}, &block)
       data = geather.merge! attributes
-      self.class.instance_variable_get("@adapterObject").set id, data do |errors|
+      self.class.instance_variable_get("@adapterObject").set self, data do |errors|
         @errors = errors
         merge data
         block.call if block_given?

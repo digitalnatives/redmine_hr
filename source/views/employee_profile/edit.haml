@@ -1,6 +1,24 @@
 %h2
-	Employee Profile
-	= " ##{self.id}"
+  Employee Profile
+  = " ##{self.id}"
 %form
-	%input{type: "checkbox", checked: self.administrator, name: 'administrator'} Administrator
-	%button Save
+  %h4 Attributes
+  %input{type: "checkbox", checked: self.administrator, name: 'administrator'} Administrator
+
+  %h4 Holiday Modifiers
+  %input(name="value")
+  %textarea(name="description")
+  %button(name="add_modifier") Add
+  %table.list
+    %thead
+      %th Year
+      %th Value
+      %th Description
+    %tbody
+      - self.holiday_modifiers.each do |modifier|
+        %tr
+          %td= modifier.year
+          %td= modifier.value
+          %td= modifier.description
+
+  %button Save

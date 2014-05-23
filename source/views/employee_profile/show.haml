@@ -3,6 +3,20 @@
 %h2
   Employee Profile
   = " ##{self.id}"
-%a(href="/users/#{self.user_id}")= self.name
-- if self.administrator
-  Administrator
+%div
+  %h3(href="/users/#{self.user_id}")
+    = self.name
+    - if self.administrator
+      ( Administrator )
+  %h4 Holiday Modifiers
+  %table.list
+    %thead
+      %th Year
+      %th Value
+      %th Description
+    %tbody
+      - self.holiday_modifiers.each do |modifier|
+        %tr
+          %td= modifier.year
+          %td= modifier.value
+          %td= modifier.description
