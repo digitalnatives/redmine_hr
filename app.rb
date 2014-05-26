@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    true
+    self.admin
   end
 
   def allowed_to?(a,b,c)
@@ -37,8 +37,7 @@ module RedmineApp
         "test" => {
           :adapter => 'mysql2',
           :database => 'redmine_hr_test',
-          :username => "travis",
-          :encoding => "utf-8"
+          :username => "travis"
         },
         "development" => {
           :adapter => 'mysql2',
@@ -61,6 +60,7 @@ client.query('CREATE DATABASE redmine_hr_test')
 RedmineApp::Application.initialize!
 
 ActiveRecord::Migration.create_table :users do |t|
+  t.boolean :admin
   t.string :firstname
   t.string :lastname
   t.timestamps
