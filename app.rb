@@ -34,6 +34,12 @@ module RedmineApp
 
     def config.database_configuration
       {
+        "test" => {
+          :adapter => 'mysql2',
+          :database => 'redmine_hr_test',
+          :username => "travis",
+          :encoding => "utf-8"
+        },
         "development" => {
           :adapter => 'mysql2',
           :database => 'redmine_hr_test',
