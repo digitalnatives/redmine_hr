@@ -13,8 +13,9 @@ class ApplicationController < ActionController::Base
 end
 
 class User < ActiveRecord::Base
-  def self.current
-    @current = self.new
+
+  class << self
+    attr_accessor :current
   end
 
   def admin?
@@ -44,7 +45,6 @@ module RedmineApp
   end
 end
 
-Rails.logger = Logger.new(STDOUT)
 require './config/routes'
 require './lib/deps'
 
@@ -60,5 +60,3 @@ ActiveRecord::Migration.create_table :users do |t|
   t.timestamps
 end
 ActiveRecord::Migrator.up "db/migrate"
-
-u = User.create({firstname: 'Test', lastname: 'User'})
