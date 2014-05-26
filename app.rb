@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def allowed_to?(a,b,c)
-    true
+    self.send(a)
   end
 end
 
@@ -61,6 +61,7 @@ RedmineApp::Application.initialize!
 
 ActiveRecord::Migration.create_table :users do |t|
   t.boolean :admin
+  t.boolean :view_holidays
   t.string :firstname
   t.string :lastname
   t.timestamps
