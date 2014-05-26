@@ -1,19 +1,19 @@
 .contextual
-  %a.icon.icon-edit(href="#profiles/#{self.id}/edit") Update
+  %a.icon.icon-edit(href="#profiles/#{self.id}/edit")= t("hr.labels.update")
 %h2
-  Employee Profile
+  = t "hr.employee_profile.title"
   = " ##{self.id}"
 %div
   %h3(href="/users/#{self.user_id}")
     = self.name
     - if self.administrator
-      ( Administrator )
-  %h4 Holiday Modifiers
+      = "( #{t('hr.employee_profile.administrator')} )"
+  %h4= t "hr.holiday_modifiers.title"
   %table.list
     %thead
-      %th Year
-      %th Value
-      %th Description
+      %th= t("hr.holiday_modifiers.year")
+      %th= t("hr.holiday_modifiers.value")
+      %th= t("hr.holiday_modifiers.description")
     %tbody
       - self.holiday_modifiers.each do |modifier|
         %tr

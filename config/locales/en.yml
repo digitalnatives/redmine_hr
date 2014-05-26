@@ -1,0 +1,22 @@
+en:
+  hr:
+    labels:
+      add: "Add"
+      save: "Save"
+      update: "Update"
+    main_menu:
+      employee_profiles: "Employee Profiles"
+    employee_profile:
+      title: "Employee Profile"
+      attributes: "Attributes"
+      administrator: "Administrator"
+      date_of_employment: "Date of Employment"
+      name: "Name"
+      e_mail: "E-mail"
+    holiday_modifiers:
+      description: "Description"
+      year: "Year"
+      value: "Value"
+      title: " Holiday Modifiers"
+
+

@@ -1,24 +1,34 @@
 %h2
-  Employee Profile
+  = t "hr.employee_profile.title"
   = " ##{self.id}"
-%form
-  %h4 Attributes
-  %input{type: "checkbox", checked: self.administrator, name: 'administrator'} Administrator
-
-  %h4 Holiday Modifiers
-  %input(name="value")
-  %textarea(name="description")
-  %button(name="add_modifier") Add
+%form.employee_profile.edit
+  .box.tabular
+    %p
+      %label= t "hr.employee_profile.administrator"
+      %input{type: "checkbox", checked: self.administrator, name: 'administrator'}
+  %button= t("hr.labels.save")
+  %br
+  %br
+  %h4= t "hr.holiday_modifiers.title"
   %table.list
     %thead
-      %th Year
-      %th Value
-      %th Description
+      %th= t("hr.holiday_modifiers.year")
+      %th= t("hr.holiday_modifiers.value")
+      %th= t("hr.holiday_modifiers.description")
     %tbody
       - self.holiday_modifiers.each do |modifier|
         %tr
           %td= modifier.year
           %td= modifier.value
           %td= modifier.description
+  .box.tabular
+    %p
+      %label= t "hr.holiday_modifiers.value"
+      %input(type="text" name="value" style="width: 99%")
+    %p
+      %label= t "hr.holiday_modifiers.description"
+      %span
+        %textarea.wiki-edit(name="description")
+  %button(name="add_modifier")
+    =t "hr.labels.add"
 
-  %button Save

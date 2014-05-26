@@ -1,10 +1,10 @@
-%h2 Employee Profiles
+%h2= t "hr.main_menu.employee_profiles"
 %table.list
   %thead
     %tr
-      %th Name
-      %th E-mail
-      %th Date of Employment
+      %th= t "hr.employee_profile.name"
+      %th= t "hr.employee_profile.e_mail"
+      %th= t "hr.employee_profile.date_of_employment"
   %tbody
     - self[:profiles].each do |profile|
       %tr

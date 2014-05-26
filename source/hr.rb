@@ -1,11 +1,20 @@
 require 'fron'
 
+require 'vendor/i18n'
+require 'locales/en'
+
 require './fron-ext/rails_adapter'
 require './models/employee_profile.rb'
 
 require './views/employee_profile/index'
 require './views/employee_profile/show'
 require './views/employee_profile/edit'
+
+module Kernel
+  def t(scope,options = {})
+    `I18n.t(#{scope},JSON.parse(#{options.to_json}))`
+  end
+end
 
 class MenuItem < Fron::Component
   tag 'li'
@@ -25,7 +34,7 @@ class MenuItem < Fron::Component
 end
 
 items = {
-  'Employee Profiles' => "#profiles",
+  "#{t('hr.main_menu.employee_profiles')}" => "#profiles",
 }
 
 injectPoint = DOM::Element.new `document.querySelector("#main")`
