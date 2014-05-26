@@ -58,6 +58,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     multi_json (1.10.1)
+    mysql2 (0.3.16)
     opal (0.6.2)
       source_map
       sprockets
@@ -120,6 +121,7 @@ PLATFORMS
 
 DEPENDENCIES
   fron!
+  mysql2
   opal-haml!
   opal-rspec (~> 0.3.0.beta3)
   rails (= 3.2.13)

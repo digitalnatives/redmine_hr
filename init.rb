@@ -1,27 +1,6 @@
 require 'redmine'
+require_dependency 'deps'
 require_dependency 'app'
-
-ActionController::Parameters.action_on_unpermitted_parameters = :raise
-
-Rails.configuration.to_prepare do
-
-  User.class_eval do
-    has_one :employee_profile
-    before_create :build_default_employee_profile
-
-    def allowed_to_hr?
-      allowed_to?(:view_holidays, nil, global: true)
-    end
-
-    private
-
-    # Create employee_profile automatically
-    def build_default_employee_profile
-      build_employee_profile
-      true
-    end
-  end
-end
 
 Redmine::Plugin.register :redmine_hr do
   name 'Redmine HR plugin'

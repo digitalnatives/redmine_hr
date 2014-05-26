@@ -43,6 +43,7 @@ class HrAPIController < ApplicationController
   def safe_params
     type = User.current.admin? ? :admin : :user
     attributes = self.class::UPDATEABLE_ATTRIBUTES[type]
+    puts attributes
     params.require(controller_name.classify.underscore).permit *attributes
   end
 end

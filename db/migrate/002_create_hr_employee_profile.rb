@@ -1,4 +1,4 @@
-class CreateEmployeeProfile < ActiveRecord::Migration
+class CreateHrEmployeeProfile < ActiveRecord::Migration
   def up
     User.all.each do |user|
       next if user.hr_employee_profile
