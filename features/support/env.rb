@@ -2,6 +2,7 @@ require './app'
 require 'capybara/cucumber'
 require 'capybara/poltergeist'
 require 'database_cleaner/cucumber'
+Bundler.require(:plugin_test)
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, phantomjs_logger: Logger.new('/dev/null'))

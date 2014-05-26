@@ -38,7 +38,7 @@ module Fron
 
   class Model
     def update(attributes = {}, &block)
-      data = geather.merge! attributes
+      data = gather.merge! attributes
       self.class.instance_variable_get("@adapterObject").set self, data do |errors|
         @errors = errors
         merge data
@@ -46,7 +46,7 @@ module Fron
       end
     end
 
-    def geather
+    def gather
       @data.dup.reject{|key| !self.class.fields.include?(key)}
     end
 
@@ -64,7 +64,35 @@ module Fron
   class Router
     def self.pathToRegexp(path)
       return path if path == "*"
-      {regexp: Regexp.new('^'+path.gsub(/:([^\/]+)/, '(.+)')+"$"), map: path.match(/:([^\/]+)/).to_a[1..-1] }
+      {regexp: Regexp.new('^'+path.gsub(/:([^\/]+)/, '([^\/]+)')+"$"), map: path.scan(/:([^\/]+)/).flatten }
+    end
+
+    def route(hash = DOM::Window.hash, controller = nil,startParams = {})
+      routes = controller ? (controller.class.routes || []) : @routes
+      routes.each do |r|
+        if r[:path] == '*'
+          if r[:controller]
+            break route(hash,r[:controller],startParams)
+          else
+            break applyRoute(controller,r,startParams)
+          end
+        else
+          matches = hash.match(r[:path][:regexp]).to_a[1..-1]
+          if matches
+            params = {}
+            if r[:path][:map]
+              r[:path][:map].each_with_index do |key, index|
+                params[key.to_sym] = matches[index]
+              end
+            end
+            if r[:action]
+              break applyRoute(controller,r,startParams.merge(params))
+            else
+              break route hash.gsub(r[:path][:regexp],''), r[:controller], startParams.merge(params)
+            end
+          end
+        end
+      end
     end
 
     def applyRoute(controller,route, params = {})

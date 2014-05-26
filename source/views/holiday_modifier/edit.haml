@@ -1,0 +1,15 @@
+%h2
+  = t "hr.holiday_modifiers.title"
+  = " ##{self.id}"
+%form
+  .box.tabular
+    %p
+      %label= t "hr.holiday_modifiers.value"
+      %input(type="text" name="value" style="width: 99%" value="#{self.value}")
+    %p
+      %label= t "hr.holiday_modifiers.description"
+      %span
+        %textarea.wiki-edit(name="description")
+          = self.description
+  %button(name="save_modifier")
+    =t "hr.labels.save"

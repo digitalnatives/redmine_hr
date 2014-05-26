@@ -14,9 +14,22 @@
       %th= t("hr.holiday_modifiers.year")
       %th= t("hr.holiday_modifiers.value")
       %th= t("hr.holiday_modifiers.description")
+      %th= t("hr.labels.actions")
     %tbody
       - self.holiday_modifiers.each do |modifier|
         %tr
           %td= modifier.year
           %td= modifier.value
           %td= modifier.description
+          %td
+            %a.icon.icon-edit{href:"#profiles/#{self.id}/modifiers/#{modifier.id}"} Edit
+  .box.tabular
+    %p
+      %label= t "hr.holiday_modifiers.value"
+      %input(type="text" name="value" style="width: 99%")
+    %p
+      %label= t "hr.holiday_modifiers.description"
+      %span
+        %textarea.wiki-edit(name="description")
+  %button(name="add_modifier")
+    =t "hr.labels.add"

@@ -9,6 +9,7 @@ require './models/employee_profile.rb'
 require './views/employee_profile/index'
 require './views/employee_profile/show'
 require './views/employee_profile/edit'
+require './views/holiday_modifier/edit'
 
 module Kernel
   def t(scope,options = {})
@@ -53,12 +54,83 @@ class Content < Fron::Component
   tag 'div#content'
 end
 
-class ProfilesController < Fron::Controller
+class ApplicationController < Fron::Controller
+
+  class << self
+    attr_reader :klass
+
+    def resource(value)
+      @klass = value
+    end
+  end
+
+  private
+
+  def gather
+    data = {}
+    self.class.klass.fields.each do |field|
+      el = @base.find("[name=#{field}]")
+      next unless el
+      value = case el.tag
+      when 'input'
+        if el['type'] == 'checkbox'
+          el.checked
+        else
+          el.value
+        end
+      when 'textarea'
+        el.value
+      end
+      data[field] = value
+    end
+    data
+  end
+
+  def render(template,data)
+    @base.html = Template[template].render data
+  end
+end
+
+class HolidayModifiersController < ApplicationController
+  route :edit
+
+  resource HolidayModifier
+
+  base Content
+
+  def initialize
+    super
+    @base.on :submit do |e| submit(e) end
+  end
+
+  def submit(e)
+    e.stop
+    return unless @modifier
+    @modifier.update gather do
+      DOM::Window.hash = "profiles/#{@profile.id}"
+    end
+  end
+
+  def edit(params)
+    EmployeeProfile.find params[:id] do |profile|
+      @profile = profile
+      @modifier = profile.holiday_modifiers.select do |mod|
+        mod.id == params[:modifierId].to_i
+      end.first
+      render 'views/holiday_modifier/edit', @modifier
+    end
+  end
+end
+
+class ProfilesController < ApplicationController
+  route 'profiles/:id/modifiers/:modifierId', HolidayModifiersController
   route 'profiles/:id/edit', :edit
   route 'profiles/:id', :show
   route 'profiles', :index
 
   route :index
+
+  resource EmployeeProfile
 
   base Content
 
@@ -80,42 +152,23 @@ class ProfilesController < Fron::Controller
     @base.on :submit do |e| submit(e) end
   end
 
-  def geather
-    data = {}
-    @profile.class.fields.each do |field|
-      el = @base.find("[name=#{field}]")
-      next unless el
-      value = case el.tag
-      when 'input'
-        if el['type'] == 'checkbox'
-          el.checked
-        else
-          el.value
-        end
-      end
-      data[field] = value
-    end
-    data
-  end
-
   def submit(e)
     e.stop
     return unless @profile
-    @profile.update geather do
-      DOM::Window.hash = "profiles/#{@profile.id}"
+    @profile.update gather do
+      show id: @profile.id
     end
   end
 
   def edit(params)
-    EmployeeProfile.find params[:id] do |profile|
-      @profile = profile
-      render 'views/employee_profile/edit', profile
+    getProfile params[:id] do
+      render 'views/employee_profile/edit', @profile
     end
   end
 
   def show(params)
-    EmployeeProfile.find params[:id] do |profile|
-      render 'views/employee_profile/show', profile
+    getProfile params[:id] do
+      render 'views/employee_profile/show', @profile
     end
   end
 
@@ -125,8 +178,13 @@ class ProfilesController < Fron::Controller
     end
   end
 
-  def render(template,data)
-    @base.html = Template[template].render data
+  private
+
+  def getProfile(id, &block)
+    EmployeeProfile.find id do |profile|
+      @profile = profile
+      block.call
+    end
   end
 end
 

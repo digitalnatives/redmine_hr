@@ -4,6 +4,7 @@ en:
       add: "Add"
       save: "Save"
       update: "Update"
+      actions: "Actions"
     main_menu:
       employee_profiles: "Employee Profiles"
     employee_profile:
@@ -14,6 +15,7 @@ en:
       name: "Name"
       e_mail: "E-mail"
     holiday_modifiers:
+      title: "Holiday Modifier"
       description: "Description"
       year: "Year"
       value: "Value"
