@@ -15,6 +15,8 @@ class MenuItem < Fron::Component
 end
 
 class MainMenu
+  attr_reader :ul
+
   def initialize(items)
     @base = DOM::Document.find("#main-menu")
     @base << (@ul = DOM::Element.new 'ul')

@@ -1,7 +1,7 @@
-require '../views/employee_profile/index'
-require '../views/employee_profile/show'
-require '../views/employee_profile/edit'
-require './holiday_modifiers_controller'
+require 'views/employee_profile/index'
+require 'views/employee_profile/show'
+require 'views/employee_profile/edit'
+require 'controllers/holiday_modifiers_controller'
 
 class ProfilesController < ApplicationController
   route 'profiles/:id/modifiers/:modifierId', HolidayModifiersController
@@ -19,14 +19,17 @@ class ProfilesController < ApplicationController
     super
 
     @base.delegate :click, '[name=add_modifier]' do |e|
+      e.stop
       addModifier(e)
     end
 
-    @base.on :submit do |e| submit(e) end
+    @base.on :submit do |e|
+      submit(e)
+      e.stop
+    end
   end
 
-  def addModifier(e)
-    e.stop
+  def addModifier
 
     modifier = HolidayModifier.new({
       year: Time.now,
@@ -40,9 +43,8 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def submit(e)
-    e.stop
-    return unless @profile
+  def submit
+    return nil unless @profile
     @profile.update gather do
       redirect "profiles/#{@profile.id}"
     end

@@ -6,4 +6,6 @@ rvm:
 gemfile: Gemfile.development
 before_script:
   - mysql -e 'create database redmine_hr_test;'
-script: BUNDLE_GEMFILE=Gemfile.development bundle exec cucumber
+script:
+  - BUNDLE_GEMFILE=Gemfile.development bundle exec cucumber
+  - rake test
