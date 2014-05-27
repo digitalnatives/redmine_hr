@@ -3,6 +3,7 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.1.0
+gemfile: Gemfile.development
 before_script:
   - mysql -e 'create database redmine_hr_test;'
-script: bundle exec cucumber
+script: BUNDLE_GEMFILE=Gemfile.development bundle exec cucumber

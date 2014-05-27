@@ -146,7 +146,7 @@ class ProfilesController < ApplicationController
       })
 
       modifier.update do
-        edit id: @profile.id
+        show id: @profile.id
       end
     end
     @base.on :submit do |e| submit(e) end
@@ -156,7 +156,7 @@ class ProfilesController < ApplicationController
     e.stop
     return unless @profile
     @profile.update gather do
-      show id: @profile.id
+      DOM::Window.hash = "profiles/#{@profile.id}"
     end
   end
 

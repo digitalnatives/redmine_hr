@@ -7,11 +7,3 @@ gem 'strong_parameters', '0.2.1'
 gem 'opal-haml', :github => 'opal/opal-haml'
 gem "rails", "3.2.13"
 gem 'mysql2', "~> 0.3.11"
-
-group :plugin_test do
-  gem 'database_cleaner'
-  gem 'capybara'
-  gem 'cucumber'
-  gem 'poltergeist'
-  gem 'faker'
-end
