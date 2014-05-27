@@ -10,9 +10,11 @@ require 'components/main-menu'
 
 require 'models/employee_profile'
 require 'models/holiday_modifier'
+require 'models/holiday_request'
 
 require 'controllers/application_controller'
 require 'controllers/profiles_controller'
+require 'controllers/holiday_requests_controller'
 
 module Kernel
   def t(scope,options = {})

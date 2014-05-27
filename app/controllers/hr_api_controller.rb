@@ -11,6 +11,10 @@ class HrAPIController < ApplicationController
     render :json => {message: 'Unpermitted Parameters!'}, :status => 400
   end
 
+  rescue_from ActiveRecord::RecordInvalid do |e|
+    render :json =>  e.record.errors, :status => 422
+  end
+
   def index
     render :json => klass.all
   end

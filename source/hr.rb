@@ -5,6 +5,7 @@ class RedmineHR < Fron::Application
   config.stylesheets = []
 
   config.routes do
+    map "holiday_requests/", HolidayRequestsController
     map ProfilesController
   end
 

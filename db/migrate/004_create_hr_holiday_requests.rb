@@ -1,7 +1,7 @@
 class CreateHrHolidayRequests < ActiveRecord::Migration
   def change
     create_table :hr_holiday_requests do |t|
-      t.integer :employee_profile_id
+      t.integer :hr_employee_profile_id
       t.date :start_date
       t.date :end_date
       t.boolean :half_day

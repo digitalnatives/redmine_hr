@@ -1,7 +1,8 @@
 class HrHolidayRequest < ActiveRecord::Base
   unloadable
+  set_inheritance_column 'holday_request'
 
-  STATUSES = %w(planned requested rejected approved accepted withdrawn).freeze
+  STATUSES = %w(planned requested rejected approved withdrawn).freeze
 
   belongs_to :hr_employee_profile
 
