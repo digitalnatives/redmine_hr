@@ -1,6 +1,13 @@
 module Fron
   module Adapters
     class RailsAdapter
+      def del(model,&block)
+        setUrl model
+        @request.request 'DELETE', transform({})  do
+          block.call
+        end
+      end
+
       def transform(data)
         newdata = {}
         newdata[:authenticity_token] = DOM::Document.head.find("meta[name=csrf-token]")['content']
@@ -30,7 +37,6 @@ module Fron
           end
         base = endpoint + "/" + @options[:resources]
         base += id ? "/" + id.to_s : ".json"
-        puts base
         @request.url = base
       end
     end
@@ -42,6 +48,12 @@ module Fron
       self.class.instance_variable_get("@adapterObject").set self, data do |errors|
         @errors = errors
         merge data
+        block.call if block_given?
+      end
+    end
+
+    def destroy(&block)
+      self.class.instance_variable_get("@adapterObject").del self do
         block.call if block_given?
       end
     end
@@ -64,7 +76,7 @@ module Fron
   class Router
     def self.pathToRegexp(path)
       return path if path == "*"
-      {regexp: Regexp.new('^'+path.gsub(/:([^\/]+)/, '([^\/]+)')+"$"), map: path.scan(/:([^\/]+)/).flatten }
+      {regexp: Regexp.new('^'+path.gsub(/:([^\/]+)/, '([^\/]+)')), map: path.scan(/:([^\/]+)/).flatten }
     end
 
     def route(hash = DOM::Window.hash, controller = nil,startParams = {})

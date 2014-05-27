@@ -1,7 +1,7 @@
 class HrAPIController < ApplicationController
   unloadable
 
-  before_filter :get_resource, :only => [:show,:update]
+  before_filter :get_resource, :only => [:show,:update,:destroy]
 
   rescue_from ActiveRecord::RecordNotFound do
     render :json => {message: 'Not Found!'}, :status => 404

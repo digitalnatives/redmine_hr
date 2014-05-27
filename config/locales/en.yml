@@ -5,6 +5,8 @@ en:
       save: "Save"
       update: "Update"
       actions: "Actions"
+      edit: "Edit"
+      delete: "Delete"
     main_menu:
       employee_profiles: "Employee Profiles"
     employee_profile:

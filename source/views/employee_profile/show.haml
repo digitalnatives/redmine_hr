@@ -18,11 +18,14 @@
     %tbody
       - self.holiday_modifiers.each do |modifier|
         %tr
-          %td= modifier.year
-          %td= modifier.value
+          %td(width="10%" style="text-align: center")= modifier.year
+          %td(width="10%" style="text-align: center")= modifier.value
           %td= modifier.description
-          %td
-            %a.icon.icon-edit{href:"#profiles/#{self.id}/modifiers/#{modifier.id}"} Edit
+          %td(width="10%" style="text-align: center")
+            %a.icon.icon-edit{href:"#profiles/#{self.id}/modifiers/#{modifier.id}"}
+              = t "hr.labels.edit"
+            %a.icon.icon-del{href:"#profiles/#{self.id}/modifiers/#{modifier.id}/delete"}
+              = t "hr.labels.delete"
   .box.tabular
     %p
       %label= t "hr.holiday_modifiers.value"
