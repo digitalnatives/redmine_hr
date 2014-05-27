@@ -30,7 +30,6 @@ class ProfilesController < ApplicationController
   end
 
   def addModifier
-
     modifier = HolidayModifier.new({
       year: Time.now,
       value: @base.find('[name=value]').value,
@@ -73,7 +72,7 @@ class ProfilesController < ApplicationController
   def getProfile(id, &block)
     EmployeeProfile.find id do |profile|
       @profile = profile
-      block.call
+      block.call if block_given?
     end
   end
 end
