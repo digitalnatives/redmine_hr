@@ -10,11 +10,14 @@ class HolidayModifiersController < ApplicationController
 
   def initialize
     super
-    @base.on :submit do |e| submit(e) end
+
+    @base.on :submit do |e|
+      e.stop
+      submit
+    end
   end
 
-  def submit(e)
-    e.stop
+  def submit
     return unless @modifier
     @modifier.update gather do
       redirect "profiles/#{@profile.id}"

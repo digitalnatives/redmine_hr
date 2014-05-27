@@ -20,11 +20,11 @@ class ProfilesController < ApplicationController
 
     @base.delegate :click, '[name=add_modifier]' do |e|
       e.stop
-      addModifier(e)
+      addModifier
     end
 
     @base.on :submit do |e|
-      submit(e)
+      submit
       e.stop
     end
   end
