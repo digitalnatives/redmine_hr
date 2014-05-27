@@ -10,6 +10,7 @@ en:
       delete: "Delete"
     main_menu:
       employee_profiles: "Employee Profiles"
+      new_holiday_request: "New Holiday Request"
     employee_profile:
       title: "Employee Profile"
       attributes: "Attributes"
@@ -32,6 +33,8 @@ en:
       half_day: "Half Day"
       sick_leave: "Sick Leave"
       holiday: "Holiday"
+      user: "User"
+      description: "Description"
       statuses:
         planned: "Planned"
         requested: "Requested"

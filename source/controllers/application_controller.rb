@@ -24,10 +24,16 @@ class ApplicationController < Fron::Controller
         end
       when 'textarea'
         el.value
+      when 'select'
+        el.value
       end
       data[field] = value
     end
     data
+  end
+
+  def empty
+    @base.empty
   end
 
   def redirect(hash)

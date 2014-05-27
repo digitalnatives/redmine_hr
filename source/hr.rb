@@ -20,5 +20,6 @@ end
 RedmineHR.new
 MainMenu.new({
   "#{t('hr.main_menu.employee_profiles')}" => "#profiles",
+  "#{t('hr.main_menu.new_holiday_request')}" => "#holiday_requests/new"
 })
 

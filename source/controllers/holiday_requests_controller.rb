@@ -11,6 +11,16 @@ class HolidayRequestsController < ApplicationController
   def initialize
     super
 
+    @base.on 'change' do
+      input = @base.find('input[type=checkbox]')
+      puts input.checked
+      end_date = @base.find('[name=end_date]')
+      end_date.disabled = input.checked
+      if input.checked
+        end_date.value = @base.find('[name=start_date]').value
+      end
+    end
+
     @base.on :submit do |e|
       e.stop
       submit
@@ -19,7 +29,11 @@ class HolidayRequestsController < ApplicationController
 
   def submit
     @request.update gather do
-      puts @request.errors
+      if @request.errors
+        render 'views/holiday_request/edit', @request
+      else
+        puts "Done"
+      end
     end
   end
 
@@ -27,6 +41,9 @@ class HolidayRequestsController < ApplicationController
     @request = self.class.klass.new({
       half_day: false
     })
-    render 'views/holiday_request/edit', @request
+    EmployeeProfile.all do |profiles|
+      @request.data[:profiles] = profiles
+      render 'views/holiday_request/edit', @request
+    end
   end
 end

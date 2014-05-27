@@ -115,6 +115,7 @@ module Fron
           end
         end
       end
+      controller.send(:empty) if controller.respond_to?(:empty)
       controller.send(route[:action], params)
       @config.logger.info "Navigate >> #{controller.class}##{route[:action]} with params #{params}"
       @config.main.empty
@@ -139,3 +140,14 @@ module Fron
   end
 end
 
+module DOM
+  class Element
+    def disabled
+      `#{@el}.disabled`
+    end
+
+    def disabled=(value)
+      `#{@el}.disabled = #{value}`
+    end
+  end
+end
