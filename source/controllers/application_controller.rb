@@ -43,4 +43,10 @@ class ApplicationController < Fron::Controller
   def render(template,data)
     @base.html = Template[template].render data
   end
+
+  def flash(message)
+    el = DOM::Element.new 'div'
+    el.html = Template['views/flash'].render({message: message})
+    @base.insertBefore el.children.first, @base.children.first
+  end
 end

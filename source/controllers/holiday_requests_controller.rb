@@ -1,4 +1,5 @@
 require 'views/holiday_request/edit'
+require 'views/flash'
 
 class HolidayRequestsController < ApplicationController
 
@@ -33,6 +34,7 @@ class HolidayRequestsController < ApplicationController
         render 'views/holiday_request/edit', @request.clone(gather)
       else
         redirect "holiday_requests/#{@request.id}/edit"
+        flash "Successfull update."
       end
     end
   end

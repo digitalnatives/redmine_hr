@@ -149,6 +149,10 @@ end
 
 module DOM
   class Element
+    def insertBefore(what,where)
+      `#{@el}.insertBefore(#{NODE.getElement what},#{NODE.getElement where})`
+    end
+
     def disabled
       `#{@el}.disabled`
     end

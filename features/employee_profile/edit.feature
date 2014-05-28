@@ -7,7 +7,7 @@ Feature: Edit Employee Profile
     Given There is an administrator user
       And The profile should have administrator
      When I visit the edit employee profile page
-      And I click on the administrator checkbox
+      And I uncheck administrator
       And I click on the save button
      Then I should be on the employee profile page
       And The profile should not have administrator
@@ -16,7 +16,7 @@ Feature: Edit Employee Profile
     Given There is a user
       And The profile should not have administrator
      When I visit the edit employee profile page
-      And I click on the administrator checkbox
+      And I check administrator
       And I click on the save button
      Then I should be on the employee profile page
       And The profile should have administrator
