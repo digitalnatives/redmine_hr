@@ -53,17 +53,19 @@ end
 require './config/routes'
 require './lib/deps'
 
-client = Mysql2::Client.new(:host => "localhost", :username => "root")
-client.query('DROP DATABASE redmine_hr_test')
-client.query('CREATE DATABASE redmine_hr_test')
+silence_stream STDOUT do
+  client = Mysql2::Client.new(:host => "localhost", :username => "root")
+  client.query('DROP DATABASE redmine_hr_test')
+  client.query('CREATE DATABASE redmine_hr_test')
 
-RedmineApp::Application.initialize!
+  RedmineApp::Application.initialize!
 
-ActiveRecord::Migration.create_table :users do |t|
-  t.boolean :admin
-  t.boolean :view_holidays
-  t.string :firstname
-  t.string :lastname
-  t.timestamps
+  ActiveRecord::Migration.create_table :users do |t|
+    t.boolean :admin
+    t.boolean :view_holidays
+    t.string :firstname
+    t.string :lastname
+    t.timestamps
+  end
+  ActiveRecord::Migrator.up "db/migrate"
 end
-ActiveRecord::Migrator.up "db/migrate"

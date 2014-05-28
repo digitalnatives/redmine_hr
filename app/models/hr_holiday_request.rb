@@ -13,6 +13,12 @@ class HrHolidayRequest < ActiveRecord::Base
 
   after_initialize :init
 
+  scope :by_year, ->(date) {
+    boy = date.beginning_of_year
+    eoy = date.end_of_year
+    where("start_date >= ? and start_date <= ?", boy, eoy)
+  }
+
   def init
     self.status ||= 'planned'
     self.type   ||= 'holiday'
