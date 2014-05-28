@@ -11,15 +11,15 @@
   .box.tabular
     %p
       %label= t "hr.holiday_request.user"
-      %select(name="hr_employee_profile_id")
+      %select{name: "hr_employee_profile_id", disabled: !CurrentUser[:admin]}
         - self.data[:profiles].each do |profile|
           %option{value: profile.id}= profile.name
     %p
       %label= t "hr.holiday_request.start_date"
-      %input(type="date" name="start_date" style="width: 99%" value="#{self.start_date}")
+      %input(type="date" name="start_date" value="#{self.start_date}")
     %p
       %label= t "hr.holiday_request.end_date"
-      %input{type:"date", name:"end_date", style:"width: 99%", value:"#{self.end_date}", disabled: self.half_day}
+      %input{type:"date", name:"end_date", value: self.end_date, disabled: self.half_day}
     %p
       %label= t "hr.holiday_request.half_day"
       %input{type: "checkbox", checked: self.half_day, name: "half_day"}

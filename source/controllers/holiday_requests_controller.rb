@@ -2,6 +2,7 @@ require 'views/holiday_request/edit'
 
 class HolidayRequestsController < ApplicationController
 
+  route ":id/edit", :edit
   route :new, :new
 
   resource HolidayRequest
@@ -13,7 +14,6 @@ class HolidayRequestsController < ApplicationController
 
     @base.on 'change' do
       input = @base.find('input[type=checkbox]')
-      puts input.checked
       end_date = @base.find('[name=end_date]')
       end_date.disabled = input.checked
       if input.checked
@@ -30,10 +30,17 @@ class HolidayRequestsController < ApplicationController
   def submit
     @request.update gather do
       if @request.errors
-        render 'views/holiday_request/edit', @request
+        render 'views/holiday_request/edit', @request.clone(gather)
       else
-        puts "Done"
+        redirect "holiday_requests/#{@request.id}/edit"
       end
+    end
+  end
+
+  def edit(params)
+    HolidayRequest.find params[:id] do |request|
+      @request = request
+      renderEdit
     end
   end
 
@@ -41,8 +48,19 @@ class HolidayRequestsController < ApplicationController
     @request = self.class.klass.new({
       half_day: false
     })
-    EmployeeProfile.all do |profiles|
-      @request.data[:profiles] = profiles
+    renderEdit
+  end
+
+  private
+
+  def renderEdit
+    if CurrentUser[:admin]
+      EmployeeProfile.all do |profiles|
+        @request.data[:profiles] = profiles
+        render 'views/holiday_request/edit', @request
+      end
+    else
+      @request.data[:profiles] = [CurrentProfile]
       render 'views/holiday_request/edit', @request
     end
   end

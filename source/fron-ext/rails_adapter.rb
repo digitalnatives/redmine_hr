@@ -19,12 +19,13 @@ module Fron
         setUrl model
         method = model.id ? 'put' : 'post'
         @request.send(method,transform(data)) do |response|
-          block.call case response.status
+          error = case response.status
           when 201, 204
             nil
           when 422
             response.json
           end
+          block.call error, response.json
         end
       end
 
@@ -45,11 +46,17 @@ module Fron
   class Model
     def update(attributes = {}, &block)
       data = gather.merge! attributes
-      self.class.instance_variable_get("@adapterObject").set self, data do |errors|
+      self.class.instance_variable_get("@adapterObject").set self, data do |errors,data|
         @errors = errors
         merge data
         block.call if block_given?
       end
+    end
+
+    def clone(data = {})
+      cl = self.class.new @data.merge data
+      cl.instance_variable_set "@errors", self.errors
+      cl
     end
 
     def destroy(&block)

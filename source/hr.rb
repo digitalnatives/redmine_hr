@@ -1,4 +1,8 @@
 require './deps'
+require 'native'
+
+CurrentUser = Native `window.CurrentUser`
+CurrentProfile = EmployeeProfile.new CurrentUser[:profile]
 
 class RedmineHR < Fron::Application
   config.title = `document.title`

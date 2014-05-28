@@ -37,4 +37,8 @@ class HrHolidayRequest < ActiveRecord::Base
       errors.add(:year, "Start Date and End Date must be in the same year")
     end
   end
+
+  def as_json(options = {})
+    super :root => false
+  end
 end

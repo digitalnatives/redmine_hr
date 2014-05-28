@@ -1,17 +1,15 @@
 class HrHolidayRequestsController < HrAPIController
 
-  UPDATEABLE_ATTRIBUTES = {
-    admin: [
-      :hr_employee_profile_id,
-      :id,
-      :start_date,
-      :end_date,
-      :type,
-      :half_day,
-      :description,
-      :status
-    ], user: []
-  }
+  UPDATEABLE_ATTRIBUTES = [
+    :hr_employee_profile_id,
+    :id,
+    :start_date,
+    :end_date,
+    :type,
+    :half_day,
+    :description,
+    :status
+  ]
 
   def create
     params = safe_params

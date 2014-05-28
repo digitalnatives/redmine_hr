@@ -1,1 +1,7 @@
+<script type="text/javascript">
+  window.CurrentUser = {
+    admin: <%= User.current.admin? %>,
+    profile: <%= User.current.hr_employee_profile.to_json.html_safe %>
+  }
+</script>
 <%= javascript_include_tag '/hr_assets/assets/hr' %>
