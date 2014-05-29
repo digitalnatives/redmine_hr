@@ -3,6 +3,12 @@ require './test/spec_helper'
 module Secretary
 end
 
+module Setting
+  def self.plugin_redmine_hr
+    { admin_role: 0, working_day: "Working Day" }
+  end
+end
+
 describe HrHolidayCalculator do
 
   let(:status)  { 'accepted' }
