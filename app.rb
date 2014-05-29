@@ -54,8 +54,9 @@ module RedmineApp
   end
 end
 
-require './config/routes'
+require './app/models/hr_holiday_request'
 require './lib/deps'
+require './config/routes'
 
 silence_stream STDOUT do
   client = Mysql2::Client.new(:host => "localhost", :username => "root")
