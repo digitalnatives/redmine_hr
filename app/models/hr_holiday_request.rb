@@ -20,7 +20,7 @@ class HrHolidayRequest < ActiveRecord::Base
     where("start_date >= ? and start_date <= ?", boy, eoy)
   }
 
-  state_machine :status, :initial => :planned do
+  SM = state_machine :status, :initial => :planned do
     event(:request)           { transition :planned                => :requested }
     event(:withdraw)          { transition :approved               => :withdrawn }
     event(:cancel)            { transition :requested              => :planned   }

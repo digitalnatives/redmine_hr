@@ -40,4 +40,4 @@
         %td= t "hr.holiday_request.statuses.#{audit[:to]}"
         %td= audit[:user]
 - self.available_statuses.each do |status|
-  %button(name="status")= t "hr.holiday_request.transitions.#{status}"
+  %button{action: status}= t "hr.holiday_request.transitions.#{status}"

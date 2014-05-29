@@ -15,12 +15,22 @@ class HolidayRequestsController < ApplicationController
   def initialize
     super
 
+    @xhr = Fron::Request.new
+
     @base.on 'change' do
       input = @base.find('input[type=checkbox]')
       end_date = @base.find('[name=end_date]')
       end_date.disabled = input.checked
       if input.checked
         end_date.value = @base.find('[name=start_date]').value
+      end
+    end
+
+    @base.delegate 'click', '[action]' do |e|
+      @xhr.url = "/hr_holiday_requests/#{@request.id}/#{e.target['action']}"
+      @xhr.get do |response|
+        @request.merge response.json
+        render 'views/holiday_request/show', @request
       end
     end
 
