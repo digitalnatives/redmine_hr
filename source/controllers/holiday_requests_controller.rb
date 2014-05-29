@@ -1,10 +1,12 @@
 require 'views/holiday_request/edit'
+require 'views/holiday_request/show'
 require 'views/flash'
 
 class HolidayRequestsController < ApplicationController
 
   route ":id/edit", :edit
   route :new, :new
+  route ":id", :show
 
   resource HolidayRequest
 
@@ -33,16 +35,20 @@ class HolidayRequestsController < ApplicationController
       if @request.errors
         render 'views/holiday_request/edit', @request.clone(gather)
       else
-        redirect "holiday_requests/#{@request.id}/edit"
-        flash "Successfull update."
+        redirect "holiday_requests/#{@request.id}"
       end
     end
   end
 
   def edit(params)
-    HolidayRequest.find params[:id] do |request|
-      @request = request
+    getRequest params do
       renderEdit
+    end
+  end
+
+  def show(params)
+    getRequest params do
+      render 'views/holiday_request/show', @request
     end
   end
 
@@ -54,6 +60,13 @@ class HolidayRequestsController < ApplicationController
   end
 
   private
+
+  def getRequest(params,&block)
+    HolidayRequest.find params[:id] do |request|
+      @request = request
+      block.call
+    end
+  end
 
   def renderEdit
     if CurrentUser[:admin]

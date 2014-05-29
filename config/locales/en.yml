@@ -24,6 +24,8 @@ en:
       edit: "Edit"
       create: "Create"
       delete: "Delete"
+      false: "No"
+      true: "Yes"
     main_menu:
       employee_profiles: "Employee Profiles"
       new_holiday_request: "New Holiday Request"
@@ -56,6 +58,19 @@ en:
       holiday: "Holiday"
       user: "User"
       description: "Description"
+      audit:
+        created_at: 'Created At'
+        from: "From"
+        to: "To"
+        user: "User"
+      transitions:
+        request: "Request"
+        remove: "Delete"
+        withdraw: "Withdraw"
+        approve: "Approve"
+        cancel: "Cancel"
+        approve_withdrawn: "Approve withdrawn"
+        reject_withdrawn: "Reject withdrawn"
       statuses:
         planned: "Planned"
         requested: "Requested"

@@ -18,3 +18,10 @@ end
 When(/^I visit the edit holiday request page$/) do
   page.visit "/hr#holiday_requests/#{@request.id}/edit"
 end
+
+Then(/^I should be on the holiday request page$/) do
+	wait_until { HrHolidayRequest.first }
+	id = @request ? @request.id : HrHolidayRequest.first.id
+  wait_for_hash "holiday_requests/#{id}"
+end
+

@@ -8,5 +8,5 @@ Feature: Edit Holiday Request
   Scenario: Edit status
   	 When I fill out the status with "requested"
   	  And I click on the save button
-  	 Then I should see a success notification
+  	 Then I should be on the holiday request page
 
