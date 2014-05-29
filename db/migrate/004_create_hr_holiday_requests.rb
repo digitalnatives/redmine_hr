@@ -8,6 +8,7 @@ class CreateHrHolidayRequests < ActiveRecord::Migration
       t.text :description
       t.string :status
       t.string :type
+      t.timestamps
     end
   end
 end

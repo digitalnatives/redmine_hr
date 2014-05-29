@@ -29,4 +29,4 @@ Feature: Create Holiday Request
       And I fill out the type with "sick-leave"
       And I fill out the description with "test description"
       And I click on the create button
-     Then I should be on the edit holiday request page
+     Then I should be on the holiday request page

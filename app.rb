@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
-Bundler.require(:default)
 require "rails/all"
+Bundler.require(:default)
 require './lib/app'
 
 class ApplicationController < ActionController::Base
@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
 
   class << self
     attr_accessor :current
+  end
+
+  def name
+    lastname + " " + firstname
   end
 
   def admin?

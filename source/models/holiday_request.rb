@@ -1,3 +1,5 @@
+require 'time'
+
 class HolidayRequest < Fron::Model
   attr_reader :data
 
@@ -14,4 +16,8 @@ class HolidayRequest < Fron::Model
     resources: 'hr_holiday_requests',
     resource: 'hr_holiday_request'
   }
+
+  def method_missing(method)
+    @data[method]
+  end
 end

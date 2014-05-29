@@ -5,6 +5,7 @@ class CreateHrHolidayModifiers < ActiveRecord::Migration
       t.date 		:year
       t.integer :value
       t.text 		:description
+      t.timestamps
     end
   end
 end

@@ -5,6 +5,7 @@ class HrHolidayRequest < ActiveRecord::Base
   STATUSES = %w(planned requested rejected approved withdrawn deleted).freeze
 
   belongs_to :hr_employee_profile
+  has_many    :audits
 
   validates :start_date, :end_date, :status, :type, presence: true
   validates :type,   inclusion: { in: %w(sick_leave holiday) }
@@ -30,6 +31,11 @@ class HrHolidayRequest < ActiveRecord::Base
 
     event(:reject) do
       transition [:requested,:approved]  => :rejected, :if => lambda {|request| request.in_the_future?}
+    end
+
+    after_transition do |request,transition|
+      user_id = User.current ? User.current.id : nil
+      request.audits.create({from: transition.from, to: transition.to, user_id: user_id})
     end
   end
 
@@ -63,6 +69,10 @@ class HrHolidayRequest < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    super :root => false
+    data = super :root => false
+    data[:available_statuses] = status_paths(from: status).map{|path| path[0].event}.uniq
+    data[:user] = hr_employee_profile.user.name
+    data[:audits] = audits.map(&:as_json)
+    data
   end
 end

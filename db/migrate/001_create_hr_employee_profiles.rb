@@ -4,6 +4,7 @@ class CreateHrEmployeeProfiles < ActiveRecord::Migration
       t.column  :user_id, 		  :integer, :null => false
       t.column  :supervisor_id, :integer, :null => false
       t.boolean :administrator
+      t.timestamps
     end
   end
 end
