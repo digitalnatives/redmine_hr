@@ -14,4 +14,6 @@ Redmine::Plugin.register :redmine_hr do
   permission :view_holidays, :hr => [:index]
 
   menu(:top_menu, :hr, {:controller => "hr", :action => 'index'}, :caption => 'HR', :after => :my_page, :if => Proc.new{ User.current.logged? && User.current.allowed_to_hr? }, :param => :user_id)
+
+  settings :default => {'admin_role' => 0, 'working_day' => "Working day"}, :partial => 'settings/redmine_hr_settings'
 end
