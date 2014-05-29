@@ -17,4 +17,12 @@ class HrHolidayRequestsController < HrAPIController
     resource = klass.create! params
     render :json => resource
   end
+
+  HrHolidayRequest::SM.events.map(&:name).each do |method|
+    define_method method.to_s+"!" do
+      get_resource
+      @resource.send("#{method}!")
+      show
+    end
+  end
 end
