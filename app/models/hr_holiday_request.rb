@@ -2,7 +2,7 @@ class HrHolidayRequest < ActiveRecord::Base
   unloadable
   set_inheritance_column 'holday_request'
 
-  STATUSES = %w(planned requested rejected approved withdrawn).freeze
+  STATUSES = %w(planned requested rejected approved withdrawn deleted).freeze
 
   belongs_to :hr_employee_profile
 
@@ -19,6 +19,20 @@ class HrHolidayRequest < ActiveRecord::Base
     where("start_date >= ? and start_date <= ?", boy, eoy)
   }
 
+  state_machine :status, :initial => :planned do
+    event(:request)           { transition :planned                => :requested }
+    event(:withdraw)          { transition :approved               => :withdrawn }
+    event(:cancel)            { transition :requested              => :planned   }
+    event(:approve)           { transition [:requested,:rejected]  => :approved  }
+    event(:remove)            { transition [:requested,:planned]   => :deleted   }
+    event(:approve_withdrawn) { transition :withdrawn              => :planned   }
+    event(:reject_withdrawn)  { transition :withdrawn              => :approved  }
+
+    event(:reject) do
+      transition [:requested,:approved]  => :rejected, :if => lambda {|request| request.in_the_future?}
+    end
+  end
+
   def init
     self.status ||= 'planned'
     self.type   ||= 'holiday'
@@ -26,6 +40,10 @@ class HrHolidayRequest < ActiveRecord::Base
 
   def half_day?
     self.half_day
+  end
+
+  def in_the_future?
+    start_date.beginning_of_day >= Date.today && end_date.beginning_of_day >= Date.today
   end
 
   def date_validations
