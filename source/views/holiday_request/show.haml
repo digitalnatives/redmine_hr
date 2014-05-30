@@ -1,5 +1,6 @@
-.contextual
-  %a.icon.icon-edit(href="#holiday_requests/#{self.id}/edit")= t("hr.labels.update")
+- if self.can_update
+  .contextual
+    %a.icon.icon-edit(href="#holiday_requests/#{self.id}/edit")= t("hr.labels.update")
 %h2
   = t "hr.holiday_request.title"
   = " ##{self.id}"

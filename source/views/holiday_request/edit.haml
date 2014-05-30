@@ -25,12 +25,13 @@
       %input{type: "checkbox", checked: self.half_day, name: "half_day"}
     %p
       %label= t "hr.holiday_request.status"
-      %select(name="status")
-        %option(value="planned")= t("hr.holiday_request.statuses.planned")
-        %option(value="requested")= t("hr.holiday_request.statuses.requested")
-        %option(value="approved")= t("hr.holiday_request.statuses.approved")
-        %option(value="withdrawn")= t("hr.holiday_request.statuses.withdrawn")
-        %option(value="rejected")= t("hr.holiday_request.statuses.rejected")
+      - if self.dirty?
+        %select(name="status")
+          %option(value="planned")= t("hr.holiday_request.statuses.planned")
+          %option(value="requested")= t("hr.holiday_request.statuses.requested")
+      - else
+        %select(disabled)
+          %option= t "hr.holiday_request.statuses.#{self.status}"
     %p
       %label= t "hr.holiday_request.type"
       %select(name="type")

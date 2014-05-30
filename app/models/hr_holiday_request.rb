@@ -4,11 +4,6 @@ class HrHolidayRequest < ActiveRecord::Base
 
   STATUSES = %w(planned requested rejected approved withdrawn deleted).freeze
 
-  EVENTS = {
-    admin: [:approve , :reject, :approve_withdrawn, :reject_withdrawn, :update],
-    user:  [:request, :cancel, :withdraw, :remove,  :update]
-  }
-
   belongs_to :hr_employee_profile
   has_many   :audits, dependent: :delete_all
 
@@ -38,27 +33,19 @@ class HrHolidayRequest < ActiveRecord::Base
       transition [:requested,:approved]  => :rejected, :if => lambda {|request| request.in_the_future?}
     end
 
-    after_transition on: :remove do |request|
-      request.destroy
-    end
-
-    after_transition except: :remove do |request,transition|
+    after_transition do |request,transition|
       user_id = User.current ? User.current.id : nil
       request.audits.create({from: transition.from, to: transition.to, user_id: user_id})
+    end
+
+    after_transition on: :remove do |request|
+      request.destroy
     end
   end
 
   def init
     self.status ||= 'planned'
     self.type   ||= 'holiday'
-  end
-
-  def user_allowed_to?(user,method)
-    type = user.hr_admin? ? :admin : :user
-    type = :admin if hr_employee_profile.supervisor == user
-    type = :user  if hr_employee_profile.user == user
-    puts method, EVENTS[type].include?(method.to_sym)
-    EVENTS[type].include?(method.to_sym)
   end
 
   def half_day?
@@ -86,11 +73,13 @@ class HrHolidayRequest < ActiveRecord::Base
   end
 
   def as_json(options = {})
+    ability = Ability.new(User.current)
     available_statuses = status_paths(from: status).map{|path| path[0].event}.uniq
     data = super :root => false
-    data[:available_statuses] = available_statuses.select{ |status| user_allowed_to?(User.current,status) }
+    data[:available_statuses] = available_statuses.select{ |status| ability.can?(status,self) }
     data[:user] = hr_employee_profile.user.name
     data[:audits] = audits.map(&:as_json)
+    data[:can_update] = ability.can?(:update,self)
     data
   end
 end

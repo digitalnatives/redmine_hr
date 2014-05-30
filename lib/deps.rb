@@ -9,11 +9,11 @@ Rails.configuration.to_prepare do
       allowed_to?(:view_holidays, nil, global: true)
     end
 
-    def hr_admin?
-      return true if admin?
+    def role
+      return :admin if admin?
       hr_role = Role.find Setting.plugin_redmine_hr[:admin_role]
-      return true if project_roles.include?(hr_role)
-      false
+      return :admin if project_roles.include?(hr_role)
+      :user
     end
 
     private
