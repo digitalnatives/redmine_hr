@@ -4,6 +4,18 @@ require "rails/all"
 Bundler.require(:default)
 require './lib/app'
 
+class Role
+  def self.find(id)
+    nil
+  end
+end
+
+module Setting
+  def self.plugin_redmine_hr
+    { admin_role: 0, working_day: "Working Day" }
+  end
+end
+
 class ApplicationController < ActionController::Base
   before_filter :prepend_view_paths
 
@@ -28,6 +40,10 @@ class User < ActiveRecord::Base
 
   def allowed_to?(a,b,c)
     self.send(a)
+  end
+
+  def project_roles
+    []
   end
 end
 

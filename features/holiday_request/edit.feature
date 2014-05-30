@@ -5,8 +5,9 @@ Feature: Edit Holiday Request
       And I have a holiday request
      When I visit the edit holiday request page
 
-  Scenario: Edit status
-  	 When I fill out the status with "requested"
+  Scenario: Edit
+     When I fill out the start date with "2014-01-03"
+      And I fill out the end date with "2014-01-04"
   	  And I click on the save button
   	 Then I should be on the holiday request page
 
