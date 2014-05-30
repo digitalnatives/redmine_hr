@@ -69,6 +69,7 @@ en:
         withdraw: "Withdraw"
         approve: "Approve"
         cancel: "Cancel"
+        reject: "Reject"
         approve_withdrawn: "Approve withdrawn"
         reject_withdrawn: "Reject withdrawn"
       statuses:
