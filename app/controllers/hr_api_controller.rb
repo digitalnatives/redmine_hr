@@ -53,4 +53,8 @@ class HrAPIController < ApplicationController
     end
     params.require(controller_name.classify.underscore).permit *attributes
   end
+
+  def current_ability
+    @current_ability ||= Ability.new(User.current)
+  end
 end

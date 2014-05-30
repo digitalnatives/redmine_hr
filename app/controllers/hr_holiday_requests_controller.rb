@@ -1,4 +1,5 @@
 class HrHolidayRequestsController < HrAPIController
+  load_and_authorize_resource only: [:create,:update]
 
   UPDATEABLE_ATTRIBUTES = [
     :hr_employee_profile_id,
@@ -21,7 +22,7 @@ class HrHolidayRequestsController < HrAPIController
   HrHolidayRequest::SM.events.map(&:name).each do |method|
     define_method method.to_s+"!" do
       get_resource
-      return deny_access unless @resource.user_allowed_to?(User.current, method)
+      return deny_access unless current_ability.can?(method,@resource)
       @resource.send("#{method}!")
       show
     end
