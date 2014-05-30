@@ -21,6 +21,7 @@ class HrHolidayRequestsController < HrAPIController
   HrHolidayRequest::SM.events.map(&:name).each do |method|
     define_method method.to_s+"!" do
       get_resource
+      return deny_access unless @resource.user_allowed_to?(User.current, method)
       @resource.send("#{method}!")
       show
     end
