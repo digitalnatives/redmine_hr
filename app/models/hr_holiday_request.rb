@@ -89,7 +89,7 @@ class HrHolidayRequest < ActiveRecord::Base
     available_statuses = status_paths(from: status).map{|path| path[0].event}.uniq
     data = super :root => false
     data[:available_statuses] = available_statuses.select{ |status| ability.can?(status,self) }
-    data[:user]       = hr_employee_profile.user.name
+    data[:user] = hr_employee_profile.user.name
     if hr_employee_profile.supervisor
       data[:supervisor] = hr_employee_profile.supervisor.name
     end

@@ -67,8 +67,8 @@ class HolidayRequestsController < ApplicationController
   def mine
     @base.empty
     @base << @index
+    @index.scope ::CurrentProfile
     @index.filters.update do
-      @index.scope ::CurrentProfile
       update
     end
   end

@@ -8,6 +8,14 @@ class HolidayRequestFilters < Fron::Component
   component :status,     Select, {text: t("hr.holiday_request.filters.status")}
   component :supervisor, Select, {text: t("hr.holiday_request.filters.supervisor")}
 
+  def initialize
+    super
+    @year.select['name'] = 'year'
+    @user.select['name'] = 'user'
+    @status.select['name'] = 'status'
+    @supervisor.select['name'] = 'supervisor'
+  end
+
   def request
     @request ||= Fron::Request.new('hr_holiday_requests/filter_data')
   end
@@ -34,11 +42,13 @@ class HolidayRequestFilters < Fron::Component
   end
 
   def update(&block)
-    request.get nil do |response|
+    params = {}
+    params[:user] = @user_id if @user_id
+    request.get params do |response|
 
       @year.options   = response.json[:year].map { |year| [year,year] }
       @status.options = response.json[:status].map do |status|
-        [status,status]
+        [status,t("hr.holiday_request.statuses.#{status}")]
       end
 
       @user.options = response.json[:profiles]

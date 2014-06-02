@@ -2,7 +2,7 @@ Feature: Edit Holiday Request
 
   Background:
     Given I am logged in
-      And I have a holiday request
+      And I have a planned holiday request
      When I visit the edit holiday request page
 
   Scenario: Edit

@@ -20,6 +20,16 @@ Around do |scenario, block|
   DatabaseCleaner.cleaning(&block)
 end
 
+def select_option(field,value)
+  page.execute_script """
+    var select = document.querySelector(\"[name='#{field}']\");
+    select.value = '#{value}';
+    event = document.createEvent(\"HTMLEvents\");
+    event.initEvent(\"change\", true, true);
+    select.dispatchEvent(event);
+  """
+end
+
 def wait_until(&block)
   Timeout.timeout(Capybara.default_wait_time) do
     active = block.call

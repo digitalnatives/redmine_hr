@@ -58,3 +58,11 @@ end
 Then(/^The (.+) (should|should not) be disabled$/) do |field,maybe|
   page.send maybe.gsub(/\s/,"_").to_sym, have_css("[name='#{field.gsub(/\s/,'_')}'][disabled]")
 end
+
+When(/^I filter for ([^\s]+) ([^\s]+)$/) do |value,field|
+  select_option field, value
+end
+
+Then(/^I should not be able to filter for (.+)$/) do |field|
+  page.should_not have_css("[name='#{field}']")
+end

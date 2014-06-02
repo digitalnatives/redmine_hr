@@ -14,7 +14,7 @@
           = user
           = "(#{requests[0].supervisor})"
       - requests.each do |request|
-        %tr
+        %tr.holiday-request-item
           %td
             %a{href: "#holiday_requests/#{request.id}"}
               = request.start_date
