@@ -12,6 +12,19 @@ class HrHolidayRequestsController < HrAPIController
     :status
   ]
 
+  def index
+    render :json => get_scope.all
+  end
+
+  def filter_data
+    requests = HrHolidayRequest.all.to_a
+    render json: {
+      year: requests.group_by { |r| r.start_date.year }.keys.uniq,
+      profiles: requests.map(&:hr_employee_profile).map(&:as_json),
+      status: requests.group_by { |r| r.status }.keys.uniq
+    }
+  end
+
   def create
     params = safe_params
     params[:hr_employee_profile_id] ||= User.current.hr_employee_profile.id
@@ -26,5 +39,16 @@ class HrHolidayRequestsController < HrAPIController
       @resource.send("#{method}!")
       show
     end
+  end
+
+  private
+
+  def get_scope
+    scope = HrHolidayRequest.scoped
+    scope = scope.by_year(DateTime.new(params[:year].to_i)) unless params[:year].blank?
+    scope = scope.by_user(params[:user]) unless params[:user].blank?
+    scope = scope.by_status(params[:status]) unless params[:status].blank?
+    scope = scope.by_supervisor(params[:supervisor]) unless params[:supervisor].blank?
+    scope
   end
 end

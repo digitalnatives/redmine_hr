@@ -8,6 +8,11 @@ module Fron
         end
       end
 
+      def all(data = nil, &block)
+        setUrl nil
+        @request.get(data) { |response| block.call response.json }
+      end
+
       def transform(data)
         newdata = {}
         newdata[:authenticity_token] = DOM::Document.head.find("meta[name=csrf-token]")['content']
@@ -50,6 +55,13 @@ module Fron
         @errors = errors
         merge data
         block.call if block_given?
+      end
+    end
+
+    def self.all(data = nil, &block)
+      @adapterObject.all data do |items|
+        break unless block_given?
+        block.call items.map{ |item| self.new item }
       end
     end
 

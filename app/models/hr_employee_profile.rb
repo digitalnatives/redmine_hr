@@ -9,7 +9,7 @@ class HrEmployeeProfile < ActiveRecord::Base
   has_many :hr_holiday_modifiers
   has_many :hr_holiday_requests
 
-  def as_json(options)
+  def as_json(options = {})
     data = super :root => false
     data[:user] = user.as_json(:root => false)
     data[:supervisor] = supervisor.as_json(:root => false)
