@@ -65,8 +65,7 @@ class HolidayRequestsController < ApplicationController
   end
 
   def mine
-    @base.empty
-    @base << @index
+    insertIndex t('hr.my_holiday_requests.title')
     @index.scope ::CurrentProfile
     @index.filters.update do
       update
@@ -74,8 +73,7 @@ class HolidayRequestsController < ApplicationController
   end
 
   def index
-    @base.empty
-    @base << @index
+    insertIndex t('hr.holiday_requests.title')
     @index.unscope
     @index.filters.update do
       update
@@ -112,6 +110,12 @@ class HolidayRequestsController < ApplicationController
   end
 
   private
+
+  def insertIndex(title)
+    @base.empty
+    @base << DOM::Element.new("h2 #{title}")
+    @base << @index
+  end
 
   def updateRequest(id,action,&block)
     @xhr.url = "/hr_holiday_requests/#{id}/#{action}"

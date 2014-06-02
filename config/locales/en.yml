@@ -32,6 +32,10 @@ en:
       year: "Year"
       value: "Value"
       title: " Holiday Modifiers"
+    holiday_requests:
+      title: "Holiday Requests"
+    my_holiday_requests:
+      title: "My Holiday Requests"
     holiday_request:
       title: "Holiday Request"
       start_date: "Start Date"
