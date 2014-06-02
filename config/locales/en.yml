@@ -6,9 +6,11 @@ en:
       update: "Update"
       actions: "Actions"
       edit: "Edit"
+      create: "Create"
       delete: "Delete"
     main_menu:
       employee_profiles: "Employee Profiles"
+      new_holiday_request: "New Holiday Request"
     employee_profile:
       title: "Employee Profile"
       attributes: "Attributes"
@@ -22,5 +24,20 @@ en:
       year: "Year"
       value: "Value"
       title: " Holiday Modifiers"
-
-
+    holiday_request:
+      title: "Holiday Request"
+      start_date: "Start Date"
+      end_date: "End Date"
+      status: "Status"
+      type: "Type"
+      half_day: "Half Day"
+      sick_leave: "Sick Leave"
+      holiday: "Holiday"
+      user: "User"
+      description: "Description"
+      statuses:
+        planned: "Planned"
+        requested: "Requested"
+        approved: "Approved"
+        rejected: "Rejected"
+        withdrawn: "Withdrawn"

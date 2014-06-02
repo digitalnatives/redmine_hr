@@ -11,5 +11,4 @@ class HrEmployeeProfilesController < HrAPIController
     end
     render :json => resources
   end
-
 end

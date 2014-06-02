@@ -7,6 +7,7 @@ class HrEmployeeProfile < ActiveRecord::Base
   belongs_to :supervisor, :class_name => "User"
 
   has_many :hr_holiday_modifiers
+  has_many :hr_holiday_requests
 
   def as_json(options)
     data = super :root => false

@@ -19,10 +19,6 @@ Then(/^I should see the profile( as administrator)?$/) do |admin|
   page.should have_content I18n.t('hr.employee_profile.administrator') if admin
 end
 
-When(/^I click on the administrator checkbox$/) do
-  page.find('input[type=checkbox]').click
-end
-
 Then(/^I should be on the employee profile page$/) do
   wait_for_hash "profiles/#{@user.id}"
 end
