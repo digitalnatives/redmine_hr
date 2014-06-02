@@ -1,87 +1,16 @@
+require 'components/holiday_request/filters'
+require 'components/holiday_request/index'
 require 'views/holiday_request/edit'
 require 'views/holiday_request/list'
 require 'views/holiday_request/show'
 require 'views/flash'
 
-class Select < Fron::Component
-  tag 'select-field'
-
-  component :label, 'label'
-  component :select, 'select'
-
-  delegate :value, :select
-
-  def text=(value)
-    @label.text = "#{value}:"
-  end
-
-  def options=(data)
-    @select.empty
-    @select << DOM::Element.new("option[value=] All")
-
-    data.each do |value|
-      @select << DOM::Element.new("option[value=#{value[0]}] #{value[1]}")
-    end
-  end
-end
-
-class HolidayRequestFilters < Fron::Component
-  tag 'filters'
-
-  component :year,       Select, {text: 'Year'}
-  component :user,       Select, {text: 'User'}
-  component :status,     Select, {text: 'Status'}
-  component :supervisor, Select, {text: 'Supervisor'}
-
-  def request
-    @request ||= Fron::Request.new('hr_holiday_requests/filter_data')
-  end
-
-  def gather
-    {
-      year: @year.value,
-      supervisor: @supervisor.value,
-      status: @status.value,
-      user: @user.value
-    }
-  end
-
-  def update(&block)
-    request.get nil do |response|
-
-      @year.options   = response.json[:year].map { |year| [year,year] }
-      @status.options = response.json[:status].map do |status|
-        [status,status]
-      end
-
-      @user.options = response.json[:profiles]
-      .map  { |p| [p[:id],"#{p[:user][:firstname]} #{p[:user][:lastname]}"] }
-      .uniq { |u| u[0]   }
-
-      @supervisor.options = response.json[:profiles]
-      .map  { |p| p[:supervisor] }.compact
-      .uniq { |u| u[:id]         }
-      .map  { |u| [u[:id], "#{u[:firstname]} #{u[:lastname]}"] }
-
-      block.call if block_given?
-    end
-  end
-end
-
-class HolidayRequestIndex < Fron::Component
-  tag 'index'
-
-  component :filters, HolidayRequestFilters
-  component :content, 'div'
-
-  delegate :gather, :filters
-end
-
 class HolidayRequestsController < ApplicationController
 
   route ":id/edit", :edit
-  route :new, :new
-  route ":id", :show
+  route "mine",     :mine
+  route "new",      :new
+  route ":id",      :show
   route :index
 
   resource HolidayRequest
@@ -110,10 +39,15 @@ class HolidayRequestsController < ApplicationController
       end
     end
 
-    @base.delegate 'click', '[action]' do |e|
-      @xhr.url = "/hr_holiday_requests/#{@request.id}/#{e.target['action']}"
-      @xhr.get do |response|
-        @request.merge response.json
+    @base.delegate 'click', 'tr [action]' do |e|
+      updateRequest e.target.id, e.target['action'] do
+        update
+      end
+    end
+
+    @base.delegate 'click', 'button[action]' do |e|
+      updateRequest @request.id, e.target['action'] do |data|
+        @request.merge data
         render 'views/holiday_request/show', @request
       end
     end
@@ -130,9 +64,19 @@ class HolidayRequestsController < ApplicationController
     end
   end
 
+  def mine
+    @base.empty
+    @base << @index
+    @index.filters.update do
+      @index.scope ::CurrentProfile
+      update
+    end
+  end
+
   def index
     @base.empty
     @base << @index
+    @index.unscope
     @index.filters.update do
       update
     end
@@ -168,6 +112,13 @@ class HolidayRequestsController < ApplicationController
   end
 
   private
+
+  def updateRequest(id,action,&block)
+    @xhr.url = "/hr_holiday_requests/#{id}/#{action}"
+    @xhr.get do |response|
+      block.call response.json
+    end
+  end
 
   def getRequest(params,&block)
     HolidayRequest.find params[:id] do |request|

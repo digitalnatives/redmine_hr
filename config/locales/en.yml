@@ -10,10 +10,12 @@ en:
       delete: "Delete"
       false: "No"
       true: "Yes"
+      all: "All"
     main_menu:
       employee_profiles: "Employee Profiles"
       new_holiday_request: "New Holiday Request"
       holiday_requests: "Holiday Requests"
+      my_holiday_requests: "My Holiday Requests"
     settings:
       admin_role: "Admin Role"
       working_day: "Workind Day"
@@ -41,6 +43,13 @@ en:
       holiday: "Holiday"
       user: "User"
       description: "Description"
+      days: "Days"
+      status: "Status"
+      filters:
+        year: "Year"
+        user: "User"
+        status: "Status"
+        supervisor: "Supervisor"
       audit:
         created_at: 'Created At'
         from: "From"

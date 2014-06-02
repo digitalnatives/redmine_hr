@@ -18,6 +18,7 @@
 </style>
 <script type="text/javascript">
   window.CurrentUser = {
+  	id: <%= User.current.id %>,
     admin: <%= User.current.admin? %>,
     profile: <%= User.current.hr_employee_profile.to_json.html_safe %>
   }
