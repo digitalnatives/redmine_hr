@@ -1,12 +1,12 @@
 %table.list
   %thead
     %tr
-      %th Start Date
-      %th End Date
-      %th Days
-      %th Status
-      %th Description
-      %th Actions
+      %th= t('hr.holiday_request.start_date')
+      %th= t('hr.holiday_request.end_date')
+      %th= t('hr.holiday_request.days')
+      %th= t('hr.holiday_request.status')
+      %th= t('hr.holiday_request.description')
+      %th= t('hr.labels.actions')
   %tbody
     - group_by(&:user).each do |user,requests|
       %tr
@@ -15,10 +15,13 @@
           = "(#{requests[0].supervisor})"
       - requests.each do |request|
         %tr
-          %td= request.start_date
+          %td
+            %a{href: "#holiday_requests/#{request.id}"}
+              = request.start_date
           %td= request.end_date
           %td= request.days
           %td= request.status
           %td= request.description
           %td
-            = request.available_statuses
+            - request.available_statuses.each do |status|
+              %a{action: status, id: request.id, style: "cursor: pointer"}= t("hr.holiday_request.transitions.#{status}")

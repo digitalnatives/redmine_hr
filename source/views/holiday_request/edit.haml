@@ -13,7 +13,10 @@
       %label= t "hr.holiday_request.user"
       %select{name: "hr_employee_profile_id", disabled: !CurrentUser[:admin]}
         - self.data[:profiles].each do |profile|
-          %option{value: profile.id}= profile.name
+          - if self.hr_employee_profile_id == profile.id
+            %option{value: profile.id, selected: true}= profile.name
+          - else
+            %option{value: profile.id}= profile.name
     %p
       %label= t "hr.holiday_request.start_date"
       %input{type:"date", name:"start_date", value: self.start_date}
