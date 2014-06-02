@@ -10,9 +10,9 @@ class HolidayRequestFilters < Fron::Component
 
   def initialize
     super
-    @year.select['name'] = 'year'
-    @user.select['name'] = 'user'
-    @status.select['name'] = 'status'
+    @year.select['name']       = 'year'
+    @user.select['name']       = 'user'
+    @status.select['name']     = 'status'
     @supervisor.select['name'] = 'supervisor'
   end
 
