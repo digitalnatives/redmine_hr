@@ -4,6 +4,9 @@ RedmineApp::Application.routes.draw do
 
   resources :hr
   resources :hr_holiday_requests do
+    collection do
+      get :filter_data
+    end
     member do
       HrHolidayRequest::SM.events.map(&:name).each do |method|
         get method, action: method.to_s+"!"

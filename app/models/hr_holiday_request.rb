@@ -14,6 +14,18 @@ class HrHolidayRequest < ActiveRecord::Base
 
   after_initialize :init
 
+  scope :by_user, ->(id) {
+    where(hr_employee_profile_id: id)
+  }
+
+  scope :by_status, ->(status) {
+    where(status: status)
+  }
+
+  scope :by_supervisor, ->(id) {
+    joins(:hr_employee_profile).where("hr_employee_profiles.supervisor_id = ?", id)
+  }
+
   scope :by_year, ->(date) {
     boy = date.beginning_of_year
     eoy = date.end_of_year
@@ -77,8 +89,14 @@ class HrHolidayRequest < ActiveRecord::Base
     available_statuses = status_paths(from: status).map{|path| path[0].event}.uniq
     data = super :root => false
     data[:available_statuses] = available_statuses.select{ |status| ability.can?(status,self) }
-    data[:user] = hr_employee_profile.user.name
-    data[:audits] = audits.map(&:as_json)
+    data[:user]       = hr_employee_profile.user.name
+    if hr_employee_profile.supervisor
+      data[:supervisor] = hr_employee_profile.supervisor.name
+    end
+    if defined? HrHolidayCalculator
+      data[:days]       = HrHolidayCalculator.calculate_duration self
+    end
+    data[:audits]     = audits.map(&:as_json)
     data[:can_update] = ability.can?(:update,self)
     data
   end

@@ -1,0 +1,24 @@
+%table.list
+  %thead
+    %tr
+      %th Start Date
+      %th End Date
+      %th Days
+      %th Status
+      %th Description
+      %th Actions
+  %tbody
+    - group_by(&:user).each do |user,requests|
+      %tr
+        %td(colspan=6)
+          = user
+          = "(#{requests[0].supervisor})"
+      - requests.each do |request|
+        %tr
+          %td= request.start_date
+          %td= request.end_date
+          %td= request.days
+          %td= request.status
+          %td= request.description
+          %td
+            = request.available_statuses
