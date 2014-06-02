@@ -1,4 +1,19 @@
 en:
+  activerecord:
+    models:
+      hr_employee_child:
+        one: Employee child
+        other: Employee children
+    attributes:
+      hr_employee_child:
+        name: Name
+        birth_date: Birth date
+        gender: Gender
+    attribute_values:
+      hr_employee_child:
+        gender:
+          male: male
+          female: female
   hr:
     labels:
       add: "Add"
@@ -24,6 +39,8 @@ en:
       year: "Year"
       value: "Value"
       title: " Holiday Modifiers"
+    employee_children:
+      title: "Employee's children"
     holiday_request:
       title: "Holiday Request"
       start_date: "Start Date"

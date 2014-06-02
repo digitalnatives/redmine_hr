@@ -1,0 +1,18 @@
+%h2
+  = t "hr.employee_children.title"
+  = " ##{self.id}"
+%form
+  .box.tabular
+    %p
+      %label= t "activerecord.attributes.hr_employee_child.name"
+      %input{type:"text", name:"name", style:"width: 99%", value: self.name}
+    %p
+      %label= t "activerecord.attributes.hr_employee_child.birth_date"
+      %input{type:"date", name:"birth_date", value: self.birth_date}
+    %p
+      %label= t "activerecord.attributes.hr_employee_child.gender"
+      %select(name="gender")
+        %option(value="male")= t("activerecord.attribute_values.hr_employee_child.gender.male")
+        %option(value="female")= t("activerecord.attribute_values.hr_employee_child.gender.female")
+  %button(name="save_child")
+    =t "hr.labels.save"

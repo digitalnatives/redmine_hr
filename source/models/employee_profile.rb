@@ -21,6 +21,10 @@ class EmployeeProfile < Fron::Model
     @data[:holiday_modifiers].map{|hr| HolidayModifier.new hr}
   end
 
+  def employee_children
+    @data[:employee_children].map{|hr| EmployeeChild.new hr}
+  end
+
   def name
     self.user[:lastname] + " " + self.user[:firstname]
   end
