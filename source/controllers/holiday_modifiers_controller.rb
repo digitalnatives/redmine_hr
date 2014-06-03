@@ -19,6 +19,7 @@ class HolidayModifiersController < ApplicationController
   end
 
   def submit
+    return unless @holiday_modifier
     @holiday_modifier.update gather do
       if @holiday_modifier.errors
         render 'views/holiday_modifier/edit', @holiday_modifier.clone(gather)

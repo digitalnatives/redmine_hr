@@ -19,6 +19,7 @@ class EmployeeChildrenController < ApplicationController
   end
 
   def submit
+    return unless @employee_child
     @employee_child.update gather do
       if @employee_child.errors
         render 'views/employee_child/edit', @employee_child.clone(gather)

@@ -3,7 +3,7 @@ require '../spec_helper'
 describe HolidayModifiersController do
 
   let(:profile)  { double(id: 0, holiday_modifiers: [modifier]) }
-  let(:modifier) { double(id: 0) }
+  let(:modifier) { double(id: 0, errors: nil) }
   let(:base)     { double(find: double(value: true)) }
 
   before do

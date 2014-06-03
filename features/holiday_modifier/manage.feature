@@ -5,9 +5,9 @@ Feature: Manage Holiday Modifier
       And There is a user
 
   Scenario: Add
-     When I visit the employee profile page
+     When I visit the new holiday modifier page
       And I fill out the holiday modifier form
-      And I click on the add_modifier button
+      And I click on the create button
      Then I should see a holiday modifier item
 
   Scenario: Delete

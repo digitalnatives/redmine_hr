@@ -1,3 +1,7 @@
+When(/^I visit the new employee child page$/) do
+  visit "/hr#profiles/#{@user.id}/employee_children/new"
+end
+
 When(/^I fill out the employee child form$/) do
   page.find('[name=name]').set "Rafaelka"
   page.find('[name=birth_date]').set "2010-01-01"
