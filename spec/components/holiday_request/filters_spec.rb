@@ -64,4 +64,66 @@ describe HolidayRequestFilters do
       data.should have_key(:user)
     end
   end
+
+  describe "update" do
+    it "should call get with with user id if scoped" do
+      subject.request.should receive(:get).with({ user: 0 })
+      subject.scope user
+      subject.update
+    end
+
+    it "should call get with empty params if unscoped" do
+      subject.request.should receive(:get).with({})
+      subject.update
+    end
+
+    context 'with data' do
+
+      let(:response) { double(:response, json: {
+        year: ['2014','2014','2015'],
+        status: ['planned','planned','requested'],
+        profiles: [
+          {
+            id: 0,
+            user: {firstname: 'A', lastname: 'B'},
+            supervisor: {firstname: 'C', lastname: 'D', id: 1},
+          },
+          {
+            id: 0,
+            user: {firstname: 'A', lastname: 'B'},
+            supervisor: {firstname: 'C', lastname: 'D', id: 1},
+          }
+        ]
+      })}
+
+      before do
+        subject.request.should receive(:get) do |&block|
+          block.call response
+        end
+      end
+
+      it "should gather years as unique" do
+        subject.update
+        subject.year.options.should eq [['2014','2014'],['2015','2015']]
+      end
+
+      it "should gather statuses as unique" do
+        subject.update
+        subject.status.options.should eq [
+          ['planned',  t("hr.holiday_request.statuses.planned")],
+          ['requested',t("hr.holiday_request.statuses.requested")]
+        ]
+      end
+
+      it "should gather users as unique" do
+        subject.update
+        subject.user.options.should eq [[0,'A B']]
+      end
+
+      it "should gather supervisors as unique" do
+        subject.update
+        subject.supervisor.options.should eq [[1,'C D']]
+      end
+    end
+  end
 end

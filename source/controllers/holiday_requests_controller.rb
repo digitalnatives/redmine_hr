@@ -6,6 +6,7 @@ require 'views/holiday_request/show'
 require 'views/flash'
 
 class HolidayRequestsController < ApplicationController
+  attr_reader :base, :xhr
 
   route ":id/edit", :edit
   route "mine",     :mine
@@ -21,47 +22,14 @@ class HolidayRequestsController < ApplicationController
     super
 
     @index = HolidayRequestIndex.new
-    @xhr = Fron::Request.new
+    @xhr   = Fron::Request.new
 
-    @base.on 'change' do |e|
-      if e.target.tag == 'select'
-        update
-      end
-    end
+    @base.on :change do |e| onChangeSelect(e) end
+    @base.on :change do |e| onChange          end
+    @base.on :submit do |e| e.stop; submit    end
 
-    @base.on 'change' do
-      input = @base.find('input[type=checkbox]')
-      break unless input
-      end_date = @base.find('[name=end_date]')
-      end_date.disabled = input.checked
-      if input.checked
-        end_date.value = @base.find('[name=start_date]').value
-      end
-    end
-
-    @base.delegate 'click', 'tr [action]' do |e|
-      updateRequest e.target.id, e.target['action'] do
-        update
-      end
-    end
-
-    @base.delegate 'click', 'button[action]' do |e|
-      updateRequest @request.id, e.target['action'] do |data|
-        @request.merge data
-        render 'views/holiday_request/show', @request
-      end
-    end
-
-    @base.on :submit do |e|
-      e.stop
-      submit
-    end
-  end
-
-  def update
-    HolidayRequest.all @index.gather do |requests|
-      @index.content.html = Template['views/holiday_request/list'].render requests
-    end
+    @base.delegate :click, 'tr [action]'    do |e| onTrClick(e)     end
+    @base.delegate :click, 'button[action]' do |e| onButtonClick(e) end
   end
 
   def mine
@@ -77,16 +45,6 @@ class HolidayRequestsController < ApplicationController
     @index.unscope
     @index.filters.update do
       update
-    end
-  end
-
-  def submit
-    @request.update gather do
-      if @request.errors
-        render 'views/holiday_request/edit', @request.clone(gather)
-      else
-        redirect "holiday_requests/#{@request.id}"
-      end
     end
   end
 
@@ -111,6 +69,48 @@ class HolidayRequestsController < ApplicationController
 
   private
 
+  def update
+    HolidayRequest.all @index.gather do |requests|
+      @index.content.html = Template['views/holiday_request/list'].render requests
+    end
+  end
+
+  def submit
+    @request.update gather do
+      if @request.errors
+        render 'views/holiday_request/edit', @request.clone(gather)
+      else
+        redirect "holiday_requests/#{@request.id}"
+      end
+    end
+  end
+
+  def onButtonClick(e)
+    updateRequest @request.id, e.target['action'] do |data|
+      @request.merge data
+      render 'views/holiday_request/show', @request
+    end
+  end
+
+  def onTrClick(e)
+    updateRequest e.target.id, e.target['action'] do
+      update
+    end
+  end
+
+  def onChange
+    input = @base.find('input[type=checkbox]')
+    return unless input
+    end_date = @base.find('[name=end_date]')
+    end_date.disabled = input.checked
+    return unless input.checked
+    end_date.value = @base.find('[name=start_date]').value
+  end
+
+  def onChangeSelect(e)
+    update if e.target.tag == 'select'
+  end
+
   def insertIndex(title)
     @base.empty
     @base << DOM::Element.new("h2 #{title}")
@@ -120,14 +120,14 @@ class HolidayRequestsController < ApplicationController
   def updateRequest(id,action,&block)
     @xhr.url = "/hr_holiday_requests/#{id}/#{action}"
     @xhr.get do |response|
-      block.call response.json
+      block.call response.json if block_given?
     end
   end
 
   def getRequest(params,&block)
     HolidayRequest.find params[:id] do |request|
       @request = request
-      block.call
+      block.call if block_given?
     end
   end
 
