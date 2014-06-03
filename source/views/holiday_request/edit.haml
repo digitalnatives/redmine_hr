@@ -3,10 +3,10 @@
   - unless self.dirty?
     = " ##{self.id}"
 %form
-  - if self.errors
+  - if errors
     #errorExplanation
       %ul
-        - self.errors.each do |key, error|
+        - errors.each do |key, error|
           %li= key + " " + error[0]
   .box.tabular
     %p

@@ -1,8 +1,9 @@
 require '../views/holiday_modifier/edit'
 
 class HolidayModifiersController < ApplicationController
-  route '/delete', :delete
-  route :edit
+  route '/new',                 :new
+  route '/:modifierId/delete',  :delete
+  route '/:modifierId',         :edit
 
   resource HolidayModifier
 
@@ -18,9 +19,12 @@ class HolidayModifiersController < ApplicationController
   end
 
   def submit
-    return unless @holiday_modifier
     @holiday_modifier.update gather do
-      redirect "profiles/#{@profile.id}"
+      if @holiday_modifier.errors
+        render 'views/holiday_modifier/edit', @holiday_modifier.clone(gather)
+      else
+        redirect "profiles/#{@profile.id}"
+      end
     end
   end
 
@@ -36,6 +40,12 @@ class HolidayModifiersController < ApplicationController
     getModifier params do
       render 'views/holiday_modifier/edit', @holiday_modifier
     end
+  end
+
+  def new(params)
+    @holiday_modifier = HolidayModifier.new({hr_employee_profile_id: params[:id]})
+    @profile = EmployeeProfile.new({id: params[:id]})
+    render 'views/holiday_modifier/edit', @holiday_modifier
   end
 
   private

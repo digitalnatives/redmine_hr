@@ -1,8 +1,9 @@
 require '../views/employee_child/edit'
 
 class EmployeeChildrenController < ApplicationController
-  route '/delete', :delete
-  route :edit
+  route '/new',              :new
+  route '/:childId/delete',  :delete
+  route '/:childId',         :edit
 
   resource EmployeeChild
 
@@ -18,9 +19,12 @@ class EmployeeChildrenController < ApplicationController
   end
 
   def submit
-    return unless @employee_child
     @employee_child.update gather do
-      redirect "profiles/#{@profile.id}"
+      if @employee_child.errors
+        render 'views/employee_child/edit', @employee_child.clone(gather)
+      else
+        redirect "profiles/#{@profile.id}"
+      end
     end
   end
 
@@ -36,6 +40,12 @@ class EmployeeChildrenController < ApplicationController
     getChild params do
       render 'views/employee_child/edit', @employee_child
     end
+  end
+
+  def new(params)
+    @employee_child = EmployeeChild.new({hr_employee_profile_id: params[:id]})
+    @profile = EmployeeProfile.new({id: params[:id]})
+    render 'views/employee_child/edit', @employee_child
   end
 
   private

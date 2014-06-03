@@ -1,7 +1,13 @@
 %h2
   = t "hr.employee_children.title"
-  = " ##{self.id}"
+  - unless dirty?
+    = " ##{id}"
 %form
+  - if errors
+    #errorExplanation
+      %ul
+        - errors.each do |key, error|
+          %li= key + " " + error[0]
   .box.tabular
     %p
       %label= t "activerecord.attributes.hr_employee_child.name"
@@ -14,5 +20,7 @@
       %select(name="gender")
         %option(value="male")= t("activerecord.attribute_values.hr_employee_child.gender.male")
         %option(value="female")= t("activerecord.attribute_values.hr_employee_child.gender.female")
-  %button(name="save_child")
-    =t "hr.labels.save"
+  - if self.dirty?
+    %button(name="save")= t "hr.labels.create"
+  - else
+    %button(name="save")= t "hr.labels.save"

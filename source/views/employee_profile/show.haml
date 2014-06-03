@@ -1,5 +1,7 @@
 .contextual
   %a.icon.icon-edit(href="#profiles/#{self.id}/edit")= t("hr.labels.update")
+  %a.icon.icon-add(href="#profiles/#{self.id}/modifiers/new")= t("hr.labels.add_modifier")
+  %a.icon.icon-add(href="#profiles/#{self.id}/employee_children/new")= t("hr.labels.add_child")
 %h2
   = t "hr.employee_profile.title"
   = " - #{self.name}"
@@ -25,17 +27,6 @@
               = t "hr.labels.edit"
             %a.icon.icon-del{href:"#profiles/#{self.id}/modifiers/#{modifier.id}/delete"}
               = t "hr.labels.delete"
-  .box.tabular
-    %p
-      %label= t "hr.holiday_modifiers.value"
-      %input(type="text" name="value" style="width: 99%")
-    %p
-      %label= t "hr.holiday_modifiers.description"
-      %span
-        %textarea.wiki-edit(name="description")
-  %button(name="add_modifier")
-    =t "hr.labels.add_modifier"
-
 %div
   %h3
   %h4= t "activerecord.models.hr_employee_child.other"
@@ -56,17 +47,3 @@
               = t "hr.labels.edit"
             %a.icon.icon-del{href:"#profiles/#{self.id}/employee_children/#{child.id}/delete"}
               = t "hr.labels.delete"
-  .box.tabular
-    %p
-      %label= t "activerecord.attributes.hr_employee_child.name"
-      %input(type="text" name="name" style="width: 99%")
-    %p
-      %label= t "activerecord.attributes.hr_employee_child.birth_date"
-      %input{type:"date", name:"birth_date"}
-    %p
-      %label= t "activerecord.attributes.hr_employee_child.gender"
-      %select(name="gender")
-        %option(value="male")= t("activerecord.attribute_values.hr_employee_child.gender.male")
-        %option(value="female")= t("activerecord.attribute_values.hr_employee_child.gender.female")
-  %button(name="add_child")
-    =t "hr.labels.add_child"
