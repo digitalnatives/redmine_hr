@@ -1,6 +1,6 @@
-class CreateAuditTable < ActiveRecord::Migration
+class CreateHrAuditTable < ActiveRecord::Migration
   def self.up
-    create_table :audits do |t|
+    create_table :hr_audits do |t|
       t.string  :from
       t.string  :to
       t.integer :user_id
@@ -10,6 +10,6 @@ class CreateAuditTable < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :audits
+    drop_table :hr_audits
   end
 end
