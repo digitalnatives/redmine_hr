@@ -5,7 +5,7 @@ class HrHolidayRequest < ActiveRecord::Base
   STATUSES = %w(planned requested rejected approved withdrawn deleted).freeze
 
   belongs_to :hr_employee_profile
-  has_many   :audits, dependent: :delete_all
+  has_many   :hr_audits, dependent: :delete_all
 
   validates :start_date, :end_date, :status, :type, presence: true
   validates :type,   inclusion: { in: %w(sick_leave holiday) }
@@ -47,7 +47,7 @@ class HrHolidayRequest < ActiveRecord::Base
 
     after_transition do |request,transition|
       user_id = User.current ? User.current.id : nil
-      request.audits.create({from: transition.from, to: transition.to, user_id: user_id})
+      request.hr_audits.create({from: transition.from, to: transition.to, user_id: user_id})
     end
 
     after_transition on: :remove do |request|
@@ -85,7 +85,7 @@ class HrHolidayRequest < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    ability = Ability.new(User.current)
+    ability = HrAbility.new(User.current)
     available_statuses = status_paths(from: status).map{|path| path[0].event}.uniq
     data = super :root => false
     data[:available_statuses] = available_statuses.select{ |status| ability.can?(status,self) }
@@ -96,7 +96,7 @@ class HrHolidayRequest < ActiveRecord::Base
     if defined? HrHolidayCalculator
       data[:days]       = HrHolidayCalculator.calculate_duration self
     end
-    data[:audits]     = audits.map(&:as_json)
+    data[:audits]     = hr_audits.map(&:as_json)
     data[:can_update] = ability.can?(:update,self)
     data
   end

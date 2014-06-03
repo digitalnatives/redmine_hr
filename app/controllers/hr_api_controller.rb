@@ -55,6 +55,6 @@ class HrAPIController < ApplicationController
   end
 
   def current_ability
-    @current_ability ||= Ability.new(User.current)
+    @current_ability ||= HrAbility.new(User.current)
   end
 end
