@@ -1,0 +1,8 @@
+<% require_asset 'opal' %>
+<% require_asset 'opal-rspec' %>
+
+<% Dir.glob('frontend_spec/**/*_spec.{rb,opal}').each do |s| %>
+<% require_asset s.sub(/^frontend_spec\//, '').sub(/\.(rb|opal)$/, '') %>
+<% end %>
+
+Opal::RSpec::Runner.autorun

@@ -56,12 +56,12 @@ class HolidayRequestsController < ApplicationController
 
   def show(params)
     getRequest params do
-      render 'views/holiday_request/show', @request
+      render 'views/holiday_request/show', @holiday_request
     end
   end
 
   def new
-    @request = self.class.klass.new({
+    @holiday_request = self.class.klass.new({
       half_day: false
     })
     renderEdit
@@ -76,19 +76,19 @@ class HolidayRequestsController < ApplicationController
   end
 
   def submit
-    @request.update gather do
-      if @request.errors
-        render 'views/holiday_request/edit', @request.clone(gather)
+    @holiday_request.update gather do
+      if @holiday_request.errors
+        render 'views/holiday_request/edit', @holiday_request.clone(gather)
       else
-        redirect "holiday_requests/#{@request.id}"
+        redirect "holiday_requests/#{@holiday_request.id}"
       end
     end
   end
 
   def onButtonClick(e)
-    updateRequest @request.id, e.target['action'] do |data|
-      @request.merge data
-      render 'views/holiday_request/show', @request
+    updateRequest @holiday_request.id, e.target['action'] do |data|
+      @holiday_request.merge data
+      render 'views/holiday_request/show', @holiday_request
     end
   end
 
@@ -126,7 +126,7 @@ class HolidayRequestsController < ApplicationController
 
   def getRequest(params,&block)
     HolidayRequest.find params[:id] do |request|
-      @request = request
+      @holiday_request = request
       block.call if block_given?
     end
   end
@@ -134,12 +134,12 @@ class HolidayRequestsController < ApplicationController
   def renderEdit
     if CurrentUser[:admin]
       EmployeeProfile.all do |profiles|
-        @request.data[:profiles] = profiles
-        render 'views/holiday_request/edit', @request
+        @holiday_request.data[:profiles] = profiles
+        render 'views/holiday_request/edit', @holiday_request
       end
     else
-      @request.data[:profiles] = [CurrentProfile]
-      render 'views/holiday_request/edit', @request
+      @holiday_request.data[:profiles] = [CurrentProfile]
+      render 'views/holiday_request/edit', @holiday_request
     end
   end
 end

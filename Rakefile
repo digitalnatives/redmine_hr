@@ -13,6 +13,8 @@ end
 
 task :test do
   Opal::RSpec::RakeTask.new do |server|
+  	server.main = 'runner'
+  	server.append_path File.expand_path(File.dirname(__FILE__) + '/frontend_spec')
     server.append_path File.expand_path(File.dirname(__FILE__) + '/config')
     server.append_path File.expand_path(File.dirname(__FILE__) + '/source')
   end

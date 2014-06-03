@@ -2,7 +2,7 @@ require '../spec_helper'
 
 describe HolidayRequestsController do
 
-  let(:request) { subject.instance_variable_get("@request") }
+  let(:request) { subject.instance_variable_get("@holiday_request") }
   let(:index)   { subject.instance_variable_get("@index") }
   let(:filters) { double :filters }
 
@@ -82,7 +82,7 @@ describe HolidayRequestsController do
     it "should create new request" do
       subject.should receive(:renderEdit)
       subject.new
-      subject.instance_variable_get("@request").should_not be nil
+      subject.instance_variable_get("@holiday_request").should_not be nil
     end
 
     it "should render edit page" do
@@ -111,7 +111,7 @@ describe HolidayRequestsController do
 
   describe "#submit" do
     before do
-      subject.instance_variable_set("@request", HolidayRequest.new({profiles: []}))
+      subject.instance_variable_set("@holiday_request", HolidayRequest.new({profiles: []}))
       subject.should receive(:gather).at_least(1).times.and_return({})
     end
 
@@ -137,7 +137,7 @@ describe HolidayRequestsController do
 
   describe "#onButtonClick" do
     before do
-      subject.instance_variable_set("@request", HolidayRequest.new())
+      subject.instance_variable_set("@holiday_request", HolidayRequest.new())
       request.should receive(:merge)
       subject.should receive(:render)
       subject.should receive(:updateRequest) do |&block| block.call end
@@ -224,7 +224,7 @@ describe HolidayRequestsController do
   describe "#renderEdit" do
 
     before do
-      subject.instance_variable_set("@request", HolidayRequest.new())
+      subject.instance_variable_set("@holiday_request", HolidayRequest.new())
       subject.should receive(:render)
     end
 

@@ -16,11 +16,6 @@ class HrHolidayModifiersController < HrAPIController
     render :json => resource
   end
 
-  def destroy
-    @resource.destroy
-    head 200
-  end
-
   private
 
   def get_profile

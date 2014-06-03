@@ -16,7 +16,7 @@ describe HolidayModifiersController do
     end
 
     it "should update the modifier" do
-      subject.instance_variable_set("@modifier",modifier)
+      subject.instance_variable_set("@holiday_modifier",modifier)
       subject.instance_variable_set("@profile",profile)
 
       subject.should receive(:gather)
@@ -28,7 +28,7 @@ describe HolidayModifiersController do
 
   describe "#delete" do
     it "should delete the modifier" do
-      subject.instance_variable_set("@modifier",modifier)
+      subject.instance_variable_set("@holiday_modifier",modifier)
       subject.instance_variable_set("@profile",profile)
 
       subject.should receive(:redirect).with "profiles/0"
@@ -54,7 +54,7 @@ describe HolidayModifiersController do
       block.should receive(:call)
       subject.getModifier({id: 0, modiferId: 0},&block)
       subject.instance_variable_get("@profile").should eq profile
-      subject.instance_variable_get("@modifier").should eq modifier
+      subject.instance_variable_get("@holiday_modifier").should eq modifier
     end
   end
 end

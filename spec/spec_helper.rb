@@ -1,7 +1,2 @@
-require '../source/deps'
-
-DOM::Document.body << DOM::Element.new("div#main-menu")
-DOM::Document.body << DOM::Element.new("div#main")
-
-CurrentProfile = {}
-CurrentUser    = {}
+require_relative '../lib/holiday_calculator'
+require_relative '../app'

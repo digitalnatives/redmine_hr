@@ -28,6 +28,11 @@ class HrAPIController < ApplicationController
     show
   end
 
+  def destroy
+    @resource.destroy
+    head 200
+  end
+
   private
 
   # We need to update override because
