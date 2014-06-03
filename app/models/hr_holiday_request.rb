@@ -49,6 +49,10 @@ class HrHolidayRequest < ActiveRecord::Base
       request.hr_audits.create({from: transition.from, to: transition.to, user_id: user_id})
     end
 
+    after_transition on: :request do |request|
+      HrMailer.requested(request).deliver
+    end
+
     after_transition on: :remove do |request|
       request.destroy
     end

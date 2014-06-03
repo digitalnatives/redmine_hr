@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
     lastname + " " + firstname
   end
 
+  def mail
+    ""
+  end
+
   def admin?
     self.admin
   end
@@ -51,6 +55,7 @@ module RedmineApp
   class Application < Rails::Application
     config.secret_token = "37345f5b0290ba7611149625389eb6f7"
     config.active_support.deprecation = :log
+    config.action_mailer.perform_deliveries = false
 
     def config.database_configuration
       {

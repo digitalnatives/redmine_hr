@@ -4,7 +4,7 @@ describe HrHolidayRequest do
 
   let(:options) {{
     start_date: Date.today,
-    end_date: Date.tomorrow
+    end_date: Date.tomorrow,
   }}
 
   let(:past_options) {{
@@ -36,6 +36,12 @@ describe HrHolidayRequest do
     "request -> approve -> withdraw -> approve_withdrawn" => "planned",
     "request -> approve -> withdraw -> reject_withdrawn" => "approved"
   }
+
+  before do
+    HrMailer.stub(:requested) do
+      double(deliver: true)
+    end
+  end
 
   describe "State Machine" do
 
