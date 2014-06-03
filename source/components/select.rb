@@ -1,6 +1,8 @@
 class Select < Fron::Component
   tag 'select-field'
 
+  attr_reader :options
+
   component :label, 'label'
   component :select, 'select'
 
@@ -11,6 +13,7 @@ class Select < Fron::Component
   end
 
   def options=(data)
+    @options = data
     @select.empty
     @select << DOM::Element.new("option[value=] "+t("hr.labels.all"))
 

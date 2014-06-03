@@ -46,8 +46,8 @@ class HolidayRequestFilters < Fron::Component
     params[:user] = @user_id if @user_id
     request.get params do |response|
 
-      @year.options   = response.json[:year].map { |year| [year,year] }
-      @status.options = response.json[:status].map do |status|
+      @year.options   = response.json[:year].uniq.map { |year| [year,year] }
+      @status.options = response.json[:status].uniq.map do |status|
         [status,t("hr.holiday_request.statuses.#{status}")]
       end
 
