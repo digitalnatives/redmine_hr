@@ -4,4 +4,4 @@
 `bundle install --gemfile=Gemfile.development`
 
 ## Cucumber
-`BUNDLE_GEMFILE=Gemfile.local cucumber`
+`BUNDLE_GEMFILE=Gemfile.development cucumber`
