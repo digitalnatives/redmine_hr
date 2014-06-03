@@ -1,26 +1,30 @@
 <style type="text/css">
-	select-field {
-		margin-bottom: 10px;
-		display: inline-block;
-		margin-right: 10px;
-	}
+  select-field {
+    margin-bottom: 10px;
+    display: inline-block;
+    margin-right: 10px;
+  }
 
-	select-field select {
-		margin: 0;
-		vertical-align: top;
-	}
+  select-field select {
+    margin: 0;
+    vertical-align: top;
+  }
 
-	select-field label {
-		display: inline-block;
-		line-height: 24px;
-		margin-right: 10px;
-	}
+  select-field label {
+    display: inline-block;
+    line-height: 24px;
+    margin-right: 10px;
+  }
 </style>
 <script type="text/javascript">
   window.CurrentUser = {
-  	id: <%= User.current.id %>,
+    id: <%= User.current.id %>,
     admin: <%= User.current.admin? %>,
     profile: <%= User.current.hr_employee_profile.to_json.html_safe %>
   }
 </script>
-<%= javascript_include_tag '/hr_assets/assets/hr' %>
+<% if Rails.env.development? %>
+  <%= javascript_include_tag '/hr_assets/assets/hr' %>
+<% else %>
+  <%= javascript_include_tag 'hr.js', plugin: 'redmine_hours' %>
+<% end %>
