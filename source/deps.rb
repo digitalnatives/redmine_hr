@@ -11,6 +11,7 @@ require 'components/main-menu'
 require 'models/employee_profile'
 require 'models/holiday_modifier'
 require 'models/holiday_request'
+require 'models/employee_child'
 
 require 'controllers/application_controller'
 require 'controllers/profiles_controller'

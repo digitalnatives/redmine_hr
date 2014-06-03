@@ -7,7 +7,7 @@ Feature: Manage Holiday Modifier
   Scenario: Add
      When I visit the employee profile page
       And I fill out the holiday modifier form
-      And I click on the add button
+      And I click on the add_modifier button
      Then I should see a holiday modifier item
 
   Scenario: Delete

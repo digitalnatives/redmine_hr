@@ -16,7 +16,7 @@
           %option{value: profile.id}= profile.name
     %p
       %label= t "hr.holiday_request.start_date"
-      %input(type="date" name="start_date" value="#{self.start_date}")
+      %input{type:"date", name:"start_date", value: self.start_date}
     %p
       %label= t "hr.holiday_request.end_date"
       %input{type:"date", name:"end_date", value: self.end_date, disabled: self.half_day}
