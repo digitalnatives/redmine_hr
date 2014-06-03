@@ -16,7 +16,8 @@ en:
           female: female
   hr:
     labels:
-      add: "Add"
+      add_modifier: "Add modifier"
+      add_child: "Add child"
       save: "Save"
       update: "Update"
       actions: "Actions"
