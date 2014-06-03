@@ -6,7 +6,7 @@ class HrHolidayRequestsController < HrAPIController
     :id,
     :start_date,
     :end_date,
-    :type,
+    :request_type,
     :half_day,
     :description,
     :status

@@ -1,14 +1,13 @@
 class HrHolidayRequest < ActiveRecord::Base
   unloadable
-  set_inheritance_column 'holday_request'
 
   STATUSES = %w(planned requested rejected approved withdrawn deleted).freeze
 
   belongs_to :hr_employee_profile
   has_many   :audits, dependent: :delete_all
 
-  validates :start_date, :end_date, :status, :type, presence: true
-  validates :type,   inclusion: { in: %w(sick_leave holiday) }
+  validates :start_date, :end_date, :status, :request_type, presence: true
+  validates :request_type,   inclusion: { in: %w(sick_leave holiday) }
   validates :status, inclusion: { in: STATUSES }
   validate  :date_validations
 
@@ -56,8 +55,8 @@ class HrHolidayRequest < ActiveRecord::Base
   end
 
   def init
-    self.status ||= 'planned'
-    self.type   ||= 'holiday'
+    self.status       ||= 'planned'
+    self.request_type ||= 'holiday'
   end
 
   def half_day?

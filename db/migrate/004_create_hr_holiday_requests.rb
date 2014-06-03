@@ -6,7 +6,7 @@ class CreateHrHolidayRequests < ActiveRecord::Migration
       t.boolean :half_day
       t.text    :description
       t.string  :status
-      t.string  :type
+      t.string  :request_type
       t.integer :hr_employee_profile_id
       t.timestamps
     end

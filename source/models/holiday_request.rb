@@ -5,7 +5,7 @@ class HolidayRequest < Fron::Model
 
   field :start_date
   field :end_date
-  field :type
+  field :request_type
   field :status
   field :half_day
   field :description

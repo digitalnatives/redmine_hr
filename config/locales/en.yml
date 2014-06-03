@@ -59,7 +59,7 @@ en:
       start_date: "Start Date"
       end_date: "End Date"
       status: "Status"
-      type: "Type"
+      request_type: "Type"
       half_day: "Half Day"
       sick_leave: "Sick Leave"
       holiday: "Holiday"
