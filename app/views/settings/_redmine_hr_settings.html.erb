@@ -1,0 +1,32 @@
+<table>
+  <tbody>
+    <tr>
+      <th><%= l('hr.settings.working_day') %></th>
+      <td>
+        <select name="settings[working_day]">
+          <% DayType.all.each do |day_type| %>
+            <% if settings['working_day'] == day_type.name %>
+              <option value="<%= day_type.name %>" selected><%=day_type.name%></option>
+            <% else %>
+              <option value="<%= day_type.name %>"><%=day_type.name%></option>
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th><%= l('hr.settings.admin_role') %></th>
+      <td>
+        <select name="settings[admin_role]">
+          <% Role.all.each do |role| %>
+            <% if settings['admin_role'].to_i == role.id %>
+              <option value="<%= role.id %>" selected><%=role.name%></option>
+            <% else %>
+              <option value="<%= role.id %>"><%=role.name%></option>
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+</table>

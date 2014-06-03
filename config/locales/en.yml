@@ -27,6 +27,9 @@ en:
     main_menu:
       employee_profiles: "Employee Profiles"
       new_holiday_request: "New Holiday Request"
+    settings:
+      admin_role: "Admin Role"
+      working_day: "Workind Day"
     employee_profile:
       title: "Employee Profile"
       attributes: "Attributes"
