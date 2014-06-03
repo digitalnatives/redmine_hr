@@ -1,10 +1,10 @@
 class CreateAuditTable < ActiveRecord::Migration
   def self.up
     create_table :audits do |t|
-      t.integer :user_id
-      t.integer :hr_holiday_request_id
       t.string  :from
       t.string  :to
+      t.integer :user_id
+      t.integer :hr_holiday_request_id
       t.timestamps
     end
   end
