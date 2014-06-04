@@ -5,6 +5,7 @@ RedmineApp::Application.routes.draw do
   resources :hr
   resources :hr_holiday_requests do
     collection do
+      get :report
       get :filter_data
     end
     member do

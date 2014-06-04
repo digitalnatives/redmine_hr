@@ -82,12 +82,16 @@ GEM
       sprockets
     opal-rspec (0.3.0.beta3)
       opal (>= 0.6.0, < 1.0.0)
+    pdf-core (0.2.5)
     poltergeist (1.5.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
     polyglot (0.3.4)
+    prawn (1.0.0)
+      pdf-core (~> 0.2.2)
+      ttfunk (~> 1.1.1)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -138,6 +142,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.1.1)
     tzinfo (0.3.39)
     websocket-driver (0.3.3)
     xpath (2.0.0)
@@ -157,6 +162,7 @@ DEPENDENCIES
   opal-haml!
   opal-rspec (~> 0.3.0.beta3)
   poltergeist
+  prawn
   rails (= 3.2.13)
   rspec (~> 2.11.0)
   state_machine (~> 1.2.0)

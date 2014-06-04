@@ -7,6 +7,9 @@ class HolidayRequestFilters < Fron::Component
   component :user,       Select, {text: t("hr.holiday_request.filters.user")}
   component :status,     Select, {text: t("hr.holiday_request.filters.status")}
   component :supervisor, Select, {text: t("hr.holiday_request.filters.supervisor")}
+  component :button,     'button', {text: t("hr.holiday_request.filters.report")}
+
+  on :click, 'button', :report
 
   def initialize
     super
@@ -14,6 +17,11 @@ class HolidayRequestFilters < Fron::Component
     @user.select['name']       = 'user'
     @status.select['name']     = 'status'
     @supervisor.select['name'] = 'supervisor'
+  end
+
+  def report
+    url = 'hr_holiday_requests/report.pdf?'+gather.to_query_string
+    `window.open(#{url});`
   end
 
   def request

@@ -9,3 +9,4 @@ gem "rails", "3.2.13"
 gem 'mysql2', "~> 0.3.11"
 gem 'state_machine', "~> 1.2.0"
 gem 'cancan', '~> 1.6.10'
+gem 'prawn', '>= 0'
