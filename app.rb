@@ -14,6 +14,14 @@ module Setting
   def self.plugin_redmine_hr
     { admin_role: 0, working_day: "Working Day" }
   end
+
+  def self.host_name
+    "a"
+  end
+
+  def self.protocol
+    "b"
+  end
 end
 
 class ApplicationController < ActionController::Base

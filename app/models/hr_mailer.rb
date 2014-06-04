@@ -1,5 +1,5 @@
 class HrMailer < ActionMailer::Base
-  layout Rails.env.test? ? 'hr_mailer' : 'mailer'
+  layout 'hr_mailer'
 
   def self.default_url_options
     { :host => Setting.host_name, :protocol => Setting.protocol }
