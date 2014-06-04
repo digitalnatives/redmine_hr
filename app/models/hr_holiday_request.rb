@@ -49,12 +49,19 @@ class HrHolidayRequest < ActiveRecord::Base
       request.hr_audits.create({from: transition.from, to: transition.to, user_id: user_id})
     end
 
-    after_transition on: :request do |request|
-      HrMailer.requested(request).deliver
-    end
+    after_transition on: :remove   do |request| request.destroy end
 
-    after_transition on: :remove do |request|
-      request.destroy
+    {
+      request: 'requested',
+      approve: 'approved',
+      reject: 'rejected',
+      withdraw: 'withdrawn',
+      approve_withdrawn: 'approved_withdrawn',
+      reject_withdrawn: 'rejected_withdrawn'
+    }.each do |event,mail|
+      after_transition on: event  do |request|
+        HrMailer.send(mail,request).deliver
+      end
     end
   end
 
@@ -87,6 +94,11 @@ class HrHolidayRequest < ActiveRecord::Base
     end
   end
 
+  def days
+    return 0 unless defined? HrHolidayCalculator
+    HrHolidayCalculator.calculate_duration self
+  end
+
   def as_json(options = {})
     ability = HrAbility.new(User.current)
     available_statuses = status_paths(from: status).map{|path| path[0].event}.uniq
@@ -96,9 +108,8 @@ class HrHolidayRequest < ActiveRecord::Base
     if hr_employee_profile.supervisor
       data[:supervisor] = hr_employee_profile.supervisor.name
     end
-    if defined? HrHolidayCalculator
-      data[:days]       = HrHolidayCalculator.calculate_duration self
-    end
+
+    data[:days]       = days
     data[:audits]     = hr_audits.map(&:as_json)
     data[:can_update] = ability.can?(:update,self)
     data

@@ -14,6 +14,38 @@ en:
         gender:
           male: male
           female: female
+  hr_mailer:
+    requested:
+      subject: "Holiday requested by %{user}"
+      text: >
+        <b>%{name}</b> requested <b>%{type}</b> for <b>%{days}</b> days from <b>%{start}</b>:
+        <br><a href="%{link}">%{link}</a>
+    withdrawn:
+      subject: "Holiday has benn withdrawn by %{user}"
+      text: >
+        <b>%{name}</b> withdrew <b>%{type}</b> for <b>%{days}</b> days from <b>%{start}</b>:
+        <br><a href="%{link}">%{link}</a>
+    approved:
+      subject: "Your holiday has been approved!"
+      text: >
+        Your %{type} from <b>%{from}</b>, unitl <b>%{to}</b> hash been approved by <b>%{approver}</b>:
+        <br><a href="%{link}">%{link}</a>
+    rejected:
+      subject: "Your holiday has been rejected!"
+      text: >
+        Your %{type} from <b>%{from}</b>, unitl <b>%{to}</b> hash been rejected by <b>%{approver}</b>:
+        <br><a href="%{link}">%{link}</a>
+    approved_withdrawn:
+      subject: "Your holiday withdraw has been approved!"
+      text: >
+        Your withdraw of %{type} from <b>%{from}</b>, unitl <b>%{to}</b> hash been approved by <b>%{approver}</b>:
+        <br><a href="%{link}">%{link}</a>
+    rejected_withdrawn:
+      subject: "Your holiday withdraw has been rejected!"
+      text: >
+        Your withdraw of %{type} from <b>%{from}</b>, unitl <b>%{to}</b> hash been rejected by <b>%{approver}</b>:
+        <br><a href="%{link}">%{link}</a>
+
   hr:
     labels:
       add_modifier: "Add modifier"
