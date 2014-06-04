@@ -10,6 +10,14 @@ class HrEmployeeProfile < ActiveRecord::Base
   has_many :hr_holiday_requests
   has_many :hr_employee_children
 
+  def age
+    ((Date.today - birth_date) / 365).to_i
+  end
+
+  def children
+    hr_employee_children
+  end
+
   def as_json(options = {})
     data = super :root => false
     data[:user] = user.as_json(:root => false)
