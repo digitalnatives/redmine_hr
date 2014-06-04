@@ -38,8 +38,8 @@ describe HrHolidayRequest do
   }
 
   before do
-    HrMailer.stub(:requested) do
-      double(deliver: true)
+    %w(requested approved withdrawn rejected approved_withdrawn rejected_withdrawn).each do |mail|
+      HrMailer.stub(mail) do double(deliver: true) end
     end
   end
 
