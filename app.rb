@@ -4,6 +4,14 @@ require "rails/all"
 Bundler.require(:default)
 require './lib/app'
 
+module Redmine
+  module WikiFormatting
+    def self.to_html(a,b)
+      ""
+    end
+  end
+end
+
 class Role
   def self.find(id)
     nil
@@ -21,6 +29,18 @@ module Setting
 
   def self.protocol
     "b"
+  end
+
+  def self.text_formatting
+    ""
+  end
+
+  def self.emails_header
+    ""
+  end
+
+  def self.emails_footer
+    ""
   end
 end
 
