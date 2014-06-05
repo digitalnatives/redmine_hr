@@ -10,6 +10,9 @@
           %li= key + " " + error[0]
   .box.tabular
     %p
+      %label= t "hr.holiday_modifiers.year"
+      %input{type:"input", name:"year", value: self.year}
+    %p
       %label= t "hr.holiday_modifiers.value"
       %input(type="text" name="value" style="width: 99%" value="#{self.value}")
     %p

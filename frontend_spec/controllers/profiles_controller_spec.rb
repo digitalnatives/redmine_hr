@@ -67,20 +67,4 @@ describe ProfilesController do
       subject.submit
     end
   end
-
-  describe "#addModifier" do
-    before do
-      HolidayModifier.should receive(:new).and_return modifier
-      subject.instance_variable_set('@profile',profile)
-    end
-
-    it "should create a new modifier" do
-      subject.addModifier
-    end
-
-    it "should update the modifier" do
-      modifier.should receive(:update)
-      subject.addModifier
-    end
-  end
 end

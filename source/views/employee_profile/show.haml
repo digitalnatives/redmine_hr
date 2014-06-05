@@ -10,29 +10,29 @@
 .issue
   %table.attributes
     %tr
-      %th Birth date
+      %th= t("hr.employee_profile.birth_date")
       %td= birth_date
-      %th Employment date
+      %th= t("hr.employee_profile.employment_date")
       %td= employment_date
     %tr
-      %th Gender
+      %th= t("hr.employee_profile.gender")
       %td= gender
   %hr
   %table.attributes
     %tr
-      %th Holiday count
+      %th= t("hr.employee_profile.holiday_counts.count")
       %td= profile_info[:holiday_count]
-      %th Requested
+      %th= t("hr.employee_profile.holiday_counts.requested")
       %td= profile_info[:requested]
     %tr
-      %th Unused holiday count
+      %th= t("hr.employee_profile.holiday_counts.unused")
       %td= profile_info[:unused]
-      %th Accepted
+      %th= t("hr.employee_profile.holiday_counts.accepted")
       %td= profile_info[:accepted]
     %tr
-      %th Unused holiday count (without planned)
+      %th= t("hr.employee_profile.holiday_counts.unused_planned")
       %td= profile_info[:unused_planned]
-      %th Planned
+      %th= t("hr.employee_profile.holiday_counts.planned")
       %td= profile_info[:planned]
 %div
   %h3

@@ -36,32 +36,6 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def addModifier
-    modifier = HolidayModifier.new({
-      year: Time.now,
-      value: @base.find('[name=value]').value,
-      description: @base.find('[name=description]').value,
-      hr_employee_profile_id: @profile.id
-    })
-
-    modifier.update do
-      show id: @profile.id
-    end
-  end
-
-  def addChild
-    child = EmployeeChild.new({
-      name: @base.find('[name=name]').value,
-      birth_date: @base.find('[name=birth_date]').value,
-      gender: @base.find('[name=gender]').value,
-      hr_employee_profile_id: @profile.id
-    })
-
-    child.update do
-      show id: @profile.id
-    end
-  end
-
   def submit
     return nil unless @profile
     @profile.update gather do

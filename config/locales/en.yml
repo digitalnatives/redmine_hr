@@ -74,6 +74,18 @@ en:
       date_of_employment: "Date of Employment"
       name: "Name"
       e_mail: "E-mail"
+      male: "Male"
+      female: "Female"
+      gender: "Gender"
+      birth_date: "Birth Date"
+      employment_date: "Employment Date"
+      holiday_counts:
+        count: "Holiday Count"
+        planned: "Planned"
+        requested: "Requested"
+        accepted: "Accepted"
+        unused: "Unused"
+        unused_planned: "Unused without (planned)"
     holiday_report:
       title: "Holidays & Sick-leaves between %{from_date} - %{to_date}"
       employee: "Employee"
