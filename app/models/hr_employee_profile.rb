@@ -11,7 +11,7 @@ class HrEmployeeProfile < ActiveRecord::Base
   has_many :hr_employee_children
 
   def age
-    ((Date.today - birth_date) / 365).to_i
+    ((Date.today.beginning_of_year - birth_date.beginning_of_year).to_i / 365)
   end
 
   def children
