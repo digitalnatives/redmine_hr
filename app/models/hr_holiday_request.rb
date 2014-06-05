@@ -10,6 +10,7 @@ class HrHolidayRequest < ActiveRecord::Base
   validates :request_type,   inclusion: { in: %w(sick_leave holiday) }
   validates :status, inclusion: { in: STATUSES }
   validate  :date_validations
+  validate  :day_count_validation
 
   after_initialize :init
 
@@ -78,6 +79,14 @@ class HrHolidayRequest < ActiveRecord::Base
     start_date.beginning_of_day >= Date.today && end_date.beginning_of_day >= Date.today
   end
 
+  def day_count_validation
+    return unless start_date.present? && end_date.present?
+    info = HrHolidayCalculator.profile_info hr_employee_profile, start_date
+    if info[:unused] < days
+      errors.add(:days, "You don't have enough days to request this holiday!")
+    end
+  end
+
   def date_validations
     return unless start_date.present? && end_date.present?
 
@@ -108,7 +117,6 @@ class HrHolidayRequest < ActiveRecord::Base
     if hr_employee_profile.supervisor
       data[:supervisor] = hr_employee_profile.supervisor.name
     end
-
     data[:days]       = days
     data[:audits]     = hr_audits.map(&:as_json)
     data[:can_update] = ability.can?(:update,self)
