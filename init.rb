@@ -2,6 +2,7 @@ require 'redmine'
 require_dependency 'deps'
 require_dependency 'app'
 require_dependency 'holiday_calculator'
+require_dependency 'holiday_report'
 
 Redmine::Plugin.register :redmine_hr do
   name 'Redmine HR plugin'

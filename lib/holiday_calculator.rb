@@ -2,8 +2,12 @@ module HrHolidayCalculator
 
   class << self
     def calculate_duration(request)
+      get_days(request).count
+    end
+
+    def get_days(request)
       days = Secretary.ask(:interval, request.start_date, request.end_date)
-      days.select{|date,value| value[:name] == Setting.plugin_redmine_hr[:working_day]}.count
+      days.select{|date,value| value[:name] == Setting.plugin_redmine_hr[:working_day]}
     end
 
     def profile_info(profile,year)

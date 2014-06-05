@@ -12,6 +12,18 @@ class HrHolidayRequestsController < HrAPIController
     :status
   ]
 
+  def report
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = HolidayReport.new get_scope.all.as_json
+        send_data pdf.render, filename: "holidays_and_sickleaves.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
+    end
+  end
+
   def index
     render :json => get_scope.all
   end

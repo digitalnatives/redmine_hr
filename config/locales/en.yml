@@ -74,6 +74,13 @@ en:
       date_of_employment: "Date of Employment"
       name: "Name"
       e_mail: "E-mail"
+    holiday_report:
+      title: "Holidays & Sick-leaves between %{from_date} - %{to_date}"
+      employee: "Employee"
+      date: "Date"
+      type: "Type"
+      sum: "%{type} sum"
+      days: "%{days} days"
     holiday_modifiers:
       title: "Holiday Modifier"
       description: "Description"
@@ -100,6 +107,7 @@ en:
       days: "Days"
       status: "Status"
       filters:
+        report: "Generate PDF from records"
         year: "Year"
         user: "User"
         status: "Status"
