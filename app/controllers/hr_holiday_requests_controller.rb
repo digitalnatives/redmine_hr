@@ -30,8 +30,13 @@ class HrHolidayRequestsController < HrAPIController
 
   def filter_data
     requests = HrHolidayRequest.scoped
-    requests = requests.by_user(params[:user]) if params[:user]
-    requests = requests.all
+    requests = if params[:user]
+      requests.by_user(params[:user])
+    elsif User.current.role == :admin
+      requests.all
+    else
+      requests.by_user(User.current.id) + requests.by_supervisor(User.current.id)
+    end
     render json: {
       year: requests.group_by { |r| r.start_date.year }.keys.uniq,
       profiles: requests.map(&:hr_employee_profile).map(&:as_json),
