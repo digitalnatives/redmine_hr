@@ -6,7 +6,7 @@ Rails.configuration.to_prepare do
     before_create :build_default_hr_employee_profile
 
     def allowed_to_hr?
-      allowed_to?(:view_holidays, nil, global: true)
+      allowed_to?(:access_hr, nil, global: true)
     end
 
     def role

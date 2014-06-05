@@ -8,7 +8,7 @@ class HrEmployeeChild < ActiveRecord::Base
   validates :name, presence: true
   validates :birth_date, presence: true
   validates :hr_employee_profile_id, presence: true
-  # validates :gender, inclusion: {in: %w{male female}}
+  validates :gender, inclusion: {in: %w{male female}}
 
   # scopes
   scope :by_employee_profile, ->(id) { where(hr_employee_profile_id: id) }

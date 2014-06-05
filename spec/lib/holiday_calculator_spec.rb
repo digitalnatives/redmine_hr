@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Secretary
+class Secretary
 end
 
 describe HrHolidayCalculator do

@@ -7,6 +7,33 @@
   = " - #{self.name}"
   - if self.administrator
     = "(#{t('hr.employee_profile.administrator')})"
+.issue
+  %table.attributes
+    %tr
+      %th Birth date
+      %td= birth_date
+      %th Employment date
+      %td= employment_date
+    %tr
+      %th Gender
+      %td= gender
+  %hr
+  %table.attributes
+    %tr
+      %th Holiday count
+      %td= profile_info[:holiday_count]
+      %th Requested
+      %td= profile_info[:requested]
+    %tr
+      %th Unused holiday count
+      %td= profile_info[:unused]
+      %th Accepted
+      %td= profile_info[:accepted]
+    %tr
+      %th Unused holiday count (without planned)
+      %td= profile_info[:unused_planned]
+      %th Planned
+      %td= profile_info[:planned]
 %div
   %h3
   %h4= t "hr.holiday_modifiers.title"

@@ -4,6 +4,17 @@
 %form
   .box.tabular
     %p
+      %label= t "activerecord.attributes.hr_employee_profile.employment_date"
+      %input{type:"date", name:"employment_date", value: self.employment_date}
+    %p
+      %label= t "activerecord.attributes.hr_employee_profile.birth_date"
+      %input{type:"date", name:"birth_date", value: self.birth_date}
+    %p
+      %label= t "activerecord.attributes.hr_employee_profile.gender"
+      %select(name="gender")
+        %option(value="male")= t("activerecord.attribute_values.hr_employee_profile.gender.male")
+        %option(value="female")= t("activerecord.attribute_values.hr_employee_profile.gender.female")
+    %p
       %label= t "hr.employee_profile.administrator"
       %input{type: "checkbox", checked: self.administrator, name: 'administrator'}
   %button= t("hr.labels.save")

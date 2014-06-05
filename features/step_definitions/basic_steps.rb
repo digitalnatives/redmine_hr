@@ -1,9 +1,9 @@
 Given(/^I am logged in$/) do
-  User.current = User.create({firstname: 'Me', lastname: 'Me', admin: true, view_holidays: true})
+  User.current = User.create({firstname: 'Me', lastname: 'Me', admin: true, access_hr: true})
 end
 
 Given(/^I am logged in as a normal user$/) do
-  User.current = User.create({firstname: 'Me', lastname: 'Me', admin: false, view_holidays: true})
+  User.current = User.create({firstname: 'Me', lastname: 'Me', admin: false, access_hr: true})
 end
 
 When(/^The administrator logges in$/) do
@@ -15,7 +15,7 @@ Given(/^There is an?( administrator)? user$/) do |admin|
     firstname: Faker::Name.first_name,
     lastname: Faker::Name.last_name,
     admin: false,
-    view_holidays: true
+    access_hr: true
   })
   @user.hr_employee_profile.administrator = !!admin
   @admin = @user if !!admin
@@ -23,7 +23,7 @@ Given(/^There is an?( administrator)? user$/) do |admin|
 end
 
 Given(/^It can't access the hr module$/) do
-  @user.view_holidays = false
+  @user.access_hr = false
   @user.save
 end
 

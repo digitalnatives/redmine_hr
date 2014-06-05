@@ -1,11 +1,13 @@
 module HrHolidayCalculator
   module Hun2014
-    class << self
-      def year
-        Date.today.beginning_of_year
-      end
 
-      def calculate(profile)
+    HrHolidayCalculator.register_module self
+
+    class << self
+      attr_reader :year
+
+      def calculate(profile, year = Date.today)
+        @year = year
         days = (20 + for_year(profile))
         if profile.employment_date > year.beginning_of_year
           (( days.to_f  / 365 ) * ( year.end_of_year - profile.employment_date ).to_i).round

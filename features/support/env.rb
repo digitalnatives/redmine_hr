@@ -1,4 +1,6 @@
 require './app'
+require './lib/holiday_calculator'
+require './lib/hun_2014'
 require 'capybara/cucumber'
 require 'capybara/poltergeist'
 require 'database_cleaner/cucumber'

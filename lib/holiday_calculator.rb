@@ -1,6 +1,13 @@
 module HrHolidayCalculator
 
   class << self
+    attr_reader :modules
+
+    def register_module(mod)
+      @modules ||= {}
+      @modules[mod.name] = mod
+    end
+
     def calculate_duration(request)
       get_days(request).count
     end
@@ -26,7 +33,8 @@ module HrHolidayCalculator
     end
 
     def holiday_count(profile,year)
-      0
+      return 0 unless Setting.plugin_redmine_hr[:holiday_module]
+      (@modules[Setting.plugin_redmine_hr[:holiday_module]] || @modules.values.first).calculate(profile,year)
     end
 
     private

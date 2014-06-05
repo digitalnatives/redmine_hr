@@ -9,12 +9,8 @@ class EmployeeProfile < Fron::Model
     resource: 'hr_employee_profile'
   }
 
-  def supervisor
-    @data[:supervisor]
-  end
-
-  def user
-    @data[:user]
+  def method_missing(method)
+    @data[method]
   end
 
   def holiday_modifiers

@@ -12,6 +12,12 @@ module Redmine
   end
 end
 
+class Secretary
+  def self.ask(type,from,to)
+    {}
+  end
+end
+
 class Role
   def self.find(id)
     nil
@@ -116,7 +122,7 @@ silence_stream STDOUT do
 
   ActiveRecord::Migration.create_table :users do |t|
     t.boolean :admin
-    t.boolean :view_holidays
+    t.boolean :access_hr
     t.string :firstname
     t.string :lastname
     t.timestamps
