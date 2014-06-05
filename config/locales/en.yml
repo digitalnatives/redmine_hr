@@ -83,7 +83,7 @@ en:
         count: "Holiday Count"
         planned: "Planned"
         requested: "Requested"
-        accepted: "Accepted"
+        approved: "Approved"
         unused: "Unused"
         unused_planned: "Unused without (planned)"
     holiday_report:

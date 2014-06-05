@@ -5,7 +5,7 @@ end
 
 describe HrHolidayCalculator do
 
-  let(:status)  { 'accepted' }
+  let(:status)  { 'approved' }
   let(:request) { double(:request,
     start_date: Date.today,
     end_date: Date.tomorrow,
@@ -61,8 +61,8 @@ describe HrHolidayCalculator do
   context "Request Dependent" do
 
     let(:requests) {[
-      double(status: 'accepted'  ,start_date: Date.today, end_date: Date.tomorrow),
-      double(status: 'accepted'  ,start_date: Date.today, end_date: Date.today),
+      double(status: 'approved'  ,start_date: Date.today, end_date: Date.tomorrow),
+      double(status: 'approved'  ,start_date: Date.today, end_date: Date.today),
       double(status: 'requested' ,start_date: Date.today, end_date: Date.today),
       double(status: 'withdrawn' ,start_date: Date.today, end_date: Date.today),
       double(status: 'planned'   ,start_date: Date.today, end_date: Date.tomorrow),
@@ -79,7 +79,7 @@ describe HrHolidayCalculator do
 
       it "should contain all needed keys" do
         [ :holiday_count,
-          :accepted,
+          :approved,
           :requested,
           :planned,
           :unused,
@@ -103,8 +103,8 @@ describe HrHolidayCalculator do
         subject[:holiday_count].should eq -1
       end
 
-      it "should count accepted holidays" do
-        subject[:accepted].should eq 3
+      it "should count approved holidays" do
+        subject[:approved].should eq 3
       end
 
       it "should count requested holidays" do
@@ -132,7 +132,7 @@ describe HrHolidayCalculator do
 
     describe "#sum_holidays" do
       it "should select holidays by status" do
-        described_class.send(:sum_holidays, requests, :accepted).should eq 3
+        described_class.send(:sum_holidays, requests, :approved).should eq 3
         described_class.send(:sum_holidays, requests, :requested).should eq 1
         described_class.send(:sum_holidays, requests, :planned).should eq 3
         described_class.send(:sum_holidays, requests, :withdrawn).should eq 1

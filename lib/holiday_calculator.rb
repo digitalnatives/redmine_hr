@@ -22,13 +22,13 @@ module HrHolidayCalculator
 
       info = {
         holiday_count: holiday_count(profile,year) + sum_modifiers(profile,year),
-        accepted:      sum_holidays(holidays,:accepted),
+        approved:      sum_holidays(holidays,:approved),
         requested:     sum_holidays(holidays, :requested),
         planned:       sum_holidays(holidays, :planned),
       }
 
-      info[:unused] = [0,info[:holiday_count] - info[:accepted]].max
-      info[:unused_planned] = [0,info[:holiday_count] - info[:accepted] - info[:planned]].max
+      info[:unused] = [0,info[:holiday_count] - info[:approved]].max
+      info[:unused_planned] = [0,info[:holiday_count] - info[:approved] - info[:planned]].max
       info
     end
 
