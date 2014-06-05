@@ -81,6 +81,7 @@ class HrHolidayRequest < ActiveRecord::Base
 
   def day_count_validation
     return unless start_date.present? && end_date.present?
+    return unless hr_employee_profile
     info = HrHolidayCalculator.profile_info hr_employee_profile, start_date
     if info[:unused] < days
       errors.add(:days, "You don't have enough days to request this holiday!")
