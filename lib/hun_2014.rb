@@ -2,13 +2,13 @@ module HrHolidayCalculator
   module Hun2014
     class << self
       def year
-        Date.new(2014)
+        Date.today.beginning_of_year
       end
 
       def calculate(profile)
         days = (20 + for_year(profile))
         if profile.employment_date > year.beginning_of_year
-          ( days  / 365 ) * ( year.end_of_year - profile.employment_date )
+          (( days.to_f  / 365 ) * ( year.end_of_year - profile.employment_date ).to_i).round
         else
           days
         end
@@ -20,7 +20,7 @@ module HrHolidayCalculator
 
       def extra_from_age(age)
         case age
-        when 12..17
+        when 0..17
           5
         when 18..24
           0
@@ -42,7 +42,7 @@ module HrHolidayCalculator
           8
         when 43..44
           9
-        else 30
+        else 10
         end
       end
 
@@ -63,8 +63,8 @@ module HrHolidayCalculator
         return extra if profile.gender == 'female'
 
         children_this_year = children.select { |child|
-          child.birt_date >= year.beginning_of_year &&
-          child.birt_date <= year.end_of_year
+          child.birth_date >= year.beginning_of_year &&
+          child.birth_date <= year.end_of_year
          }.length
 
         extra_year = case children_this_year

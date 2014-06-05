@@ -10,3 +10,5 @@ gem 'mysql2', "~> 0.3.11"
 gem 'state_machine', "~> 1.2.0"
 gem 'cancan', '~> 1.6.10'
 gem 'prawn', '>= 0'
+
+gem 'simplecov', :require => false, :group => :test
