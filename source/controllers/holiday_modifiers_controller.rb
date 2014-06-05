@@ -1,8 +1,9 @@
 require '../views/holiday_modifier/edit'
 
 class HolidayModifiersController < ApplicationController
-  route '/delete', :delete
-  route :edit
+  route '/new',                 :new
+  route '/:modifierId/delete',  :delete
+  route '/:modifierId',         :edit
 
   resource HolidayModifier
 
@@ -18,15 +19,19 @@ class HolidayModifiersController < ApplicationController
   end
 
   def submit
-    return unless @modifier
-    @modifier.update gather do
-      redirect "profiles/#{@profile.id}"
+    return unless @holiday_modifier
+    @holiday_modifier.update gather do
+      if @holiday_modifier.errors
+        render 'views/holiday_modifier/edit', @holiday_modifier.clone(gather)
+      else
+        redirect "profiles/#{@profile.id}"
+      end
     end
   end
 
   def delete(params)
     getModifier params do
-      @modifier.destroy do
+      @holiday_modifier.destroy do
         redirect "profiles/#{@profile.id}"
       end
     end
@@ -34,8 +39,14 @@ class HolidayModifiersController < ApplicationController
 
   def edit(params)
     getModifier params do
-      render 'views/holiday_modifier/edit', @modifier
+      render 'views/holiday_modifier/edit', @holiday_modifier
     end
+  end
+
+  def new(params)
+    @holiday_modifier = HolidayModifier.new({hr_employee_profile_id: params[:id]})
+    @profile = EmployeeProfile.new({id: params[:id]})
+    render 'views/holiday_modifier/edit', @holiday_modifier
   end
 
   private
@@ -43,7 +54,7 @@ class HolidayModifiersController < ApplicationController
   def getModifier(params,&block)
     EmployeeProfile.find params[:id] do |profile|
       @profile = profile
-      @modifier = profile.holiday_modifiers.select do |mod|
+      @holiday_modifier = profile.holiday_modifiers.select do |mod|
         mod.id == params[:modifierId].to_i
       end.first
       block.call

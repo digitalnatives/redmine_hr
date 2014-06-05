@@ -5,9 +5,9 @@ Feature: Manage Employee children
       And There is a user
 
   Scenario: Add
-     When I visit the employee profile page
+     When I visit the new employee child page
       And I fill out the employee child form
-      And I click on the add_child button
+      And I click on the create button
      Then I should see an employee child item
 
   Scenario: Delete

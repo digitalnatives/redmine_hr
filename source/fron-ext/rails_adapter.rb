@@ -1,3 +1,9 @@
+module Kernel
+  def t(scope,options = {})
+    `I18n.t(#{scope},JSON.parse(#{options.to_json}))`
+  end
+end
+
 module Fron
   module Adapters
     class RailsAdapter
@@ -6,6 +12,11 @@ module Fron
         @request.request 'DELETE', transform({})  do
           block.call
         end
+      end
+
+      def all(data = nil, &block)
+        setUrl nil
+        @request.get(data) { |response| block.call response.json }
       end
 
       def transform(data)
@@ -50,6 +61,13 @@ module Fron
         @errors = errors
         merge data
         block.call if block_given?
+      end
+    end
+
+    def self.all(data = nil, &block)
+      @adapterObject.all data do |items|
+        break unless block_given?
+        block.call items.map{ |item| self.new item }
       end
     end
 

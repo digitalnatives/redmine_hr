@@ -1,0 +1,44 @@
+- if self.can_update
+  .contextual
+    %a.icon.icon-edit(href="#holiday_requests/#{self.id}/edit")= t("hr.labels.update")
+%h2
+  = t "hr.holiday_request.title"
+  = " ##{self.id}"
+.issue
+  %table.attributes
+    %tr
+      %th= t("hr.holiday_request.user") + ":"
+      %td= self.user
+      %th= t("hr.holiday_request.status") + ":"
+      %td= t "hr.holiday_request.statuses.#{self.status}"
+    %tr
+      %th= t("hr.holiday_request.start_date") + ":"
+      %td= self.start_date
+      %th= t("hr.holiday_request.request_type") + ":"
+      %td= t "hr.holiday_request.#{self.request_type}"
+    %tr
+      %th= t("hr.holiday_request.end_date") + ":"
+      %td= self.end_date
+      %th= t("hr.holiday_request.half_day") + ":"
+      %td= t "hr.labels.#{self.half_day}"
+  %hr
+  .description
+    %p
+      %strong= t("hr.holiday_request.description")
+    .wiki= self.description
+%table.list
+  %thead
+    %tr
+      %th= t 'hr.holiday_request.audit.created_at'
+      %th= t 'hr.holiday_request.audit.from'
+      %th= t 'hr.holiday_request.audit.to'
+      %th= t 'hr.holiday_request.audit.user'
+  %tbody
+    - self.audits.each do |audit|
+      %tr
+        %td= Time.parse(audit[:created_at]).strftime("%Y-%M-%H")
+        %td= t "hr.holiday_request.statuses.#{audit[:from]}"
+        %td= t "hr.holiday_request.statuses.#{audit[:to]}"
+        %td= audit[:user]
+- self.available_statuses.each do |status|
+  %button{action: status}= t "hr.holiday_request.transitions.#{status}"

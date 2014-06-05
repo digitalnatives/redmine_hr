@@ -9,4 +9,4 @@ before_script:
 script:
   - BUNDLE_GEMFILE=Gemfile.development bundle exec cucumber
   - bundle exec rake test
-  - bundle exec rspec test --color
+  - bundle exec rspec --color

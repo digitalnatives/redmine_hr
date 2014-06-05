@@ -24,9 +24,14 @@ en:
       edit: "Edit"
       create: "Create"
       delete: "Delete"
+      false: "No"
+      true: "Yes"
+      all: "All"
     main_menu:
       employee_profiles: "Employee Profiles"
       new_holiday_request: "New Holiday Request"
+      holiday_requests: "Holiday Requests"
+      my_holiday_requests: "My Holiday Requests"
     settings:
       admin_role: "Admin Role"
       working_day: "Workind Day"
@@ -45,20 +50,46 @@ en:
       title: " Holiday Modifiers"
     employee_children:
       title: "Employee's children"
+    holiday_requests:
+      title: "Holiday Requests"
+    my_holiday_requests:
+      title: "My Holiday Requests"
     holiday_request:
       title: "Holiday Request"
       start_date: "Start Date"
       end_date: "End Date"
       status: "Status"
-      type: "Type"
+      request_type: "Type"
       half_day: "Half Day"
       sick_leave: "Sick Leave"
       holiday: "Holiday"
       user: "User"
       description: "Description"
+      days: "Days"
+      status: "Status"
+      filters:
+        year: "Year"
+        user: "User"
+        status: "Status"
+        supervisor: "Supervisor"
+      audit:
+        created_at: 'Created At'
+        from: "From"
+        to: "To"
+        user: "User"
+      transitions:
+        request: "Request"
+        remove: "Delete"
+        withdraw: "Withdraw"
+        approve: "Approve"
+        cancel: "Cancel"
+        reject: "Reject"
+        approve_withdrawn: "Approve withdrawn"
+        reject_withdrawn: "Reject withdrawn"
       statuses:
         planned: "Planned"
         requested: "Requested"
         approved: "Approved"
         rejected: "Rejected"
         withdrawn: "Withdrawn"
+        deleted: "Deleted"

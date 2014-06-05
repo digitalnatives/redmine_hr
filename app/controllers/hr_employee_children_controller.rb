@@ -11,7 +11,7 @@ class HrEmployeeChildrenController < HrAPIController
   end
 
   def create
-    resource = klass.create safe_params
+    resource = klass.create! safe_params
     render :json => resource
   end
 

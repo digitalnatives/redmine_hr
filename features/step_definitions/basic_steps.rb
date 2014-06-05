@@ -6,6 +6,10 @@ Given(/^I am logged in as a normal user$/) do
   User.current = User.create({firstname: 'Me', lastname: 'Me', admin: false, view_holidays: true})
 end
 
+When(/^The administrator logges in$/) do
+  User.current = @admin
+end
+
 Given(/^There is an?( administrator)? user$/) do |admin|
   @user = User.create({
     firstname: Faker::Name.first_name,
@@ -14,6 +18,7 @@ Given(/^There is an?( administrator)? user$/) do |admin|
     view_holidays: true
   })
   @user.hr_employee_profile.administrator = !!admin
+  @admin = @user if !!admin
   @user.hr_employee_profile.save!
 end
 
@@ -52,4 +57,12 @@ end
 
 Then(/^The (.+) (should|should not) be disabled$/) do |field,maybe|
   page.send maybe.gsub(/\s/,"_").to_sym, have_css("[name='#{field.gsub(/\s/,'_')}'][disabled]")
+end
+
+When(/^I filter for ([^\s]+) ([^\s]+)$/) do |value,field|
+  select_option field, value
+end
+
+Then(/^I should not be able to filter for (.+)$/) do |field|
+  page.should_not have_css("[name='#{field}']")
 end

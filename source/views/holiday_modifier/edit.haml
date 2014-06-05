@@ -1,7 +1,13 @@
 %h2
   = t "hr.holiday_modifiers.title"
-  = " ##{self.id}"
+  - unless dirty?
+    = " ##{id}"
 %form
+  - if errors
+    #errorExplanation
+      %ul
+        - errors.each do |key, error|
+          %li= key + " " + error[0]
   .box.tabular
     %p
       %label= t "hr.holiday_modifiers.value"
@@ -11,5 +17,7 @@
       %span
         %textarea.wiki-edit(name="description")
           = self.description
-  %button(name="save_modifier")
-    =t "hr.labels.save"
+  - if self.dirty?
+    %button(name="save")= t "hr.labels.create"
+  - else
+    %button(name="save")= t "hr.labels.save"

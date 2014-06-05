@@ -28,6 +28,11 @@ class HrAPIController < ApplicationController
     show
   end
 
+  def destroy
+    @resource.destroy
+    head 200
+  end
+
   private
 
   # We need to update override because
@@ -52,5 +57,9 @@ class HrAPIController < ApplicationController
       self.class::UPDATEABLE_ATTRIBUTES[type]
     end
     params.require(controller_name.classify.underscore).permit *attributes
+  end
+
+  def current_ability
+    @current_ability ||= HrAbility.new(User.current)
   end
 end

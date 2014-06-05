@@ -3,17 +3,20 @@
   - unless self.dirty?
     = " ##{self.id}"
 %form
-  - if self.errors
+  - if errors
     #errorExplanation
       %ul
-        - self.errors.each do |key, error|
+        - errors.each do |key, error|
           %li= key + " " + error[0]
   .box.tabular
     %p
       %label= t "hr.holiday_request.user"
       %select{name: "hr_employee_profile_id", disabled: !CurrentUser[:admin]}
         - self.data[:profiles].each do |profile|
-          %option{value: profile.id}= profile.name
+          - if self.hr_employee_profile_id == profile.id
+            %option{value: profile.id, selected: true}= profile.name
+          - else
+            %option{value: profile.id}= profile.name
     %p
       %label= t "hr.holiday_request.start_date"
       %input{type:"date", name:"start_date", value: self.start_date}
@@ -25,15 +28,16 @@
       %input{type: "checkbox", checked: self.half_day, name: "half_day"}
     %p
       %label= t "hr.holiday_request.status"
-      %select(name="status")
-        %option(value="planned")= t("hr.holiday_request.statuses.planned")
-        %option(value="requested")= t("hr.holiday_request.statuses.requested")
-        %option(value="approved")= t("hr.holiday_request.statuses.approved")
-        %option(value="withdrawn")= t("hr.holiday_request.statuses.withdrawn")
-        %option(value="rejected")= t("hr.holiday_request.statuses.rejected")
+      - if self.dirty?
+        %select(name="status")
+          %option(value="planned")= t("hr.holiday_request.statuses.planned")
+          %option(value="requested")= t("hr.holiday_request.statuses.requested")
+      - else
+        %select(disabled)
+          %option= t "hr.holiday_request.statuses.#{self.status}"
     %p
-      %label= t "hr.holiday_request.type"
-      %select(name="type")
+      %label= t "hr.holiday_request.request_type"
+      %select(name="request_type")
         %option(value="holiday")= t("hr.holiday_request.holiday")
         %option(value="sick_leave")= t("hr.holiday_request.sick_leave")
     %p

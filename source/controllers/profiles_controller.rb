@@ -5,8 +5,8 @@ require 'controllers/holiday_modifiers_controller'
 require 'controllers/employee_children_controller'
 
 class ProfilesController < ApplicationController
-  route 'profiles/:id/modifiers/:modifierId', HolidayModifiersController
-  route 'profiles/:id/employee_children/:childId', EmployeeChildrenController
+  route 'profiles/:id/modifiers', HolidayModifiersController
+  route 'profiles/:id/employee_children', EmployeeChildrenController
   route 'profiles/:id/edit', :edit
   route 'profiles/:id', :show
   route 'profiles', :index

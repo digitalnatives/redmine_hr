@@ -2,9 +2,9 @@ require '../spec_helper'
 
 describe EmployeeChildrenController do
 
-  let(:profile)  { double(id: 0, employee_children: [employee_child]) }
-  let(:employee_child) { double(id: 0) }
-  let(:base)     { double(find: double(value: true)) }
+  let(:profile)        { double(id: 0, employee_children: [employee_child]) }
+  let(:employee_child) { double(id: 0, errors: nil) }
+  let(:base)           { double(find: double(value: true)) }
 
   before do
     subject.instance_variable_set('@base',base)

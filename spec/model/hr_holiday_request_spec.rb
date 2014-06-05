@@ -1,4 +1,4 @@
-require './test/spec_helper'
+require 'spec_helper'
 
 describe HrHolidayRequest do
 
@@ -7,8 +7,8 @@ describe HrHolidayRequest do
       subject.status.should eq 'planned'
     end
 
-    it "should have default type: holiday" do
-      subject.type.should eq 'holiday'
+    it "should have default request_type: holiday" do
+      subject.request_type.should eq 'holiday'
     end
   end
 

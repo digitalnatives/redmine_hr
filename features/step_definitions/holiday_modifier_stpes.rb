@@ -1,3 +1,7 @@
+When(/^I visit the new holiday modifier page$/) do
+  visit "/hr#profiles/#{@user.id}/modifiers/new"
+end
+
 When(/^I fill out the holiday modifier form$/) do
   page.find('[name=value]').set "0"
   page.find('[name=description]').set "description"

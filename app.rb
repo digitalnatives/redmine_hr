@@ -1,8 +1,20 @@
 require 'rubygems'
 require 'bundler/setup'
-Bundler.require(:default)
 require "rails/all"
+Bundler.require(:default)
 require './lib/app'
+
+class Role
+  def self.find(id)
+    nil
+  end
+end
+
+module Setting
+  def self.plugin_redmine_hr
+    { admin_role: 0, working_day: "Working Day" }
+  end
+end
 
 class ApplicationController < ActionController::Base
   before_filter :prepend_view_paths
@@ -18,12 +30,20 @@ class User < ActiveRecord::Base
     attr_accessor :current
   end
 
+  def name
+    lastname + " " + firstname
+  end
+
   def admin?
     self.admin
   end
 
   def allowed_to?(a,b,c)
     self.send(a)
+  end
+
+  def project_roles
+    []
   end
 end
 
@@ -50,8 +70,9 @@ module RedmineApp
   end
 end
 
-require './config/routes'
+require './app/models/hr_holiday_request'
 require './lib/deps'
+require './config/routes'
 
 silence_stream STDOUT do
   client = Mysql2::Client.new(:host => "localhost", :username => "root")
