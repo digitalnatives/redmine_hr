@@ -4,6 +4,14 @@ require "rails/all"
 Bundler.require(:default)
 require './lib/app'
 
+module Redmine
+  module WikiFormatting
+    def self.to_html(a,b)
+      ""
+    end
+  end
+end
+
 class Role
   def self.find(id)
     nil
@@ -13,6 +21,26 @@ end
 module Setting
   def self.plugin_redmine_hr
     { admin_role: 0, working_day: "Working Day" }
+  end
+
+  def self.host_name
+    "a"
+  end
+
+  def self.protocol
+    "b"
+  end
+
+  def self.text_formatting
+    ""
+  end
+
+  def self.emails_header
+    ""
+  end
+
+  def self.emails_footer
+    ""
   end
 end
 
@@ -34,6 +62,10 @@ class User < ActiveRecord::Base
     lastname + " " + firstname
   end
 
+  def mail
+    ""
+  end
+
   def admin?
     self.admin
   end
@@ -51,6 +83,7 @@ module RedmineApp
   class Application < Rails::Application
     config.secret_token = "37345f5b0290ba7611149625389eb6f7"
     config.active_support.deprecation = :log
+    config.action_mailer.perform_deliveries = false
 
     def config.database_configuration
       {

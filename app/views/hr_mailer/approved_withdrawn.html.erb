@@ -1,0 +1,7 @@
+<%= t('hr_mailer.approved_withdrawn.text',{
+  approver: User.current.name,
+  type: t("hr.holiday_request.#{@request.request_type}"),
+  from: l(@request.start_date),
+  to: l(@request.end_date),
+  link: hr_index_url(anchor: "holiday_requests/#{@request.id}")
+}).html_safe %>
