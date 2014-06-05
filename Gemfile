@@ -11,4 +11,4 @@ gem 'state_machine', "~> 1.2.0"
 gem 'cancan', '~> 1.6.10'
 gem 'prawn', '>= 0'
 
-gem 'simplecov', '~> 0.6', :require => false, :group => :test
+gem 'simplecov', :require => false, :group => :test
