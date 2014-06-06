@@ -4,6 +4,10 @@ this_year = Date.today.year
 
 describe HrHolidayCalculator::Hun2014 do
 
+  before do
+    described_class.instance_variable_set("@year", Date.today)
+  end
+
   describe "extra_from_age" do
     it "should return 5 for 0..17" do
       (0..17).each do |i|
