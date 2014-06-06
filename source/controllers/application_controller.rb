@@ -44,6 +44,7 @@ class ApplicationController < Fron::Controller
     @base.html = Template[template].render data
     %x{
       setTimeout(function(){
+        if(!window.$) return
         $("[name*=date]").datepicker(datepickerOptions);
       })
     }

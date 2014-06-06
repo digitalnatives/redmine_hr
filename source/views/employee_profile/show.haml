@@ -17,7 +17,9 @@
       %th= t("hr.employee_profile.gender")
       %td= gender
       %th= t("hr.employee_profile.supervisor")
-      %td= supervisor[:firstname] + " " + supervisor[:lastname]
+      %td
+        - if supervisor
+          = supervisor[:firstname] + " " + supervisor[:lastname]
   %hr
   %table.attributes
     %tr
