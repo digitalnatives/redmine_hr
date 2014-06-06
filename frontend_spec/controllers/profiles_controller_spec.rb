@@ -4,16 +4,19 @@ describe ProfilesController do
 
   let(:modifier) { double(update: true)              }
   let(:base)     { double(find: double(value: true)) }
-  let(:profile)  { double(id: 0)                     }
+  let(:profile)  { double(id: 0, supervisors: [], data: {})    }
 
   before do
+    CurrentUser[:admin] = true
     subject.instance_variable_set('@base',base)
   end
 
   describe "#edit" do
     it "should get profile and render edit" do
-      subject.should receive(:getProfile) do |&block| block.call end
-      subject.should receive(:render).with 'views/employee_profile/edit', nil
+      EmployeeProfile.should receive(:all) do |&block| block.call [] end
+      subject.instance_variable_set("@profile", profile)
+      subject.should receive(:getProfile) do |&block| block.call profile end
+      subject.should receive(:render).with 'views/employee_profile/edit', profile
       subject.edit({id: 0})
     end
   end
