@@ -21,7 +21,7 @@ class HrHolidayModifiersController < HrAPIController
 
   def convert_year
     params[:hr_holiday_modifier][:year] = Date.new(Integer(params[:hr_holiday_modifier][:year])) unless params[:hr_holiday_modifier][:year].blank?
-  rescue e
+  rescue
   end
 
   def get_profile

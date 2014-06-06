@@ -12,6 +12,8 @@ class HrHolidayModifier < ActiveRecord::Base
   }
 
   def as_json(options = {})
-    super :root => false
+    data = super :root => false
+    data[:year] = self.year.year
+    data
   end
 end

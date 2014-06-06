@@ -20,14 +20,9 @@ class ProfilesController < ApplicationController
   def initialize
     super
 
-    @base.delegate :click, '[name=add_modifier]' do |e|
+    @base.delegate :click, 'button[name=cancel]' do |e|
       e.stop
-      addModifier
-    end
-
-    @base.delegate :click, '[name=add_child]' do |e|
-      e.stop
-      addChild
+      redirect "#profiles/#{@profile.id}"
     end
 
     @base.on :submit do |e|
