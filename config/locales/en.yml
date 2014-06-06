@@ -64,12 +64,14 @@ en:
       new_holiday_request: "New Holiday Request"
       holiday_requests: "Holiday Requests"
       my_holiday_requests: "My Holiday Requests"
+      my_profile: "My Employee Profile"
     settings:
       admin_group: "Admin Group"
       holiday_module: "Holiday Module"
       access: "Access Groups"
       working_day: "Workind Day"
     employee_profile:
+      supervisor: "Supervisor"
       title: "Employee Profile"
       attributes: "Attributes"
       date_of_employment: "Date of Employment"
