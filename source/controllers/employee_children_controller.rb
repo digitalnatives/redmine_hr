@@ -12,6 +12,11 @@ class EmployeeChildrenController < ApplicationController
   def initialize
     super
 
+    @base.delegate :click, 'button[name=cancel]' do |e|
+      e.stop
+      redirect "#profiles/#{@profile.id}"
+    end
+
     @base.on :submit do |e|
       e.stop
       submit

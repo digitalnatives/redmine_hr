@@ -10,7 +10,7 @@ describe HolidayRequestsController do
     it 'should listen on events' do
       subject.base.listeners[:change].length.should eq 2
       subject.base.listeners[:submit].length.should eq 1
-      subject.base.listeners[:click].length.should eq 2
+      subject.base.listeners[:click].length.should eq 3
     end
 
     it "should initialize index" do

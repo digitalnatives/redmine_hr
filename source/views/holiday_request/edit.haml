@@ -1,6 +1,6 @@
 %h2
   = t "hr.holiday_request.title"
-  - unless self.dirty?
+  - unless dirty?
     = " ##{self.id}"
 %form
   - if errors
@@ -12,29 +12,35 @@
     %p
       %label= t "hr.holiday_request.user"
       %select{name: "hr_employee_profile_id", disabled: !CurrentUser[:admin]}
-        - self.data[:profiles].each do |profile|
-          - if self.hr_employee_profile_id == profile.id
-            %option{value: profile.id, selected: true}= profile.name
+        - data[:profiles].each do |profile|
+          - if dirty?
+            - if CurrentUser[:id] == profile.id
+              %option{value: profile.id, selected: true}= profile.name
+            - else
+              %option{value: profile.id}= profile.name
           - else
-            %option{value: profile.id}= profile.name
+            - if hr_employee_profile_id == profile.id
+              %option{value: profile.id, selected: true}= profile.name
+            - else
+              %option{value: profile.id}= profile.name
     %p
       %label= t "hr.holiday_request.start_date"
-      %input{type:"date", name:"start_date", value: self.start_date}
+      %input{type:"input", name:"start_date", value: start_date}
     %p
       %label= t "hr.holiday_request.end_date"
-      %input{type:"date", name:"end_date", value: self.end_date, disabled: self.half_day}
+      %input{type:"input", name:"end_date", value: end_date, disabled: half_day}
     %p
       %label= t "hr.holiday_request.half_day"
-      %input{type: "checkbox", checked: self.half_day, name: "half_day"}
+      %input{type: "checkbox", checked: half_day, name: "half_day"}
     %p
       %label= t "hr.holiday_request.status"
-      - if self.dirty?
+      - if dirty?
         %select(name="status")
           %option(value="planned")= t("hr.holiday_request.statuses.planned")
           %option(value="requested")= t("hr.holiday_request.statuses.requested")
       - else
         %select(disabled)
-          %option= t "hr.holiday_request.statuses.#{self.status}"
+          %option= t "hr.holiday_request.statuses.#{status}"
     %p
       %label= t "hr.holiday_request.request_type"
       %select(name="request_type")
@@ -43,8 +49,9 @@
     %p
       %label= t "hr.holiday_request.description"
       %textarea.wiki-edit(name="description")
-        = self.description
-  - if self.dirty?
+        = description
+  - if dirty?
     %button(name="save")= t "hr.labels.create"
   - else
     %button(name="save")= t "hr.labels.save"
+  %button(name="cancel")= t "hr.labels.cancel"

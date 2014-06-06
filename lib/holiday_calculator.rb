@@ -34,7 +34,8 @@ module HrHolidayCalculator
 
     def holiday_count(profile,year)
       return 0 unless Setting.plugin_redmine_hr[:holiday_module]
-      (@modules[Setting.plugin_redmine_hr[:holiday_module]] || @modules.values.first).calculate(profile,year)
+      return 0 unless Setting.plugin_redmine_hr[:holiday_module][Date.today.year.to_s]
+      (@modules[Setting.plugin_redmine_hr[:holiday_module][Date.today.year.to_s]] || @modules.values.first).calculate(profile,year)
     end
 
     private

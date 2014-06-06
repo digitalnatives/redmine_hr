@@ -45,15 +45,23 @@
     <tr>
       <th><%= l('hr.settings.holiday_module') %></th>
       <td>
-        <select name="settings[holiday_module]">
+        <%
+          year = HrHolidayRequest.order(start_date: :asc).first.start_date.year
+          range = Range.new year, Date.today.year + 2
+        %>
+        <% range.each do |year| %>
+        <br>
+        <span><%= year %></span>
+        <select name="settings[holiday_module][<%=year%>]">
           <% HrHolidayCalculator.modules.each do |mod,m| %>
-            <% if settings['holiday_module'] == mod %>
+            <% if settings['holiday_module'][year.to_s] == mod %>
               <option value="<%= mod %>" selected><%= mod %></option>
             <% else %>
               <option value="<%= mod %>"><%= mod %></option>
             <% end %>
           <% end %>
         </select>
+        <% end %>
       </td>
     </tr>
   </tbody>

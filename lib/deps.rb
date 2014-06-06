@@ -20,6 +20,10 @@ Rails.configuration.to_prepare do
       :user
     end
 
+    def supervisor?
+      HrEmployeeProfile.where(supervisor_id: id).count > 0
+    end
+
     private
 
     # Create employee_profile automatically

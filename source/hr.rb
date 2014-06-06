@@ -28,11 +28,14 @@ end
 RedmineHR.new
 
 menu = {
+  "#{t('hr.main_menu.my_profile')}" => "#profiles/#{CurrentProfile.id}",
   "#{t('hr.main_menu.my_holiday_requests')}" => "#holiday_requests/mine",
-  "#{t('hr.main_menu.new_holiday_request')}" => "#holiday_requests/new",
-  "#{t('hr.main_menu.holiday_requests')}"    => "#holiday_requests/",
+  "#{t('hr.main_menu.new_holiday_request')}" => "#holiday_requests/new"
 }
 
+if CurrentUser.admin || CurrentUser[:supervisor]
+  menu[t('hr.main_menu.holiday_requests')] = "#holiday_requests/"
+end
 if CurrentUser.admin
   menu[t('hr.main_menu.employee_profiles')] = "#profiles"
 end

@@ -1,10 +1,11 @@
-.contextual
-  %a.icon.icon-edit(href="#profiles/#{self.id}/edit")= t("hr.labels.update")
-  %a.icon.icon-add(href="#profiles/#{self.id}/modifiers/new")= t("hr.labels.add_modifier")
-  %a.icon.icon-add(href="#profiles/#{self.id}/employee_children/new")= t("hr.labels.add_child")
+- if CurrentUser[:admin]
+  .contextual
+    %a.icon.icon-edit(href="#profiles/#{id}/edit")= t("hr.labels.update")
+    %a.icon.icon-add(href="#profiles/#{id}/modifiers/new")= t("hr.labels.add_modifier")
+    %a.icon.icon-add(href="#profiles/#{id}/employee_children/new")= t("hr.labels.add_child")
 %h2
   = t "hr.employee_profile.title"
-  = " - #{self.name}"
+  = " - #{name}"
 .issue
   %table.attributes
     %tr
@@ -15,6 +16,10 @@
     %tr
       %th= t("hr.employee_profile.gender")
       %td= gender
+      %th= t("hr.employee_profile.supervisor")
+      %td
+        - if supervisor
+          = supervisor[:firstname] + " " + supervisor[:lastname]
   %hr
   %table.attributes
     %tr
@@ -42,15 +47,15 @@
       %th= t("hr.holiday_modifiers.description")
       %th= t("hr.labels.actions")
     %tbody
-      - self.holiday_modifiers.each do |modifier|
+      - holiday_modifiers.each do |modifier|
         %tr
           %td(width="10%" style="text-align: center")= modifier.year
           %td(width="10%" style="text-align: center")= modifier.value
           %td= modifier.description
           %td(width="10%" style="text-align: center")
-            %a.icon.icon-edit{href:"#profiles/#{self.id}/modifiers/#{modifier.id}"}
+            %a.icon.icon-edit{href:"#profiles/#{id}/modifiers/#{modifier.id}"}
               = t "hr.labels.edit"
-            %a.icon.icon-del{href:"#profiles/#{self.id}/modifiers/#{modifier.id}/delete"}
+            %a.icon.icon-del{href:"#profiles/#{id}/modifiers/#{modifier.id}/delete"}
               = t "hr.labels.delete"
 %div
   %h3
@@ -62,13 +67,13 @@
       %th= t("activerecord.attributes.hr_employee_child.gender")
       %th= t("hr.labels.actions")
     %tbody
-      - self.employee_children.each do |child|
+      - employee_children.each do |child|
         %tr
           %td(width="10%" style="text-align: center")= child.name
           %td(width="10%" style="text-align: center")= child.birth_date
           %td(width="10%" style="text-align: center")= child.gender
           %td(width="10%" style="text-align: center")
-            %a.icon.icon-edit{href:"#profiles/#{self.id}/employee_children/#{child.id}"}
+            %a.icon.icon-edit{href:"#profiles/#{id}/employee_children/#{child.id}"}
               = t "hr.labels.edit"
-            %a.icon.icon-del{href:"#profiles/#{self.id}/employee_children/#{child.id}/delete"}
+            %a.icon.icon-del{href:"#profiles/#{id}/employee_children/#{child.id}/delete"}
               = t "hr.labels.delete"

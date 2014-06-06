@@ -12,7 +12,8 @@
       %tr
         %td(colspan=6)
           = user
-          = "(#{requests[0].supervisor})"
+          - if requests[0].supervisor
+            = "(#{requests[0].supervisor})"
       - requests.each do |request|
         %tr.holiday-request-item
           %td

@@ -20,14 +20,9 @@ class ProfilesController < ApplicationController
   def initialize
     super
 
-    @base.delegate :click, '[name=add_modifier]' do |e|
+    @base.delegate :click, 'button[name=cancel]' do |e|
       e.stop
-      addModifier
-    end
-
-    @base.delegate :click, '[name=add_child]' do |e|
-      e.stop
-      addChild
+      redirect "#profiles/#{@profile.id}"
     end
 
     @base.on :submit do |e|
@@ -52,7 +47,6 @@ class ProfilesController < ApplicationController
   end
 
   def show(params)
-    return unless CurrentUser[:admin]
     getProfile params[:id] do
       render 'views/employee_profile/show', @profile
     end

@@ -24,6 +24,15 @@ class HolidayRequestsController < ApplicationController
     @index = HolidayRequestIndex.new
     @xhr   = Fron::Request.new
 
+    @base.delegate :click, 'button[name=cancel]' do |e|
+      e.stop
+      if @holiday_request && !@holiday_request.dirty?
+        redirect "#profiles/#{@holiday_request.id}"
+      else
+        redirect "#holiday_requests/"
+      end
+    end
+
     @base.on :change do |e| onChangeSelect(e) end
     @base.on :change do |e| onChange          end
     @base.on :submit do |e| e.stop; submit    end

@@ -3,6 +3,7 @@ When(/^I visit the new holiday modifier page$/) do
 end
 
 When(/^I fill out the holiday modifier form$/) do
+	page.find('[name=year]').set "2014"
   page.find('[name=value]').set "0"
   page.find('[name=description]').set "description"
 end
@@ -13,7 +14,7 @@ Then(/^I (should|should not) see a holiday modifier item$/) do |maybe|
 end
 
 Given(/^The user has a holiday modifier$/) do
- 	@modifier = @user.hr_employee_profile.hr_holiday_modifiers.create({value: 0, description: 'test'})
+ 	@modifier = @user.hr_employee_profile.hr_holiday_modifiers.create({year: Date.new(2014), value: 0, description: 'test'})
 end
 
 When(/^I delete the holiday modifier$/) do
