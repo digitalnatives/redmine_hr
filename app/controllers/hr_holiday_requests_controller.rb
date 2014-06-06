@@ -16,7 +16,7 @@ class HrHolidayRequestsController < HrAPIController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = HolidayReport.new get_scope.all.as_json
+        pdf = HolidayReport.new get_scope.where(status: 'approved').as_json
         send_data pdf.render, filename: "holidays_and_sickleaves.pdf",
                               type: "application/pdf",
                               disposition: "inline"
@@ -65,9 +65,14 @@ class HrHolidayRequestsController < HrAPIController
   def get_scope
     scope = HrHolidayRequest.scoped
     scope = scope.by_year(DateTime.new(params[:year].to_i)) unless params[:year].blank?
-    scope = scope.by_user(params[:user]) unless params[:user].blank?
     scope = scope.by_status(params[:status]) unless params[:status].blank?
-    scope = scope.by_supervisor(params[:supervisor]) unless params[:supervisor].blank?
+    scope = scope.by_user(params[:user]) unless params[:user].blank?
+
+    if User.current.role == :user && params[:user].to_i != User.current.id
+      scope = scope.by_supervisor(User.current.id)
+    else
+      scope = scope.by_supervisor(params[:supervisor]) unless params[:supervisor].blank?
+    end
     scope
   end
 end

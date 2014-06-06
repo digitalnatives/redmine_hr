@@ -1,4 +1,6 @@
 class EmployeeProfile < Fron::Model
+  attr_reader :data
+
   field :supervisor_id
   field :user_id
   field :birth_date

@@ -37,6 +37,7 @@ class ProfilesController < ApplicationController
   end
 
   def submit
+    return unless CurrentUser[:admin]
     return nil unless @profile
     @profile.update gather do
       redirect "profiles/#{@profile.id}"
@@ -44,24 +45,39 @@ class ProfilesController < ApplicationController
   end
 
   def edit(params)
+    return unless CurrentUser[:admin]
     getProfile params[:id] do
-      render 'views/employee_profile/edit', @profile
+      renderEdit
     end
   end
 
   def show(params)
+    return unless CurrentUser[:admin]
     getProfile params[:id] do
       render 'views/employee_profile/show', @profile
     end
   end
 
   def index
+    return unless CurrentUser[:admin]
     EmployeeProfile.all do |profiles|
       render 'views/employee_profile/index', profiles: profiles
     end
   end
 
   private
+
+  def renderEdit
+    if CurrentUser[:admin]
+      EmployeeProfile.all do |profiles|
+        @profile.data[:supervisors] = profiles.map(&:user)
+        render 'views/employee_profile/edit', @profile
+      end
+    else
+      @profile.data[:supervisors] = [@profile.supervisor]
+      render 'views/employee_profile/edit', @profile
+    end
+  end
 
   def getProfile(id, &block)
     EmployeeProfile.find id do |profile|

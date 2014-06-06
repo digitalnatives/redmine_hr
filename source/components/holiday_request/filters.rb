@@ -52,6 +52,7 @@ class HolidayRequestFilters < Fron::Component
   def update(&block)
     params = {}
     params[:user] = @user_id if @user_id
+    @supervisor.hide if !CurrentUser[:admin]
     request.get params do |response|
 
       @year.options   = response.json[:year].uniq.map { |year| [year,year] }

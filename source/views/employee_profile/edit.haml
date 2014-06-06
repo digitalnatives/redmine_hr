@@ -4,6 +4,14 @@
 %form
   .box.tabular
     %p
+      %label= t "hr.employee_profile.supervisor"
+      %select{name: "supervisor_id", disabled: !CurrentUser[:admin]}
+        - self.data[:supervisors].each do |user|
+          - if self.supervisor_id == user[:id]
+            %option{value: user[:id], selected: true}= user[:firstname] + " " + user[:lastname]
+          - else
+            %option{value: user[:id]}= user[:firstname] + " " + user[:lastname]
+    %p
       %label= t "hr.employee_profile.employment_date"
       %input{type:"date", name:"employment_date", value: self.employment_date}
     %p
