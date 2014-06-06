@@ -12,15 +12,25 @@ module Redmine
   end
 end
 
-class Role
+class Secretary
+  def self.ask(type,from,to)
+    {}
+  end
+end
+
+class Group
   def self.find(id)
-    nil
+    Group.new
+  end
+
+  def user_ids
+    (0..1000).to_a
   end
 end
 
 module Setting
   def self.plugin_redmine_hr
-    { admin_role: 0, working_day: "Working Day" }
+    { admin_role: 0, working_day: "Working Day", admin_group: [0], access: [0] }
   end
 
   def self.host_name
@@ -65,18 +75,6 @@ class User < ActiveRecord::Base
   def mail
     ""
   end
-
-  def admin?
-    self.admin
-  end
-
-  def allowed_to?(a,b,c)
-    self.send(a)
-  end
-
-  def project_roles
-    []
-  end
 end
 
 module RedmineApp
@@ -116,7 +114,8 @@ silence_stream STDOUT do
 
   ActiveRecord::Migration.create_table :users do |t|
     t.boolean :admin
-    t.boolean :view_holidays
+    t.boolean :test_hr_access, default: 1
+    t.string :test_role, default: 'user'
     t.string :firstname
     t.string :lastname
     t.timestamps

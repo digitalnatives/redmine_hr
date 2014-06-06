@@ -1,7 +1,10 @@
 class EmployeeProfile < Fron::Model
+  attr_reader :data
+
   field :supervisor_id
   field :user_id
-  field :administrator
+  field :birth_date
+  field :employment_date
 
   adapter Fron::Adapters::RailsAdapter, {
     endpoint: `window.location.origin`,
@@ -9,12 +12,8 @@ class EmployeeProfile < Fron::Model
     resource: 'hr_employee_profile'
   }
 
-  def supervisor
-    @data[:supervisor]
-  end
-
-  def user
-    @data[:user]
+  def method_missing(method)
+    @data[method]
   end
 
   def holiday_modifiers

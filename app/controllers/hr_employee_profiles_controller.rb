@@ -1,7 +1,7 @@
 class HrEmployeeProfilesController < HrAPIController
 
   UPDATEABLE_ATTRIBUTES = {
-    admin: [:id, :supervisor_id, :administrator, :user_id],
+    admin: [:id, :supervisor_id, :user_id, :birth_date, :employment_date, :gender],
     user: []
   }
 

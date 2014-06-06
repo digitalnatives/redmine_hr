@@ -18,8 +18,3 @@ Feature: Show Employee Profile
     Given There is a user
      When I visit the employee profile page
      Then I should see the profile
-
-  Scenario: Show profile administrator
-    Given There is an administrator user
-     When I visit the employee profile page
-     Then I should see the profile as administrator

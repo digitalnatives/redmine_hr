@@ -26,10 +26,16 @@ class RedmineHR < Fron::Application
 end
 
 RedmineHR.new
-MainMenu.new({
+
+menu = {
   "#{t('hr.main_menu.my_holiday_requests')}" => "#holiday_requests/mine",
-  "#{t('hr.main_menu.holiday_requests')}" => "#holiday_requests/",
   "#{t('hr.main_menu.new_holiday_request')}" => "#holiday_requests/new",
-  "#{t('hr.main_menu.employee_profiles')}" => "#profiles",
-})
+  "#{t('hr.main_menu.holiday_requests')}"    => "#holiday_requests/",
+}
+
+if CurrentUser.admin
+  menu[t('hr.main_menu.employee_profiles')] = "#profiles"
+end
+
+MainMenu.new menu
 

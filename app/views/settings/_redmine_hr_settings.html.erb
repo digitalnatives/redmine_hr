@@ -15,14 +15,42 @@
       </td>
     </tr>
     <tr>
-      <th><%= l('hr.settings.admin_role') %></th>
+      <th><%= l('hr.settings.access') %></th>
       <td>
-        <select name="settings[admin_role]">
-          <% Role.all.each do |role| %>
-            <% if settings['admin_role'].to_i == role.id %>
-              <option value="<%= role.id %>" selected><%=role.name%></option>
+        <select name="settings[access][]" multiple size="10">
+          <% Group.all.each do |group| %>
+            <% if settings['access'] && settings['access'].include?( group.id.to_s ) %>
+              <option value="<%= group.id %>" selected><%=group.name%></option>
             <% else %>
-              <option value="<%= role.id %>"><%=role.name%></option>
+              <option value="<%= group.id %>"><%=group.name%></option>
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th><%= l('hr.settings.admin_group') %></th>
+      <td>
+        <select name="settings[admin_group][]" multiple size="10">
+          <% Group.all.each do |group| %>
+            <% if settings['admin_group'] && settings['admin_group'].include?( group.id.to_s ) %>
+              <option value="<%= group.id %>" selected><%=group.name%></option>
+            <% else %>
+              <option value="<%= group.id %>"><%=group.name%></option>
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th><%= l('hr.settings.holiday_module') %></th>
+      <td>
+        <select name="settings[holiday_module]">
+          <% HrHolidayCalculator.modules.each do |mod,m| %>
+            <% if settings['holiday_module'] == mod %>
+              <option value="<%= mod %>" selected><%= mod %></option>
+            <% else %>
+              <option value="<%= mod %>"><%= mod %></option>
             <% end %>
           <% end %>
         </select>

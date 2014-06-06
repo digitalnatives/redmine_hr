@@ -64,7 +64,7 @@ Then(/^There should be (\d+) buttons$/) do |num|
 end
 
 Then(/^There should be a (.+) button$/) do |text|
-  page.find("button", text: I18n.t("hr.holiday_request.transitions.#{text}"))
+  page.should have_css("button", text: I18n.t("hr.holiday_request.transitions.#{text}"))
 end
 
 When(/^I filter for the current year$/) do

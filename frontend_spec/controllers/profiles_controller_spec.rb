@@ -4,16 +4,19 @@ describe ProfilesController do
 
   let(:modifier) { double(update: true)              }
   let(:base)     { double(find: double(value: true)) }
-  let(:profile)  { double(id: 0)                     }
+  let(:profile)  { double(id: 0, supervisors: [], data: {})    }
 
   before do
+    CurrentUser[:admin] = true
     subject.instance_variable_set('@base',base)
   end
 
   describe "#edit" do
     it "should get profile and render edit" do
-      subject.should receive(:getProfile) do |&block| block.call end
-      subject.should receive(:render).with 'views/employee_profile/edit', nil
+      EmployeeProfile.should receive(:all) do |&block| block.call [] end
+      subject.instance_variable_set("@profile", profile)
+      subject.should receive(:getProfile) do |&block| block.call profile end
+      subject.should receive(:render).with 'views/employee_profile/edit', profile
       subject.edit({id: 0})
     end
   end
@@ -65,22 +68,6 @@ describe ProfilesController do
       subject.should receive(:gather)
       subject.should receive(:redirect).with "profiles/0"
       subject.submit
-    end
-  end
-
-  describe "#addModifier" do
-    before do
-      HolidayModifier.should receive(:new).and_return modifier
-      subject.instance_variable_set('@profile',profile)
-    end
-
-    it "should create a new modifier" do
-      subject.addModifier
-    end
-
-    it "should update the modifier" do
-      modifier.should receive(:update)
-      subject.addModifier
     end
   end
 end

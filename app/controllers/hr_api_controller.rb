@@ -53,8 +53,7 @@ class HrAPIController < ApplicationController
     attributes = if self.class::UPDATEABLE_ATTRIBUTES.is_a? Array
       self.class::UPDATEABLE_ATTRIBUTES
     else
-      type = User.current.admin? ? :admin : :user
-      self.class::UPDATEABLE_ATTRIBUTES[type]
+      self.class::UPDATEABLE_ATTRIBUTES[User.current.role]
     end
     params.require(controller_name.classify.underscore).permit *attributes
   end
