@@ -16,7 +16,7 @@ class HrHolidayRequestsController < HrAPIController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = HolidayReport.new get_scope.where(status: 'approved').as_json
+        pdf = HolidayReport.new get_scope.as_json
         send_data pdf.render, filename: "holidays_and_sickleaves.pdf",
                               type: "application/pdf",
                               disposition: "inline"

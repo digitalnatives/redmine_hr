@@ -13,10 +13,10 @@
             %option{value: user[:id]}= user[:firstname] + " " + user[:lastname]
     %p
       %label= t "hr.employee_profile.employment_date"
-      %input{type:"date", name:"employment_date", value: self.employment_date}
+      %input{type:"input", name:"employment_date", value: self.employment_date}
     %p
       %label= t "hr.employee_profile.birth_date"
-      %input{type:"date", name:"birth_date", value: self.birth_date}
+      %input{type:"input", name:"birth_date", value: self.birth_date}
     %p
       %label= t "hr.employee_profile.gender"
       %select(name="gender")

@@ -1,6 +1,8 @@
 class HrHolidayModifier < ActiveRecord::Base
   unloadable
 
+  validates :year, :value, presence: true
+
   scope :by_profile, ->(id) { where(hr_employee_profile_id: id) }
 
   scope :by_year, ->(date) {

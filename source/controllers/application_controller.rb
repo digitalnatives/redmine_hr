@@ -42,6 +42,11 @@ class ApplicationController < Fron::Controller
 
   def render(template,data)
     @base.html = Template[template].render data
+    %x{
+      setTimeout(function(){
+        $("[name*=date]").datepicker(datepickerOptions);
+      })
+    }
   end
 
   def flash(message)
