@@ -14,7 +14,4 @@
       %select(name="gender")
         %option(value="male")= t("hr.employee_profile.male")
         %option(value="female")= t("hr.employee_profile.female")
-    %p
-      %label= t "hr.employee_profile.administrator"
-      %input{type: "checkbox", checked: self.administrator, name: 'administrator'}
   %button= t("hr.labels.save")

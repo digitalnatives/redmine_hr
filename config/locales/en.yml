@@ -65,12 +65,13 @@ en:
       holiday_requests: "Holiday Requests"
       my_holiday_requests: "My Holiday Requests"
     settings:
-      admin_role: "Admin Role"
+      admin_group: "Admin Group"
+      holiday_module: "Holiday Module"
+      access: "Access Groups"
       working_day: "Workind Day"
     employee_profile:
       title: "Employee Profile"
       attributes: "Attributes"
-      administrator: "Administrator"
       date_of_employment: "Date of Employment"
       name: "Name"
       e_mail: "E-mail"

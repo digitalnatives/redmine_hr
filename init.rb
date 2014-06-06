@@ -13,12 +13,11 @@ Redmine::Plugin.register :redmine_hr do
   url 'tba'
   author_url 'tba'
 
-  permission :access_hr, :hr => [:index]
-
   menu(:top_menu, :hr, {:controller => "hr", :action => 'index'}, :caption => 'HR', :after => :my_page, :if => Proc.new{ User.current.logged? && User.current.allowed_to_hr? }, :param => :user_id)
 
   settings :default => {
-  	'admin_role' => 0,
+  	'admin_group' => [0],
+    'access' => [0],
   	'working_day' => "Working day",
   	'holiday_module' => "HrHolidayCalculator::Hun2014"
 	}, :partial => 'settings/redmine_hr_settings'

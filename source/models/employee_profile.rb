@@ -1,7 +1,6 @@
 class EmployeeProfile < Fron::Model
   field :supervisor_id
   field :user_id
-  field :administrator
   field :birth_date
   field :employment_date
 

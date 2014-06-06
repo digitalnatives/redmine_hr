@@ -1,7 +1,6 @@
 class CreateHrEmployeeProfiles < ActiveRecord::Migration
   def change
     create_table :hr_employee_profiles do |t|
-      t.boolean :administrator
       t.column  :gender,          :string,  :default => nil
       t.column  :birth_date,      :date,    :default => nil
       t.column  :employment_date, :date,    :default => nil

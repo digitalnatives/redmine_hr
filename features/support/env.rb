@@ -10,6 +10,7 @@ Capybara.register_driver :poltergeist do |app|
 end
 
 Capybara.default_driver = :poltergeist
+Capybara.default_wait_time = 10
 Capybara.app = RedmineApp::Application
 
 ActiveRecord::Base.logger.level = Logger::Severity::UNKNOWN

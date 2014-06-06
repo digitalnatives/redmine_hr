@@ -1,9 +1,10 @@
 Given(/^I am logged in$/) do
-  User.current = User.create({firstname: 'Me', lastname: 'Me', admin: true, access_hr: true})
+  User.current = User.create({firstname: 'Me', lastname: 'Me'})
+  User.current.test_role = :admin
 end
 
 Given(/^I am logged in as a normal user$/) do
-  User.current = User.create({firstname: 'Me', lastname: 'Me', admin: false, access_hr: true})
+  User.current = User.create({firstname: 'Me', lastname: 'Me'})
 end
 
 When(/^The administrator logges in$/) do
@@ -14,17 +15,15 @@ Given(/^There is an?( administrator)? user$/) do |admin|
   @user = User.create({
     firstname: Faker::Name.first_name,
     lastname: Faker::Name.last_name,
-    admin: false,
-    access_hr: true
   })
-  @user.hr_employee_profile.administrator = !!admin
+  @user.test_role = "admin" if !!admin
   @admin = @user if !!admin
-  @user.hr_employee_profile.save!
+  @user.save!
 end
 
 Given(/^It can't access the hr module$/) do
-  @user.access_hr = false
-  @user.save
+  @user.update_attributes(test_hr_access: false)
+  @user.save!
 end
 
 When(/^I click on the (.+) button$/) do |name|

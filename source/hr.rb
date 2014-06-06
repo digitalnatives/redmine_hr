@@ -33,7 +33,7 @@ menu = {
   "#{t('hr.main_menu.holiday_requests')}"    => "#holiday_requests/",
 }
 
-if CurrentUser.admin?
+if CurrentUser.admin
   menu[t('hr.main_menu.employee_profiles')] = "#profiles"
 end
 

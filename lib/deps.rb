@@ -6,12 +6,17 @@ Rails.configuration.to_prepare do
     before_create :build_default_hr_employee_profile
 
     def allowed_to_hr?
-      allowed_to?(:access_hr, nil, global: true)
+      return self.test_hr_access if defined? self.test_hr_access
+      return false unless Setting.plugin_redmine_hr[:access]
+      ids = Setting.plugin_redmine_hr[:access].reduce([]) { |memo,id| memo << Group.find(id.to_i).user_ids }.flatten
+      ids.include?(id)
     end
 
     def role
-      hr_role = Role.find Setting.plugin_redmine_hr[:admin_role]
-      return :admin if project_roles.include?(hr_role)
+      return self.test_role if defined? self.test_role
+      return :user unless Setting.plugin_redmine_hr[:admin_group]
+      ids = Setting.plugin_redmine_hr[:admin_group].reduce([]) { |memo,id| memo << Group.find(id.to_i).user_ids }.flatten
+      return :admin if ids.include?(id)
       :user
     end
 
@@ -20,7 +25,6 @@ Rails.configuration.to_prepare do
     # Create employee_profile automatically
     def build_default_hr_employee_profile
       build_hr_employee_profile
-      hr_employee_profile.administrator = false
       hr_employee_profile.supervisor_id = 0
       true
     end
