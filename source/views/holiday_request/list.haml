@@ -21,7 +21,7 @@
               = request.start_date
           %td= request.end_date
           %td= request.days
-          %td= request.status
+          %td= t("hr.holiday_request.statuses.#{request.status}")
           %td= request.description
           %td
             - request.available_statuses.each do |status|

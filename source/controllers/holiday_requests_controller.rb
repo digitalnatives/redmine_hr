@@ -147,7 +147,19 @@ class HolidayRequestsController < ApplicationController
         render 'views/holiday_request/edit', @holiday_request
       end
     else
-      @holiday_request.data[:profiles] = [CurrentProfile]
+      isMe = @holiday_request.hr_employee_profile_id == CurrentProfile[:id]
+      profile = if isMe
+        CurrentProfile
+      else
+        firstname, lastname = @holiday_request.user.split " "
+        EmployeeProfile.new({
+          holiday_modifiers: [],
+          employee_children: [],
+          id: @holiday_request.hr_employee_profile_id,
+          user: { firstname: firstname, lastname: lastname }
+        })
+      end
+      @holiday_request.data[:profiles] = [profile]
       render 'views/holiday_request/edit', @holiday_request
     end
   end
