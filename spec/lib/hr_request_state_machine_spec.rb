@@ -12,7 +12,9 @@ describe HrHolidayRequest do
     end_date: Date.today
   }}
 
-  subject { described_class.new(options) }
+  let(:profile) { HrEmployeeProfile.create supervisor_id: 0, user_id: 0, birth_date: Date.today, employment_date: Date.today }
+
+  subject { profile.hr_holiday_requests.new(options) }
 
   states = [
     { event: 'request',           status: 'requested', from: ['planned']               },
@@ -63,7 +65,7 @@ describe HrHolidayRequest do
 
         state[:from].each do |status|
           it "should transition from #{status}" do
-            sub = described_class.new(options.merge({status: "#{status}"}))
+            sub = profile.hr_holiday_requests.new(options.merge({status: "#{status}"}))
             sub.send("#{state[:event]}!")
             sub.status.should eq state[:status]
           end
@@ -71,7 +73,7 @@ describe HrHolidayRequest do
 
         it "should fail for every other status" do
           (described_class::STATUSES - state[:from]).each do |status|
-            sub = described_class.new(options.merge({status: status}))
+            sub = profile.hr_holiday_requests.new(options.merge({status: status}))
             lambda { sub.send("#{state[:event]}!") }.should raise_error
           end
         end
@@ -80,7 +82,7 @@ describe HrHolidayRequest do
 
     describe "#reject" do
       it "should not transition if the request is in the past" do
-        sub = described_class.new(past_options.merge({status: 'requested'}))
+        sub = profile.hr_holiday_requests.new(past_options.merge({status: 'requested'}))
         lambda { sub.reject! }.should raise_error
       end
     end

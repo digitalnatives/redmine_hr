@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe HrHolidayRequest do
 
+  before do
+    subject.build_hr_employee_profile
+  end
+
   describe "defaults" do
     it "should have default status: planned" do
       subject.status.should eq 'planned'
