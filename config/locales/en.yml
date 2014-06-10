@@ -89,7 +89,7 @@ en:
         requested: "Requested"
         approved: "Approved"
         unused: "Unused"
-        unused_planned: "Unused without (planned)"
+        unused_planned: "Unused with planned"
     holiday_report:
       title: "Holidays & Sick-leaves between %{from_date} - %{to_date}"
       employee: "Employee"
