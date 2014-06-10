@@ -53,7 +53,7 @@ class ProfilesController < ApplicationController
   end
 
   def index
-    return unless CurrentUser[:admin]
+    return redirect '#holiday_requests/mine' unless CurrentUser[:admin]
     EmployeeProfile.all do |profiles|
       render 'views/employee_profile/index', profiles: profiles
     end
