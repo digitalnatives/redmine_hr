@@ -14,7 +14,7 @@
       %select{name: "hr_employee_profile_id", disabled: !CurrentUser[:admin]}
         - data[:profiles].each do |profile|
           - if dirty?
-            - if CurrentUser[:id] == profile.id
+            - if CurrentProfile.id.to_s == profile.id.to_s
               %option{value: profile.id, selected: true}= profile.name
             - else
               %option{value: profile.id}= profile.name
