@@ -40,7 +40,7 @@ Given(/^(I|Someone) (?:have|has) an? (.+) holiday request( for last year)?$/) do
     u
   end
   @request = user.hr_employee_profile.hr_holiday_requests.new({
-    half_day: true,
+    half_day: false,
     status: status
   })
   if last_year
