@@ -53,10 +53,11 @@
           %td(width="10%" style="text-align: center")= modifier.value
           %td= modifier.description
           %td(width="10%" style="text-align: center")
-            %a.icon.icon-edit{href:"#profiles/#{id}/modifiers/#{modifier.id}"}
-              = t "hr.labels.edit"
-            %a.icon.icon-del{href:"#profiles/#{id}/modifiers/#{modifier.id}/delete"}
-              = t "hr.labels.delete"
+            - if CurrentUser[:admin]
+              %a.icon.icon-edit{href:"#profiles/#{id}/modifiers/#{modifier.id}"}
+                = t "hr.labels.edit"
+              %a.icon.icon-del{href:"#profiles/#{id}/modifiers/#{modifier.id}/delete"}
+                = t "hr.labels.delete"
 %div
   %h3
   %h4= t "activerecord.models.hr_employee_child.other"
@@ -73,7 +74,8 @@
           %td(width="10%" style="text-align: center")= child.birth_date
           %td(width="10%" style="text-align: center")= child.gender
           %td(width="10%" style="text-align: center")
-            %a.icon.icon-edit{href:"#profiles/#{id}/employee_children/#{child.id}"}
-              = t "hr.labels.edit"
-            %a.icon.icon-del{href:"#profiles/#{id}/employee_children/#{child.id}/delete"}
-              = t "hr.labels.delete"
+            - if CurrentUser[:admin]
+              %a.icon.icon-edit{href:"#profiles/#{id}/employee_children/#{child.id}"}
+                = t "hr.labels.edit"
+              %a.icon.icon-del{href:"#profiles/#{id}/employee_children/#{child.id}/delete"}
+                = t "hr.labels.delete"

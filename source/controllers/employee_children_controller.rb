@@ -35,6 +35,7 @@ class EmployeeChildrenController < ApplicationController
   end
 
   def delete(params)
+    return unless CurrentUser.admin
     getChild params do
       @employee_child.destroy do
         redirect "profiles/#{@profile.id}"
@@ -43,12 +44,14 @@ class EmployeeChildrenController < ApplicationController
   end
 
   def edit(params)
+    return unless CurrentUser.admin
     getChild params do
       render 'views/employee_child/edit', @employee_child
     end
   end
 
   def new(params)
+    return unless CurrentUser.admin
     @employee_child = EmployeeChild.new({hr_employee_profile_id: params[:id]})
     @profile = EmployeeProfile.new({id: params[:id]})
     render 'views/employee_child/edit', @employee_child
