@@ -47,7 +47,7 @@ class HolidayRequestsController < ApplicationController
 
   def mine
     insertIndex t('hr.my_holiday_requests.title')
-    @index.scope ::CurrentUser
+    @index.scope ::CurrentProfile
     @index.filters.update do
       update
     end

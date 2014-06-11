@@ -3,7 +3,7 @@ require 'fron'
 require 'vendor/i18n'
 require 'locales/en'
 
-require 'fron-ext/rails_adapter'
+require 'core-ext/kernel'
 
 require 'components/content'
 require 'components/main-menu'

@@ -65,9 +65,9 @@ describe HrHolidayCalculator do
     end
   end
 
-  describe '#get_days' do
+  describe '#calculate_duration' do
     it "handles half day" do
-      described_class.get_days(half_day_request).should eq 0.5
+      described_class.calculate_duration(half_day_request).should eq 0.5
     end
   end
 
