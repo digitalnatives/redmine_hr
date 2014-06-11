@@ -20,7 +20,7 @@
     %p
       %label= t "hr.employee_profile.gender"
       %select(name="gender")
-        %option(value="male")= t("hr.employee_profile.male")
-        %option(value="female")= t("hr.employee_profile.female")
+        %option{value: "male", selected: gender == 'male' }= t("hr.employee_profile.male")
+        %option{value: "female", selected: gender == 'female' }= t("hr.employee_profile.female")
   %button= t("hr.labels.save")
   %%button(name="cancel")= t "hr.labels.cancel"
