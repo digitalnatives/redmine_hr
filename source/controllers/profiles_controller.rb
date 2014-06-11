@@ -47,8 +47,10 @@ class ProfilesController < ApplicationController
   end
 
   def show(params)
-    return unless CurrentUser[:admin]
     getProfile params[:id] do
+      unless CurrentUser[:admin]
+        break if @profile.id != CurrentProfile.id
+      end
       render 'views/employee_profile/show', @profile
     end
   end
