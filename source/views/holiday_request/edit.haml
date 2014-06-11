@@ -19,7 +19,7 @@
             - else
               %option{value: profile.id}= profile.name
           - else
-            - if hr_employee_profile_id == profile.id
+            - if hr_employee_profile_id.to_s == profile.id.to_s
               %option{value: profile.id, selected: true}= profile.name
             - else
               %option{value: profile.id}= profile.name

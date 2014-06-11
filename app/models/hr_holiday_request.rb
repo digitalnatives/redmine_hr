@@ -97,7 +97,7 @@ class HrHolidayRequest < ActiveRecord::Base
     return if request_type == 'sick_leave'
     return unless start_date.present? && end_date.present?
     return unless hr_employee_profile
-    info = HrHolidayCalculator.profile_info hr_employee_profile, start_date
+    info = HrHolidayCalculator.profile_info hr_employee_profile, start_date, self
     if info[:unused_planned] < days
       errors.add(:days, "You don't have enough days to request this holiday!")
     end

@@ -17,8 +17,8 @@ module HrHolidayCalculator
       days.select{|date,value| value[:name] == Setting.plugin_redmine_hr[:working_day]}
     end
 
-    def profile_info(profile,year)
-      holidays = profile.hr_holiday_requests.by_year(year)
+    def profile_info(profile, year, *without)
+      holidays = profile.hr_holiday_requests.by_year(year) - without
 
       info = {
         holiday_count: holiday_count(profile,year) + sum_modifiers(profile,year),
@@ -27,8 +27,8 @@ module HrHolidayCalculator
         planned:       sum_holidays(holidays, :planned),
       }
 
-      info[:unused] = [0,info[:holiday_count] - info[:approved]].max
-      info[:unused_planned] = [0,info[:holiday_count] - info[:approved] - info[:planned]].max
+      info[:unused] = [0,info[:holiday_count] - info[:approved] - info[:requested]].max
+      info[:unused_planned] = [0,info[:unused] - info[:planned] ].max
       info
     end
 
