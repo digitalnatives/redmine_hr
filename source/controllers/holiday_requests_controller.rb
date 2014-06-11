@@ -27,7 +27,7 @@ class HolidayRequestsController < ApplicationController
     @base.delegate :click, 'button[name=cancel]' do |e|
       e.stop
       if @holiday_request && !@holiday_request.dirty?
-        redirect "#profiles/#{@holiday_request.id}"
+        redirect "#profiles/#{@holiday_request.hr_employee_profile_id}"
       else
         if CurrentUser.admin || CurrentUser[:supervisor]
           redirect "#holiday_requests/"
