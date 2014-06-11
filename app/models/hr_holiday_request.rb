@@ -89,7 +89,7 @@ class HrHolidayRequest < ActiveRecord::Base
   end
 
   def overlaps?(other)
-    (start_date - other.end_date) * (other.start_date - end_date) >= 0
+    start_date.to_date <= other.end_date.to_date && other.start_date.to_date <= end_date.to_date
   end
 
   def day_count_validation
