@@ -29,7 +29,11 @@ class HolidayRequestsController < ApplicationController
       if @holiday_request && !@holiday_request.dirty?
         redirect "#profiles/#{@holiday_request.id}"
       else
-        redirect "#holiday_requests/"
+        if CurrentUser.admin || CurrentUser[:supervisor]
+          redirect "#holiday_requests/"
+        else
+          redirect "#holiday_requests/mine"
+        end
       end
     end
 

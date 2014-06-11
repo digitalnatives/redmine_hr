@@ -4,6 +4,7 @@
       %th= t('hr.holiday_request.start_date')
       %th= t('hr.holiday_request.end_date')
       %th= t('hr.holiday_request.days')
+      %th= t('hr.holiday_request.request_type')
       %th= t('hr.holiday_request.status')
       %th= t('hr.holiday_request.description')
       %th= t('hr.labels.actions')
@@ -21,6 +22,7 @@
               = request.start_date
           %td= request.end_date
           %td= request.days
+          %td= t("hr.holiday_request.#{request.request_type}")
           %td= t("hr.holiday_request.statuses.#{request.status}")
           %td= request.description
           %td

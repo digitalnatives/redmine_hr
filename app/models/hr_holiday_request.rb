@@ -81,6 +81,7 @@ class HrHolidayRequest < ActiveRecord::Base
   end
 
   def overlap_validation
+    return unless start_date.present? && end_date.present?
     overlaps = hr_employee_profile.hr_holiday_requests
     .select { |request| request != self   }
     .select { |request| overlaps? request }
@@ -93,6 +94,7 @@ class HrHolidayRequest < ActiveRecord::Base
   end
 
   def day_count_validation
+    return if request_type == 'sick_leave'
     return unless start_date.present? && end_date.present?
     return unless hr_employee_profile
     info = HrHolidayCalculator.profile_info hr_employee_profile, start_date

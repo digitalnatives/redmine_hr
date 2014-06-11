@@ -36,16 +36,20 @@
       %label= t "hr.holiday_request.status"
       - if dirty?
         %select(name="status")
-          %option(value="planned")= t("hr.holiday_request.statuses.planned")
-          %option(value="requested")= t("hr.holiday_request.statuses.requested")
+          %option{value: "planned", selected: status == 'planned'}
+            = t("hr.holiday_request.statuses.planned")
+          %option{value: "requested", selected: status == 'requested'}
+            = t("hr.holiday_request.statuses.requested")
       - else
         %select(disabled)
           %option= t "hr.holiday_request.statuses.#{status}"
     %p
       %label= t "hr.holiday_request.request_type"
       %select(name="request_type")
-        %option(value="holiday")= t("hr.holiday_request.holiday")
-        %option(value="sick_leave")= t("hr.holiday_request.sick_leave")
+        %option{value: "holiday", selected: request_type == 'holiday' }
+          = t("hr.holiday_request.holiday")
+        %option{value: "sick_leave", selected: request_type == 'sick_leave' }
+          = t("hr.holiday_request.sick_leave")
     %p
       %label= t "hr.holiday_request.description"
       %textarea.wiki-edit(name="description")
