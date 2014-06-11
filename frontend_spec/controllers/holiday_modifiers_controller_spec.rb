@@ -8,6 +8,7 @@ describe HolidayModifiersController do
 
   before do
     subject.instance_variable_set('@base',base)
+    CurrentUser.admin = true
   end
 
   describe "#submit" do

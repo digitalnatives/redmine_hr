@@ -5,6 +5,7 @@ class EmployeeProfile < Fron::Model
   field :user_id
   field :birth_date
   field :employment_date
+  field :gender
 
   adapter Fron::Adapters::RailsAdapter, {
     endpoint: `window.location.origin`,

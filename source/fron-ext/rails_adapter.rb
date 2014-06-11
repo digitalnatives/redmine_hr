@@ -178,5 +178,9 @@ module DOM
     def disabled=(value)
       `#{@el}.disabled = #{value}`
     end
+
+    def empty
+      children.each { |node| node.remove! }
+    end
   end
 end

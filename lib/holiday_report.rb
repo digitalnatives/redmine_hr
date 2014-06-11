@@ -70,7 +70,7 @@ class HolidayReport < Prawn::Document
   private
 
   def from_date
-    @requests.map { |req| req["start_date"]}.max
+    @requests.map { |req| req["start_date"]}.min
   end
 
   def to_date

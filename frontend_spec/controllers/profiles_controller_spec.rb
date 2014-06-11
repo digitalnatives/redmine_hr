@@ -7,7 +7,7 @@ describe ProfilesController do
   let(:profile)  { double(id: 0, supervisors: [], data: {})    }
 
   before do
-    CurrentUser[:admin] = true
+    CurrentUser.admin = true
     subject.instance_variable_set('@base',base)
   end
 

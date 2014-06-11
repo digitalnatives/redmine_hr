@@ -795,3 +795,8 @@
   I18n.l = I18n.localize;
   I18n.p = I18n.pluralize;
 })(typeof(exports) === "undefined" ? (this.I18n || (this.I18n = {})) : exports);
+
+
+if (!window.location.origin) {
+  window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+}

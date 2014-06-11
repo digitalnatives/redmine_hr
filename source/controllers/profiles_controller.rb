@@ -48,12 +48,15 @@ class ProfilesController < ApplicationController
 
   def show(params)
     getProfile params[:id] do
+      unless CurrentUser[:admin]
+        break if @profile.id != CurrentProfile.id
+      end
       render 'views/employee_profile/show', @profile
     end
   end
 
   def index
-    return unless CurrentUser[:admin]
+    return redirect '#holiday_requests/mine' unless CurrentUser[:admin]
     EmployeeProfile.all do |profiles|
       render 'views/employee_profile/index', profiles: profiles
     end

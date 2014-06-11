@@ -45,6 +45,10 @@ class ApplicationController < Fron::Controller
     %x{
       setTimeout(function(){
         if(!window.$) return
+        options = datepickerOptions;
+        options.onSelect = function(dateText, inst) {
+          #{DOM::Element.new(`this`).trigger 'change'}
+       }
         $("[name*=date]").datepicker(datepickerOptions);
       })
     }

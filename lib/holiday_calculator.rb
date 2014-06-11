@@ -9,16 +9,17 @@ module HrHolidayCalculator
     end
 
     def calculate_duration(request)
-      get_days(request).count
+      get_days(request)
     end
 
     def get_days(request)
+      return 0.5 if request.half_day
       days = Secretary.ask(:interval, request.start_date, request.end_date)
-      days.select{|date,value| value[:name] == Setting.plugin_redmine_hr[:working_day]}
+      days.select{|date,value| value[:name] == Setting.plugin_redmine_hr[:working_day]}.count
     end
 
-    def profile_info(profile,year)
-      holidays = profile.hr_holiday_requests.by_year(year)
+    def profile_info(profile, year, *without)
+      holidays = profile.hr_holiday_requests.by_year(year) - without
 
       info = {
         holiday_count: holiday_count(profile,year) + sum_modifiers(profile,year),
@@ -27,8 +28,8 @@ module HrHolidayCalculator
         planned:       sum_holidays(holidays, :planned),
       }
 
-      info[:unused] = [0,info[:holiday_count] - info[:approved]].max
-      info[:unused_planned] = [0,info[:holiday_count] - info[:approved] - info[:planned]].max
+      info[:unused] = [0,info[:holiday_count] - info[:approved] - info[:requested]].max
+      info[:unused_planned] = [0,info[:unused] - info[:planned] ].max
       info
     end
 

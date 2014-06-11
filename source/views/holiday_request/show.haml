@@ -36,7 +36,7 @@
   %tbody
     - self.audits.each do |audit|
       %tr
-        %td= Time.parse(audit[:created_at]).strftime("%Y-%M-%H")
+        %td= Time.parse(audit[:created_at]).strftime("%Y-%m-%d")
         %td= t "hr.holiday_request.statuses.#{audit[:from]}"
         %td= t "hr.holiday_request.statuses.#{audit[:to]}"
         %td= audit[:user]

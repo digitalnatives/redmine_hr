@@ -40,13 +40,13 @@ Given(/^(I|Someone) (?:have|has) an? (.+) holiday request( for last year)?$/) do
     u
   end
   @request = user.hr_employee_profile.hr_holiday_requests.new({
-    half_day: true,
+    half_day: false,
     status: status
   })
   if last_year
     @request.update_attributes({start_date: 1.year.ago, end_date: 1.year.ago})
   else
-    @request.update_attributes({start_date: Date.tomorrow, end_date: Date.tomorrow})
+    @request.update_attributes({start_date: Date.tomorrow.to_time, end_date: Date.tomorrow.to_time})
   end
   @request.save
 end

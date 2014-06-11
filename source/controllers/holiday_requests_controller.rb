@@ -27,9 +27,13 @@ class HolidayRequestsController < ApplicationController
     @base.delegate :click, 'button[name=cancel]' do |e|
       e.stop
       if @holiday_request && !@holiday_request.dirty?
-        redirect "#profiles/#{@holiday_request.id}"
+        redirect "#profiles/#{@holiday_request.hr_employee_profile_id}"
       else
-        redirect "#holiday_requests/"
+        if CurrentUser.admin || CurrentUser[:supervisor]
+          redirect "#holiday_requests/"
+        else
+          redirect "#holiday_requests/mine"
+        end
       end
     end
 
@@ -43,7 +47,7 @@ class HolidayRequestsController < ApplicationController
 
   def mine
     insertIndex t('hr.my_holiday_requests.title')
-    @index.scope ::CurrentProfile
+    @index.scope ::CurrentUser
     @index.filters.update do
       update
     end
@@ -147,7 +151,19 @@ class HolidayRequestsController < ApplicationController
         render 'views/holiday_request/edit', @holiday_request
       end
     else
-      @holiday_request.data[:profiles] = [CurrentProfile]
+      isMe = @holiday_request.hr_employee_profile_id == CurrentProfile[:id]
+      profile = if isMe
+        CurrentProfile
+      else
+        firstname, lastname = @holiday_request.user.split " "
+        EmployeeProfile.new({
+          holiday_modifiers: [],
+          employee_children: [],
+          id: @holiday_request.hr_employee_profile_id,
+          user: { firstname: firstname, lastname: lastname }
+        })
+      end
+      @holiday_request.data[:profiles] = [profile]
       render 'views/holiday_request/edit', @holiday_request
     end
   end

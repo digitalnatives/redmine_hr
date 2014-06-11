@@ -11,6 +11,7 @@ class HrHolidayRequest < ActiveRecord::Base
   validates :status, inclusion: { in: STATUSES }
   validate  :date_validations
   validate  :day_count_validation
+  validate  :overlap_validation
 
   after_initialize :init
 
@@ -79,11 +80,25 @@ class HrHolidayRequest < ActiveRecord::Base
     start_date.beginning_of_day >= Date.today && end_date.beginning_of_day >= Date.today
   end
 
+  def overlap_validation
+    return unless start_date.present? && end_date.present?
+    overlaps = hr_employee_profile.hr_holiday_requests
+    .select { |request| request != self   }
+    .select { |request| overlaps? request }
+    return if overlaps.count == 0
+    errors.add :date, "Overlaps with an other holiday_request"
+  end
+
+  def overlaps?(other)
+    start_date.to_date <= other.end_date.to_date && other.start_date.to_date <= end_date.to_date
+  end
+
   def day_count_validation
+    return if request_type == 'sick_leave'
     return unless start_date.present? && end_date.present?
     return unless hr_employee_profile
-    info = HrHolidayCalculator.profile_info hr_employee_profile, start_date
-    if info[:unused] < days
+    info = HrHolidayCalculator.profile_info hr_employee_profile, start_date, self
+    if info[:unused_planned] < days
       errors.add(:days, "You don't have enough days to request this holiday!")
     end
   end

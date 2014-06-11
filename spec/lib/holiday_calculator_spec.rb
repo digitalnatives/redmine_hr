@@ -9,7 +9,14 @@ describe HrHolidayCalculator do
   let(:request) { double(:request,
     start_date: Date.today,
     end_date: Date.tomorrow,
-    status: status
+    status: status,
+    half_day: false
+  ) }
+  let(:half_day_request) { double(:request,
+    start_date: Date.today,
+    end_date: Date.tomorrow,
+    status: status,
+    half_day: true
   ) }
   let(:requests) { [request] }
   let(:profile) { double(:profile,
@@ -58,15 +65,21 @@ describe HrHolidayCalculator do
     end
   end
 
+  describe '#get_days' do
+    it "handles half day" do
+      described_class.get_days(half_day_request).should eq 0.5
+    end
+  end
+
   context "Request Dependent" do
 
     let(:requests) {[
-      double(status: 'approved'  ,start_date: Date.today, end_date: Date.tomorrow),
-      double(status: 'approved'  ,start_date: Date.today, end_date: Date.today),
-      double(status: 'requested' ,start_date: Date.today, end_date: Date.today),
-      double(status: 'withdrawn' ,start_date: Date.today, end_date: Date.today),
-      double(status: 'planned'   ,start_date: Date.today, end_date: Date.tomorrow),
-      double(status: 'planned'   ,start_date: Date.today, end_date: Date.today),
+      double(status: 'approved'  ,start_date: Date.today, end_date: Date.tomorrow, half_day: false),
+      double(status: 'approved'  ,start_date: Date.today, end_date: Date.today,half_day: false),
+      double(status: 'requested' ,start_date: Date.today, end_date: Date.today,half_day: false),
+      double(status: 'withdrawn' ,start_date: Date.today, end_date: Date.today,half_day: false),
+      double(status: 'planned'   ,start_date: Date.today, end_date: Date.tomorrow,half_day: false),
+      double(status: 'planned'   ,start_date: Date.today, end_date: Date.today,half_day: false)
     ]}
 
     describe "#profile_info" do

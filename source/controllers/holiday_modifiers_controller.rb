@@ -35,6 +35,7 @@ class HolidayModifiersController < ApplicationController
   end
 
   def delete(params)
+    return unless CurrentUser.admin
     getModifier params do
       @holiday_modifier.destroy do
         redirect "profiles/#{@profile.id}"
@@ -43,12 +44,14 @@ class HolidayModifiersController < ApplicationController
   end
 
   def edit(params)
+    return unless CurrentUser.admin
     getModifier params do
       render 'views/holiday_modifier/edit', @holiday_modifier
     end
   end
 
   def new(params)
+    return unless CurrentUser.admin
     @holiday_modifier = HolidayModifier.new({hr_employee_profile_id: params[:id]})
     @profile = EmployeeProfile.new({id: params[:id]})
     render 'views/holiday_modifier/edit', @holiday_modifier
