@@ -7,6 +7,20 @@ module Kernel
   end
 end
 
+module Fron
+  class Request
+    private
+
+    def handle_state_change
+      if ready_state == 4
+        response = Response.new `#{@request}.status`, `#{@request}.responseText`, `#{@request}.getAllResponseHeaders()`
+        @callback.call response if @callback
+      end
+    end
+  end
+end
+
+
 CurrentUser = Native `window.CurrentUser`
 CurrentProfile = EmployeeProfile.new CurrentUser[:profile]
 
