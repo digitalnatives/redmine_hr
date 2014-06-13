@@ -12,6 +12,9 @@ module Redmine
   end
 end
 
+class Mailer < ActionMailer::Base
+end
+
 class Secretary
   def self.ask(type,from,to)
     {}
