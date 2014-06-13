@@ -1,4 +1,4 @@
-class HrMailer < ActionMailer::Base
+class HrMailer < Mailer
   layout 'hr_mailer'
 
   def self.default_url_options
