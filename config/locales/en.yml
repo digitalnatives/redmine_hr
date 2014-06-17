@@ -21,7 +21,7 @@ en:
         <b>%{name}</b> requested <b>%{type}</b> for <b>%{days}</b> days from <b>%{start}</b>:
         <br><a href="%{link}">%{link}</a>
     withdrawn:
-      subject: "Holiday has benn withdrawn by %{user}"
+      subject: "Holiday has been withdrawn by %{user}"
       text: >
         <b>%{name}</b> withdrew <b>%{type}</b> for <b>%{days}</b> days from <b>%{start}</b>:
         <br><a href="%{link}">%{link}</a>
