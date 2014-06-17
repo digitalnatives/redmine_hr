@@ -47,7 +47,9 @@ class HrHolidayRequestsController < HrAPIController
   def create
     params = safe_params
     params[:hr_employee_profile_id] ||= User.current.hr_employee_profile.id
+    status = params.delete(:status)
     resource = klass.create! params
+    resource.request! if status == 'requested'
     render :json => resource
   end
 
