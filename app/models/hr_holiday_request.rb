@@ -6,7 +6,7 @@ class HrHolidayRequest < ActiveRecord::Base
   belongs_to :hr_employee_profile
   has_many   :hr_audits, dependent: :delete_all
 
-  validates :start_date, :end_date, :status, :request_type, presence: true
+  validates :start_date, :end_date, :status, :request_type, :hr_employee_profile_id, presence: true
   validates :request_type,   inclusion: { in: %w(sick_leave holiday) }
   validates :status, inclusion: { in: STATUSES }
   validate  :date_validations
@@ -81,6 +81,7 @@ class HrHolidayRequest < ActiveRecord::Base
   end
 
   def overlap_validation
+    return unless hr_employee_profile
     return unless start_date.present? && end_date.present?
     overlaps = hr_employee_profile.hr_holiday_requests
     .select { |request| request != self   }
