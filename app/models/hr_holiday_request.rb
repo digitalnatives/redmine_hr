@@ -35,7 +35,6 @@ class HrHolidayRequest < ActiveRecord::Base
 
   SM = state_machine :status, :initial => :planned do
     event(:request)           { transition :planned                => :requested }
-    event(:withdraw)          { transition :approved               => :withdrawn }
     event(:cancel)            { transition :requested              => :planned   }
     event(:approve)           { transition [:requested,:rejected]  => :approved  }
     event(:remove)            { transition [:requested,:planned]   => :deleted   }
@@ -43,7 +42,11 @@ class HrHolidayRequest < ActiveRecord::Base
     event(:reject_withdrawn)  { transition :withdrawn              => :approved  }
 
     event(:reject) do
-      transition [:requested,:approved]  => :rejected, :if => lambda {|request| request.in_the_future?}
+      transition [:requested,:approved]  => :rejected, :if => lambda { |request| request.in_the_future? }
+    end
+
+    event(:withdraw) do
+      transition :approved  => :withdrawn, :if => lambda { |request| request.in_the_future? }
     end
 
     after_transition do |request,transition|
