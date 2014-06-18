@@ -46,8 +46,6 @@ describe HrHolidayRequest do
     it "should be valid for not half day" do
       subject.start_date = Date.today
       subject.end_date = Date.tomorrow
-      subject.hr_employee_profile_id = 1
-      subject.valid?.should be true
       subject.errors.count.should eq 0
     end
   end
