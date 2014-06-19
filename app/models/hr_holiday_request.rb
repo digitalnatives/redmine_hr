@@ -6,7 +6,7 @@ class HrHolidayRequest < ActiveRecord::Base
   belongs_to :hr_employee_profile
   has_many   :hr_audits, dependent: :delete_all
 
-  validates :start_date, :end_date, :status, :request_type, presence: true
+  validates :start_date, :end_date, :status, :request_type, :hr_employee_profile_id, presence: true
   validates :request_type,   inclusion: { in: %w(sick_leave holiday) }
   validates :status, inclusion: { in: STATUSES }
   validate  :date_validations
@@ -14,6 +14,9 @@ class HrHolidayRequest < ActiveRecord::Base
   validate  :overlap_validation
 
   after_initialize :init
+
+  scope :holidays, -> { where request_type: 'holiday' }
+  scope :sick_leaves, -> { where request_type: 'sick_leave' }
 
   scope :by_user, ->(id) {
     where(hr_employee_profile_id: id)
@@ -35,7 +38,6 @@ class HrHolidayRequest < ActiveRecord::Base
 
   SM = state_machine :status, :initial => :planned do
     event(:request)           { transition :planned                => :requested }
-    event(:withdraw)          { transition :approved               => :withdrawn }
     event(:cancel)            { transition :requested              => :planned   }
     event(:approve)           { transition [:requested,:rejected]  => :approved  }
     event(:remove)            { transition [:requested,:planned]   => :deleted   }
@@ -43,7 +45,11 @@ class HrHolidayRequest < ActiveRecord::Base
     event(:reject_withdrawn)  { transition :withdrawn              => :approved  }
 
     event(:reject) do
-      transition [:requested,:approved]  => :rejected, :if => lambda {|request| request.in_the_future?}
+      transition [:requested,:approved]  => :rejected, :if => lambda { |request| request.in_the_future? }
+    end
+
+    event(:withdraw) do
+      transition :approved  => :withdrawn, :if => lambda { |request| request.in_the_future? }
     end
 
     after_transition do |request,transition|
@@ -81,6 +87,7 @@ class HrHolidayRequest < ActiveRecord::Base
   end
 
   def overlap_validation
+    return unless hr_employee_profile
     return unless start_date.present? && end_date.present?
     overlaps = hr_employee_profile.hr_holiday_requests
     .select { |request| request != self   }

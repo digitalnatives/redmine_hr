@@ -46,8 +46,10 @@
       <th><%= l('hr.settings.holiday_module') %></th>
       <td>
         <%
-          year = HrHolidayRequest.order(start_date: :asc).first.start_date.year
-          range = Range.new year, Date.today.year + 2
+          request =  HrHolidayRequest.order(start_date: :asc).first
+          year    = request.start_date.year if request
+          year  ||= Date.today.year
+          range   = Range.new year, Date.today.year + 2
         %>
         <% range.each do |year| %>
         <br>
