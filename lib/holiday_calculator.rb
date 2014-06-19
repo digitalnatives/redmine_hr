@@ -19,13 +19,14 @@ module HrHolidayCalculator
     end
 
     def profile_info(profile, year, *without)
-      holidays = profile.hr_holiday_requests.by_year(year) - without
+      holidays = profile.hr_holiday_requests.holidays.by_year(year) - without
 
       info = {
         holiday_count: holiday_count(profile,year) + sum_modifiers(profile,year),
-        approved:      sum_holidays(holidays,:approved),
+        approved:      sum_holidays(holidays, :approved),
         requested:     sum_holidays(holidays, :requested),
         planned:       sum_holidays(holidays, :planned),
+        sick_leave:    sum_holidays(profile.hr_holiday_requests.sick_leaves.by_year(year), :approved)
       }
 
       info[:unused] = [0,info[:holiday_count] - info[:approved] - info[:requested]].max

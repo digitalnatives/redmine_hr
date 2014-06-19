@@ -20,7 +20,10 @@ describe HrHolidayCalculator do
   ) }
   let(:requests) { [request] }
   let(:profile) { double(:profile,
-    hr_holiday_requests: double(by_year: requests),
+    hr_holiday_requests: double(
+      holidays: double(by_year: requests),
+      sick_leaves: double(by_year: requests)
+    ),
     hr_holiday_modifiers: double(by_year: [
       double(value: 1),
       double(value: -2)
@@ -108,7 +111,7 @@ describe HrHolidayCalculator do
       end
 
       it "should call sum_holidays" do
-        described_class.should_receive(:sum_holidays).exactly(3).and_return 0
+        described_class.should_receive(:sum_holidays).exactly(4).and_return 0
         subject
       end
 

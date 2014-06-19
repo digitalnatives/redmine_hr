@@ -15,6 +15,9 @@ class HrHolidayRequest < ActiveRecord::Base
 
   after_initialize :init
 
+  scope :holidays, -> { where request_type: 'holiday' }
+  scope :sick_leaves, -> { where request_type: 'sick_leave' }
+
   scope :by_user, ->(id) {
     where(hr_employee_profile_id: id)
   }

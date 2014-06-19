@@ -84,6 +84,7 @@ en:
       birth_date: "Birth Date"
       employment_date: "Employment Date"
       holiday_counts:
+        sick_leave: "Sick Leaves"
         count: "Holiday Count"
         planned: "Planned"
         requested: "Requested"
