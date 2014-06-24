@@ -16,6 +16,31 @@
     line-height: 24px;
     margin-right: 10px;
   }
+  #main {
+    position: relative;
+  }
+  loader {
+    position: absolute;
+    vertical-align: middle;
+    text-align: center;
+    background: rgba(30,30,30,0.85);
+    border-radius: 5px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+  }
+
+  loader:before {
+    content: "LOADING...";
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+    font-weight: bold;
+    font-size: 30px;
+    color: #fff;
+  }
 </style>
 <script type="text/javascript">
   window.CurrentUser = {

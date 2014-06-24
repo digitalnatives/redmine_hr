@@ -30,6 +30,14 @@ class HrEmployeeProfile < ActiveRecord::Base
     hr_employee_children
   end
 
+  def as_user_json
+    {
+      id: id,
+      user: user.as_json(:root => false),
+      supervisor: supervisor.as_json(:root => false)
+    }
+  end
+
   def as_json(options = {})
     data = super :root => false
     data[:user] = user.as_json(:root => false)
