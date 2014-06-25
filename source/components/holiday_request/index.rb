@@ -3,6 +3,7 @@ class HolidayRequestIndex < Fron::Component
 
   component :filters, HolidayRequestFilters
   component :content, 'div'
+  component :loader, 'loader'
 
   delegate :gather,  :filters
   delegate :unscope, :filters
