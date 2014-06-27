@@ -83,11 +83,9 @@ class HolidayRequestsController < ApplicationController
   private
 
   def update
-    id = `setTimeout(function(){ #{@index.loader.show} }, 500)`
+    @index.loading = true
     HolidayRequest.all @index.gather do |requests|
-      `clearTimeout(id)`
       @index.content.html = Template['views/holiday_request/list'].render requests
-      @index.loader.hide
     end
   end
 
