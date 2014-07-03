@@ -83,6 +83,7 @@ class HolidayRequestsController < ApplicationController
   private
 
   def update
+    @index.loading = true
     HolidayRequest.all @index.gather do |requests|
       @index.content.html = Template['views/holiday_request/list'].render requests
     end
