@@ -2,7 +2,7 @@ ActionController::Parameters.action_on_unpermitted_parameters = :raise
 Rails.configuration.to_prepare do
 
   User.class_eval do
-    has_one :hr_employee_profile
+    has_one :hr_employee_profile, dependent: :destroy
     before_create :build_default_hr_employee_profile
 
     def allowed_to_hr?

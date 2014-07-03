@@ -6,9 +6,9 @@ class HrEmployeeProfile < ActiveRecord::Base
   belongs_to :user
   belongs_to :supervisor, :class_name => "User"
 
-  has_many :hr_holiday_modifiers
-  has_many :hr_holiday_requests
-  has_many :hr_employee_children
+  has_many :hr_holiday_modifiers, dependent: :destroy
+  has_many :hr_holiday_requests, dependent: :destroy
+  has_many :hr_employee_children, dependent: :destroy
 
   validates :gender, inclusion: {in: %w{male female}}
   validates :birth_date, presence: true
