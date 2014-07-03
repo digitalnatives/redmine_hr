@@ -7,7 +7,7 @@ class HrEmployeeProfilesController < HrAPIController
 
   def index
     resources = klass.all.select do |profile|
-      profile.user.allowed_to_hr?
+      profile.user && profile.user.allowed_to_hr?
     end
     render :json => resources.sort_by { |prof| prof.user.lastname }
   end
