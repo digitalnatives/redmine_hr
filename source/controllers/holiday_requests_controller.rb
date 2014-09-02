@@ -4,6 +4,7 @@ require 'views/holiday_request/edit'
 require 'views/holiday_request/list'
 require 'views/holiday_request/show'
 require 'views/flash'
+require 'date'
 
 class HolidayRequestsController < ApplicationController
   attr_reader :base, :xhr
@@ -57,6 +58,9 @@ class HolidayRequestsController < ApplicationController
     insertIndex t('hr.holiday_requests.title')
     @index.unscope
     @index.filters.update do
+      @index.filters.year.value = Date.today.year
+      @index.filters.month.value = Date.today.prev_month.month
+      @index.filters.toggleMonth
       update
     end
   end

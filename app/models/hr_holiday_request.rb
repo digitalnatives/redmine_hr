@@ -36,6 +36,12 @@ class HrHolidayRequest < ActiveRecord::Base
     where("start_date >= ? and start_date <= ?", boy, eoy)
   }
 
+  scope :by_month, ->(date) {
+    boy = date.beginning_of_month
+    eoy = date.end_of_month
+    where("start_date >= ? and start_date <= ?", boy, eoy)
+  }
+
   SM = state_machine :status, :initial => :planned do
     event(:request)           { transition :planned                => :requested }
     event(:cancel)            { transition :requested              => :planned   }

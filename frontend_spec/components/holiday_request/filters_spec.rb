@@ -80,6 +80,7 @@ describe HolidayRequestFilters do
     context 'with data' do
 
       let(:response) { double(:response, json: {
+        month: ['0','1','2'],
         year: ['2014','2014','2015'],
         status: ['planned','planned','requested'],
         profiles: [

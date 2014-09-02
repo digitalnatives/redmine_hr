@@ -5,6 +5,8 @@ describe HolidayRequestsController do
   let(:request) { subject.instance_variable_get("@holiday_request") }
   let(:index)   { subject.instance_variable_get("@index") }
   let(:filters) { double :filters }
+  let(:year)    { double :year, :value= => true }
+  let(:month)   { double :month, :value= => true }
 
   describe "#initialize" do
     it 'should listen on events' do
@@ -41,7 +43,10 @@ describe HolidayRequestsController do
 
     before do
       index.should receive(:unscope)
-      index.should receive(:filters).and_return filters
+      allow(index).to receive(:filters).and_return filters
+      filters.should receive(:year).and_return year
+      filters.should receive(:month).and_return month
+      filters.should receive(:toggleMonth)
       filters.should receive(:update) do |&block| block.call end
       subject.should receive(:insertIndex)
       subject.should receive(:update)
