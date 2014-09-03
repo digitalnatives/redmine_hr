@@ -38,6 +38,7 @@ class HrHolidayRequestsController < HrAPIController
       requests.by_user(User.current.id) + requests.by_supervisor(User.current.id)
     end
     render json: {
+      month: requests.group_by { |r| r.start_date.month }.keys.uniq,
       year: requests.group_by { |r| r.start_date.year }.keys.uniq,
       profiles: requests.map(&:hr_employee_profile).map(&:as_user_json),
       status: requests.group_by { |r| r.status }.keys.uniq
@@ -65,8 +66,12 @@ class HrHolidayRequestsController < HrAPIController
   private
 
   def get_scope
+    year = params[:year].to_i
+    year = DateTime.now.year if params[:year].blank?
+
     scope = HrHolidayRequest.scoped
     scope = scope.by_year(DateTime.new(params[:year].to_i)) unless params[:year].blank?
+    scope = scope.by_month(DateTime.new(year, params[:month].to_i)) unless params[:month].blank?
     scope = scope.by_status(params[:status]) unless params[:status].blank?
     scope = scope.by_user(params[:user]) unless params[:user].blank?
 

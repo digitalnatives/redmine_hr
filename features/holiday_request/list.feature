@@ -8,7 +8,7 @@ Feature: List Holiday Requests
       And I visit the holiday requests page
 
   Scenario: List All
-     Then I should see 3 holiday request items
+     Then I should see 2 holiday request items
 
   Scenario: Filter for year
      When I filter for the current year
@@ -20,14 +20,14 @@ Feature: List Holiday Requests
 
   Scenario: Filter for user
      When I filter for myself
-     Then I should see 2 holiday request items
+     Then I should see 1 holiday request items
 
   Scenario: Filter for supervisor
      When I filter for myself as supervisor
      Then I should see 1 holiday request items
 
   Scenario: My Holiday Requests
-     Then I should see 3 holiday request items
+     Then I should see 2 holiday request items
      When I visit the my holiday requests page
      Then I should see 2 holiday request items
       And I should not be able to filter for user
